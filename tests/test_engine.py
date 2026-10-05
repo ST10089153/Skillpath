@@ -3,8 +3,8 @@
 Fixture: tests/fixtures/skill_map.csv (fake occupations occ_alpha ... occ_epsilon).
 For S = {skill_a, skill_b}:
     J(alpha) = J(beta) = 2/3, J(gamma) = J(delta) = J(epsilon) = 0
-    nearest = alpha, beta (tie, A->Z), delta (0-tie, A->Z before epsilon, gamma)
-    gains: skill_c = skill_d = 1/18, skill_x = skill_y = -1/36
+    nearest = alpha, beta (tie, A->Z); zero-similarity occupations are excluded
+    gains: skill_c = skill_d = 1/12 (tie, A->Z)
 """
 
 import os
@@ -29,8 +29,19 @@ def test_jaccard_values():
 
 def test_nearest_occupations_ties_broken_alphabetically(skill_map):
     near = nearest_occupations({"skill_a", "skill_b"}, skill_map)
-    assert [o.name for o, _ in near] == ["occ_alpha", "occ_beta", "occ_delta"]
-    assert [j for _, j in near] == [Fraction(2, 3), Fraction(2, 3), 0]
+    assert [o.name for o, _ in near] == ["occ_alpha", "occ_beta"]
+    assert [j for _, j in near] == [Fraction(2, 3), Fraction(2, 3)]
+
+
+def test_zero_similarity_occupations_excluded(skill_map):
+    # skill_x overlaps only occ_delta: no unrelated occupation may fill the other K slots
+    near = nearest_occupations({"skill_x"}, skill_map)
+    assert [o.name for o, _ in near] == ["occ_delta"]
+
+
+def test_nearest_capped_at_k(skill_map):
+    near = nearest_occupations({"skill_a", "skill_c", "skill_x", "multi word skill"}, skill_map)
+    assert len(near) == C.K
 
 
 def test_nearest_ties_independent_of_row_order():
@@ -42,14 +53,13 @@ def test_nearest_ties_independent_of_row_order():
 def test_candidate_scores_and_tie_break(skill_map):
     near = [o for o, _ in nearest_occupations({"skill_a", "skill_b"}, skill_map)]
     ranked = score_candidates({"skill_a", "skill_b"}, near)
-    assert ranked == [("skill_c", Fraction(1, 18)), ("skill_d", Fraction(1, 18)),
-                      ("skill_x", Fraction(-1, 36)), ("skill_y", Fraction(-1, 36))]
+    assert ranked == [("skill_c", Fraction(1, 12)), ("skill_d", Fraction(1, 12))]
 
 
 def test_recommendation_and_alternatives(engine):
     res = engine.recommend(profile("skill_a; skill_b"), "B")
     assert res["recommended_skill"] == "skill_c"
-    assert res["alternatives"] == ["skill_d", "skill_x", "skill_y"]
+    assert res["alternatives"] == ["skill_d"]
 
 
 # --- Normalisation --------------------------------------------------------
@@ -137,7 +147,7 @@ def test_malformed_profiles_do_not_raise(engine, bad):
 
 
 # --- Q3 explanation completeness ------------------------------------------
-@pytest.mark.parametrize("skills", ["skill_a; skill_b", "skill_e; skill_f", "skill_x", "multi word skill"])
+@pytest.mark.parametrize("skills", ["skill_a; skill_b", "skill_e; skill_f", "skill_x", "skill_e"])
 def test_explanation_complete(engine, skills):
     res = engine.recommend(profile(skills), "A")
     exp = res["explanation"]

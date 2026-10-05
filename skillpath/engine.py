@@ -126,8 +126,13 @@ def jaccard(a, b) -> Fraction:
 
 
 def nearest_occupations(skills, skill_map: SkillMap, k: int = C.K) -> list[tuple[Occupation, Fraction]]:
-    """Top k occupations by Jaccard similarity; ties broken by occupation name A->Z."""
-    scored = [(o, jaccard(skills, o.skills)) for o in skill_map.occupations]
+    """Top k occupations by Jaccard similarity; ties broken by occupation name A->Z.
+
+    Only occupations sharing at least one skill with the profile (J > 0) qualify, so fewer than k
+    may be returned. Adjacency-first: never steer towards occupations with no overlap at all
+    (DECISIONS.md #34; proposal section 2.6, Autor et al., 2024).
+    """
+    scored = [(o, j) for o in skill_map.occupations if (j := jaccard(skills, o.skills)) > 0]
     scored.sort(key=lambda t: (-t[1], _name_key(t[0].name)))
     return scored[:k]
 
