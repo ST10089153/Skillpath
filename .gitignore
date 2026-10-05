@@ -9,3 +9,4 @@ tests/tmp_log.csv
 node_modules/
 app/.expo/
 app/dist/
+models/

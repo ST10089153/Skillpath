@@ -224,7 +224,7 @@ def recommend(profile: dict, version: str, skill_map: SkillMap) -> dict:
     nearest = nearest_occupations(skills, skill_map)
     nearest_info = [{"occupation": o.name, "similarity": round(float(j), 4),
                      "skills_held": len(skills & o.skills), "skills_total": len(o.skills),
-                     "source": o.source} for o, j in nearest]
+                     "skills_missing": sorted(o.skills - skills), "source": o.source} for o, j in nearest]
     names = ", ".join(o.name for o, _ in nearest)
     ranked = score_candidates(skills, [o for o, _ in nearest])
 

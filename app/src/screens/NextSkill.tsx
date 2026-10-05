@@ -11,6 +11,7 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
   const [info, setInfo] = useState<SkillInfo | null>(null);
   const [why, setWhy] = useState(false);
   const [showAlts, setShowAlts] = useState(false);
+  const [gaps, setGaps] = useState(false);
   const [note, setNote] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -90,6 +91,24 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
             ))}
           </View>
         )}
+      </Pressable>
+
+      <Pressable
+        accessibilityRole="button"
+        accessibilityState={{ expanded: gaps }}
+        onPress={() => setGaps(!gaps)}
+        style={[styles.card, { minHeight: 52 }]}
+      >
+        <Text style={styles.h2}>{gaps ? '▾' : '▸'} What's missing?</Text>
+        {gaps && rec.nearest_occupations.map((o) => (
+          <View key={o.occupation} style={{ marginTop: 8 }}>
+            <Body style={{ fontWeight: '600', marginBottom: 2 }}>
+              {o.occupation}: you have {o.skills_held} of {o.skills_total}
+            </Body>
+            <Body muted style={{ marginBottom: 2 }}>Still to learn ({o.skills_missing.length}):</Body>
+            <Body>{o.skills_missing.map((m) => (m === rec.recommended_skill ? `★ ${m} (start here)` : m)).join(' · ')}</Body>
+          </View>
+        ))}
       </Pressable>
 
       <ErrorText error={error} />

@@ -16,7 +16,9 @@ import secrets
 from datetime import datetime, timezone
 from typing import Literal, Optional
 
-from fastapi import Depends, FastAPI, Header, HTTPException, Query
+import threading
+
+from fastapi import Depends, FastAPI, File, Header, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import PlainTextResponse
 from pydantic import BaseModel
@@ -72,7 +74,7 @@ class EventIn(BaseModel):
 
 
 def create_app(db_path: Optional[str] = None, skill_map_path: Optional[str] = None,
-               admin_token: Optional[str] = None, clock=utcnow) -> FastAPI:
+               admin_token: Optional[str] = None, clock=utcnow, cv_embed=None) -> FastAPI:
     env = {**load_env(), **os.environ}
     db_path = db_path or env.get("SKILLPATH_DB", os.path.join(ROOT, "skillpath.db"))
     skill_map_path = skill_map_path or env.get("SKILLPATH_SKILL_MAP") or engine.default_skill_map_path(ROOT)
@@ -85,6 +87,17 @@ def create_app(db_path: Optional[str] = None, skill_map_path: Optional[str] = No
         with open(descriptions_path, encoding="utf-8") as f:
             descriptions = json.load(f)
     eng = engine.Engine(skill_map)
+
+    extractor = {"obj": None}
+    extractor_lock = threading.Lock()
+
+    def get_extractor():
+        """Load the local embedding model on first use (about 20 s once; then cached in memory)."""
+        with extractor_lock:
+            if extractor["obj"] is None:
+                from skillpath.cv import CVSkillExtractor
+                extractor["obj"] = CVSkillExtractor(skill_map, descriptions, embed=cv_embed)
+            return extractor["obj"]
 
     app = FastAPI(title="SkillPath API", version="0.2.0",
                   description="Research prototype. AI-generated suggestions; not career or financial advice.")
@@ -187,6 +200,29 @@ def create_app(db_path: Optional[str] = None, skill_map_path: Optional[str] = No
         return {"skill": key, "description": d.get("description", ""), "esco_uri": esco_uri,
                 "esco_url": f"https://esco.ec.europa.eu/en/classification/skill?uri={esco_uri}" if esco_uri else "",
                 "occupations": [o.name for o in skill_map.occupations if key in o.skills]}
+
+    @app.post("/cv/extract")
+    async def cv_extract(file: UploadFile = File(...)):
+        """Propose skills found in a CV (PDF, DOCX or TXT) using the local embedding model.
+
+        The file and its text are processed in memory only and never stored or logged (POPIA).
+        """
+        data = await file.read()
+        if len(data) > 5 * 1024 * 1024:
+            raise HTTPException(413, "CV file is too large (maximum 5 MB)")
+        from skillpath.cv import extract_text
+        try:
+            text = extract_text(data, file.filename or "")
+        except ValueError as e:
+            raise HTTPException(400, str(e))
+        except Exception:
+            raise HTTPException(400, "Could not read this file. Try a PDF, Word (.docx) or text file.")
+        if not text.strip():
+            return {"skills": [], "message": "No text found in this file (scanned PDFs are not supported)."}
+        found = get_extractor().extract(text)
+        return {"skills": [{"skill": d.skill, "score": d.score, "evidence": d.evidence, "method": d.method}
+                           for d in found],
+                "message": "" if found else "No SkillPath skills were recognised. Add your skills manually."}
 
     @app.get("/vocabulary")
     def vocabulary():

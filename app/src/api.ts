@@ -9,7 +9,22 @@ export interface NearestOccupation {
   similarity: number;
   skills_held: number;
   skills_total: number;
+  skills_missing: string[];
   source: string;
+}
+
+export interface DetectedSkill {
+  skill: string;
+  score: number;
+  evidence: string;
+  method: 'exact' | 'semantic';
+}
+
+export interface PickedFile {
+  uri: string;
+  name: string;
+  mimeType?: string;
+  file?: File;
 }
 
 export interface Recommendation {
@@ -78,7 +93,18 @@ async function call<T>(method: string, path: string, body?: unknown): Promise<T>
   return data as T;
 }
 
+async function upload<T>(path: string, f: PickedFile): Promise<T> {
+  const form = new FormData();
+  if (f.file) form.append('file', f.file, f.name); // web
+  else form.append('file', { uri: f.uri, name: f.name, type: f.mimeType || 'application/octet-stream' } as unknown as Blob);
+  const res = await fetch(`${API_URL}${path}`, { method: 'POST', body: form });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(typeof data?.detail === 'string' ? data.detail : `Upload failed (${res.status})`);
+  return data as T;
+}
+
 export const api = {
+  extractCv: (f: PickedFile) => upload<{ skills: DetectedSkill[]; message: string }>('/cv/extract', f),
   createUser: () =>
     call<{ user_id: string; arm: string }>('POST', '/users', { consent: true, age_confirmed: true }),
   vocabulary: () =>

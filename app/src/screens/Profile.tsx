@@ -1,7 +1,8 @@
+import * as DocumentPicker from 'expo-document-picker';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Pressable, Text, TextInput, View } from 'react-native';
 
-import { api, Competency } from '../api';
+import { api, Competency, DetectedSkill } from '../api';
 import { Body, Button, Card, ErrorText, Loading, Screen, Title, colors, styles } from '../ui';
 
 const LEVELS: { value: Competency; label: string; detail: string }[] = [
@@ -32,6 +33,9 @@ export default function Profile({ userId, onDone }: { userId: string; onDone: ()
   const [query, setQuery] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  const [detected, setDetected] = useState<DetectedSkill[] | null>(null);
+  const [cvBusy, setCvBusy] = useState(false);
+  const [cvNote, setCvNote] = useState('');
 
   useEffect(() => {
     api.event(userId, 'assessment_started');
@@ -47,6 +51,29 @@ export default function Profile({ userId, onDone }: { userId: string; onDone: ()
 
   const toggle = (s: string) =>
     setSelected((cur) => (cur.includes(s) ? cur.filter((x) => x !== s) : [...cur, s]));
+
+  async function uploadCv() {
+    setError('');
+    setCvNote('');
+    const pick = await DocumentPicker.getDocumentAsync({
+      type: ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain'],
+      copyToCacheDirectory: true,
+    });
+    if (pick.canceled || !pick.assets?.length) return;
+    const a = pick.assets[0];
+    setCvBusy(true);
+    try {
+      const r = await api.extractCv({ uri: a.uri, name: a.name, mimeType: a.mimeType, file: a.file });
+      setDetected(r.skills);
+      setCvNote(r.message);
+      // Detected skills are pre-selected; the user can untick any that are wrong (DD6).
+      setSelected((cur) => [...cur, ...r.skills.map((d) => d.skill).filter((s) => !cur.includes(s))]);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setCvBusy(false);
+    }
+  }
 
   async function save() {
     if (!level) return;
@@ -65,7 +92,31 @@ export default function Profile({ userId, onDone }: { userId: string; onDone: ()
   return (
     <Screen>
       <Title>Your skills</Title>
-      <Body>Select the skills you already have. Search, or browse by occupation.</Body>
+      <Card>
+        <Text style={styles.h2}>Start with your CV (optional)</Text>
+        <Body>SkillPath's built-in AI reads your CV and suggests the skills it finds. Your CV is processed by
+          SkillPath's own server, is never sent to outside AI services, and is not saved.</Body>
+        <Button label={cvBusy ? 'Reading your CV… (first time takes ~20 s)' : 'Upload CV (PDF, Word or text)'}
+                variant="secondary" disabled={cvBusy} onPress={uploadCv} />
+        {cvNote !== '' && <Body muted>{cvNote}</Body>}
+        {detected && detected.length > 0 && (
+          <View>
+            <Body style={{ fontWeight: '600' }}>Found {detected.length} skills. Untick any that are not right:</Body>
+            {detected.map((d) => (
+              <Pressable key={d.skill} accessibilityRole="checkbox" accessibilityState={{ checked: selected.includes(d.skill) }}
+                         onPress={() => toggle(d.skill)} style={{ paddingVertical: 8, minHeight: 48 }}>
+                <Text style={{ fontSize: 17, color: colors.text }}>
+                  {selected.includes(d.skill) ? '☑' : '☐'} {d.skill}{' '}
+                  <Text style={styles.small}>({d.method === 'exact' ? 'named in CV' : `${Math.round(d.score * 100)}% match`})</Text>
+                </Text>
+                <Text style={styles.small}>From your CV: "{d.evidence}"</Text>
+              </Pressable>
+            ))}
+          </View>
+        )}
+      </Card>
+
+      <Body>Add or remove skills below. Search, or browse by occupation.</Body>
       <TextInput
         style={styles.input}
         placeholder="Search skills"

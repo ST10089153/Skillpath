@@ -15,6 +15,7 @@ Evaluation is by **controlled synthetic testing**: researcher-built synthetic pr
 |---|---|
 | `skillpath/` | The engine (pure, deterministic rules). `config.py` holds every design constant. |
 | `skillpath_adapter.py` | `SkillPathEngine` class imported by the harness (`--engine skillpath`). |
+| `skillpath/cv.py` | CV skill extraction with a locally hosted AI model (all-MiniLM-L6-v2 via fastembed). The model (~90 MB) downloads once into `models/` (git-ignored) on first use, then works offline. |
 | `api/` | FastAPI backend with SQLite event logging (Milestone 2). |
 | `app/` | Expo (React Native, TypeScript) mobile-first app (Milestone 3). |
 | `data/skill_map.csv` | Occupation-skill map built from DHET 2024 OIHD + ESCO + Stats SA by `scripts/build_skill_map.py` (24 occupations, 392 skills). Loaded if present. |
@@ -84,6 +85,8 @@ Interactive docs: http://localhost:8000/docs. Data is stored in `skillpath.db` (
 |---|---|
 | `POST /users` | Body `{consent, age_confirmed}`. Creates a pseudonymous user (`U` + 6 hex) and assigns arm A/B (SHA-256 parity). Researcher override: `?arm=A` or `?arm=B`. |
 | `GET /vocabulary` | Skills grouped by occupation. |
+| `POST /cv/extract` | Multipart `file` (PDF, DOCX, TXT). Returns proposed skills with the matching CV phrase and similarity. Nothing is stored. |
+| `GET /skills/{skill}` | Official ESCO description and the occupations that need the skill. |
 | `GET /modules` | Placeholder module content (`data/modules.json`). |
 | `GET /users/{id}` | View my data (profile, pathway, events). |
 | `POST /users/{id}/profile` | Body `{skills: [...], competency_level}`. |

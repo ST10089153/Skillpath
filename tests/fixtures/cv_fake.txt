@@ -1,0 +1,5 @@
+FAKE TEST CV (fixture)
+Experience
+- Did skill_a work every day at occ_alpha style job
+- Some skill_x and skill_y practice, and teamwork
+Skills: skill_e, cooking

@@ -48,3 +48,12 @@ INCOME_TEMPLATE = "Estimated {income} (literature-derived estimate, not financia
 
 # Logic versions: A = income-visible, B = income-neutral.
 INCOME_VISIBLE_VERSION = "A"
+
+# Skill profiling layer: CV skill extraction (skillpath/cv.py).
+# Locally hosted sentence-embedding model (Apache-2.0), run offline via fastembed/ONNX.
+CV_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+# Minimum cosine similarity between a CV phrase and a skill for the skill to be proposed.
+# Proposals are always confirmed by the user; tune with care and record changes in DECISIONS.md.
+CV_MATCH_THRESHOLD = 0.55
+# At most this many proposed skills are shown, highest similarity first.
+CV_MAX_SKILLS = 25

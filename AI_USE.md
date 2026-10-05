@@ -17,6 +17,10 @@ AI coding assistant, on 2026-10-05, from a specification written by the research
   Occupations in High Demand list, the ESCO API and Stats SA (2024). The occupation selection (24 occupations)
   was proposed by the assistant using the rule in DECISIONS.md #32 and must be confirmed by the researcher.
 
+- Added the CV skill-extraction component (`skillpath/cv.py`), which runs an open-source sentence-embedding
+  model (all-MiniLM-L6-v2) locally. This is an AI component *inside* SkillPath; it is separate from the AI
+  assistant used to write the code.
+
 ## What the AI assistant did not do
 - It did not create, fill in or edit synthetic profiles, CVs, acceptable recommendations, test output logs
   or results. No skill, occupation or income figure was typed by hand: all come from the cited sources via the script.
