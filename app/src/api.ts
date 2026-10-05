@@ -47,7 +47,16 @@ export interface Progress {
 export interface ModuleContent {
   title: string;
   description: string;
+  resource_label: string;
   resource_url: string;
+}
+
+export interface SkillInfo {
+  skill: string;
+  description: string;
+  esco_uri: string;
+  esco_url: string;
+  occupations: string[];
 }
 
 export interface ModuleLibrary {
@@ -75,6 +84,7 @@ export const api = {
   vocabulary: () =>
     call<{ occupations: { occupation: string; skills: string[] }[]; skills: string[] }>('GET', '/vocabulary'),
   modules: () => call<ModuleLibrary>('GET', '/modules'),
+  skill: (skill: string) => call<SkillInfo>('GET', `/skills/${encodeURIComponent(skill)}`),
   myData: (id: string) => call<Record<string, unknown>>('GET', `/users/${id}`),
   saveProfile: (id: string, skills: string[], competency_level: Competency) =>
     call('POST', `/users/${id}/profile`, { skills, competency_level }),
@@ -96,9 +106,14 @@ export function slugify(skill: string): string {
   return skill.toLowerCase().trim().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'skill';
 }
 
-export function moduleContent(lib: ModuleLibrary | null, skill: string, index: number): ModuleContent {
+export function moduleContent(lib: ModuleLibrary | null, skill: string, index: number, escoUrl = ''): ModuleContent {
   const list = lib?.skills?.[slugify(skill)] ?? lib?.default ?? [];
-  const item = list[index] ?? { title: `Module ${index + 1}`, description: '', resource_url: '' };
-  const fill = (s: string) => s.split('{skill}').join(skill);
-  return { title: fill(item.title), description: fill(item.description), resource_url: item.resource_url };
+  const item = list[index] ?? { title: `Module ${index + 1}`, description: '', resource_label: '', resource_url: '' };
+  const fill = (s: string) => (s || '')
+    .split('{skill}').join(skill)
+    .split('{query}').join(encodeURIComponent(skill))
+    .split('{esco_url}').join(escoUrl);
+  const url = fill(item.resource_url);
+  return { title: fill(item.title), description: fill(item.description),
+           resource_label: item.resource_label || 'Open resource', resource_url: url };
 }

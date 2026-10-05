@@ -202,3 +202,22 @@ def test_export_disabled_without_token(tmp_path):
 def test_module_content_has_six_placeholders(client):
     m = client.get("/modules").json()
     assert len(m["default"]) == 6 and all(x["title"] and x["description"] for x in m["default"])
+
+
+def test_skill_info(client):
+    r = client.get("/skills/skill_c").json()
+    assert r["skill"] == "skill_c" and r["occupations"] == ["occ_alpha", "occ_gamma"]
+    assert client.get("/skills/not_a_skill").status_code == 404
+
+
+def test_real_skill_descriptions_cover_vocabulary():
+    import json
+    import os
+    from conftest import ROOT
+    from skillpath.engine import SkillMap
+    sm_path = os.path.join(ROOT, "data", "skill_map.csv")
+    desc_path = os.path.join(ROOT, "data", "skill_descriptions.json")
+    if not (os.path.exists(sm_path) and os.path.exists(desc_path)):
+        pytest.skip("real skill map not built")
+    desc = json.load(open(desc_path, encoding="utf-8"))
+    assert SkillMap.from_csv(sm_path).vocabulary <= set(desc)

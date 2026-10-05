@@ -17,7 +17,8 @@ Evaluation is by **controlled synthetic testing**: researcher-built synthetic pr
 | `skillpath_adapter.py` | `SkillPathEngine` class imported by the harness (`--engine skillpath`). |
 | `api/` | FastAPI backend with SQLite event logging (Milestone 2). |
 | `app/` | Expo (React Native, TypeScript) mobile-first app (Milestone 3). |
-| `data/skill_map.csv` | **Researcher-built** occupation-skill map (not created by code). Loaded if present. |
+| `data/skill_map.csv` | Occupation-skill map built from DHET 2024 OIHD + ESCO + Stats SA by `scripts/build_skill_map.py` (24 occupations, 392 skills). Loaded if present. |
+| `data/skill_descriptions.json` | Official ESCO description of every skill (shown in the app). |
 | `data/skill_map.example.csv` | Four FAKE rows for development, used when `skill_map.csv` is absent. |
 | `data/modules.json` | Placeholder module content shown in the app. |
 | `data/income_reference_statssa.csv` | Stats SA 2024 median earnings by occupation group, for the researcher to review (see `data/INCOME_SOURCES.md`). Not read by code. |
@@ -44,6 +45,15 @@ pytest
 
 This runs the engine unit tests, the API tests, and an integration test that executes the real harness
 (`run_synthetic_tests.py ... --engine skillpath`) on the fake fixture and then `analyse_outputs.py` on its log.
+
+## Rebuilding the skill map
+
+```bash
+python scripts/build_skill_map.py
+```
+
+Needs internet. Re-running fetches the current ESCO release, so record the date (written to
+`data/skill_map_build.json`) and commit the outputs before any test run.
 
 ## Data collection (the study)
 

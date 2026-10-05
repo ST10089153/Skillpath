@@ -1,0 +1,7 @@
+{
+ "retrieved": "2026-10-05",
+ "esco_api": "https://ec.europa.eu/esco/api",
+ "occupations": 24,
+ "distinct_skills": 392,
+ "esco_version": "current release served by the API on the retrieval date"
+}

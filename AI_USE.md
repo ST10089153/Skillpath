@@ -12,9 +12,14 @@ AI coding assistant, on 2026-10-05, from a specification written by the research
   (Report 02-11-02) into `data/income_reference_statssa.csv` as **reference material for the researcher to verify**.
   This file is not read by any code.
 
+- At the researcher's request (2026-10-05), wrote and ran `scripts/build_skill_map.py`, which generated
+  `data/skill_map.csv`, `data/skill_descriptions.json` and `data/skill_map_build.json` from the DHET 2024
+  Occupations in High Demand list, the ESCO API and Stats SA (2024). The occupation selection (24 occupations)
+  was proposed by the assistant using the rule in DECISIONS.md #32 and must be confirmed by the researcher.
+
 ## What the AI assistant did not do
-- It did not create, fill in or edit any research data: synthetic profiles, CVs, acceptable recommendations,
-  `data/skill_map.csv`, test output logs or results.
+- It did not create, fill in or edit synthetic profiles, CVs, acceptable recommendations, test output logs
+  or results. No skill, occupation or income figure was typed by hand: all come from the cited sources via the script.
 - It did not modify the researcher-provided scripts (`run_synthetic_tests.py`, `analyse_outputs.py`,
   `prepare_profiles.py`), their CSV formats, or the acceptance thresholds.
 

@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
-import { api, Recommendation } from '../api';
+import { api, Recommendation, SkillInfo } from '../api';
 import { Body, Button, Card, ErrorText, Loading, Screen, Title, colors, styles } from '../ui';
 
 export default function NextSkill({ userId, onAdopted, onEditProfile }: {
   userId: string; onAdopted: () => void; onEditProfile: () => void;
 }) {
   const [rec, setRec] = useState<Recommendation | null>(null);
+  const [info, setInfo] = useState<SkillInfo | null>(null);
   const [why, setWhy] = useState(false);
   const [showAlts, setShowAlts] = useState(false);
   const [note, setNote] = useState('');
@@ -20,6 +21,9 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
   }, [userId]);
 
   useEffect(load, [load]);
+  useEffect(() => {
+    if (rec?.recommended_skill) api.skill(rec.recommended_skill).then(setInfo).catch(() => setInfo(null));
+  }, [rec?.recommended_skill]);
 
   async function run(fn: () => Promise<unknown>, after?: () => void) {
     setBusy(true);
@@ -54,7 +58,11 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
         <Text style={{ fontSize: 32, fontWeight: '800', color: colors.text, marginVertical: 8 }} accessibilityRole="header">
           {rec.recommended_skill}
         </Text>
-        <Body muted>Six short lessons, 5 to 10 minutes each.</Body>
+        {info?.description ? <Body>{info.description}</Body> : null}
+        {info && info.occupations.length > 0 && (
+          <Body muted>Asked for by: {info.occupations.join(', ')}</Body>
+        )}
+        <Body muted>Six short steps, 5 to 10 minutes each, using free resources.</Body>
         {rec.income_displayed !== '' && (
           <View style={{ backgroundColor: colors.accent, borderRadius: 8, padding: 10, marginTop: 4 }}>
             <Text style={styles.small}>Income information</Text>

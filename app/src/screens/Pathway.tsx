@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Linking, Text, View } from 'react-native';
 
-import { api, moduleContent, ModuleLibrary, Progress } from '../api';
+import { api, moduleContent, ModuleLibrary, Progress, SkillInfo } from '../api';
 import { Body, Button, Card, Difficulty, ErrorText, Loading, Screen, Title, colors, styles } from '../ui';
 
 export default function Pathway({ userId, onGoToNextSkill }: { userId: string; onGoToNextSkill: () => void }) {
   const [prog, setProg] = useState<Progress | null>(null);
   const [lib, setLib] = useState<ModuleLibrary | null>(null);
+  const [info, setInfo] = useState<SkillInfo | null>(null);
   const [flash, setFlash] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -16,6 +17,9 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
     api.modules().then(setLib).catch(() => setLib(null));
   }, [userId]);
   useEffect(load, [load]);
+  useEffect(() => {
+    if (prog?.skill) api.skill(prog.skill).then(setInfo).catch(() => setInfo(null));
+  }, [prog?.skill]);
 
   async function report(moduleId: string, passed: boolean) {
     setBusy(true);
@@ -49,7 +53,7 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
       {flash !== '' && <View style={styles.banner}><Body style={{ marginBottom: 0 }}>{flash}</Body></View>}
       <ErrorText error={error} />
       {prog.modules.map((m, i) => {
-        const c = moduleContent(lib, prog.skill, i);
+        const c = moduleContent(lib, prog.skill, i, info?.esco_url ?? '');
         const current = prog.current_module?.module_id === m.module_id;
         const difficulty = current && prog.current_module ? prog.current_module.difficulty : m.difficulty;
         const minutes = current && prog.current_module ? prog.current_module.minutes : m.minutes;
@@ -59,8 +63,15 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
             <Text style={[styles.h2, { marginTop: 4 }]}>{c.title}</Text>
             <Difficulty level={difficulty} />
             {(current || m.done) && <Body style={{ marginTop: 8 }}>{c.description}</Body>}
-            {current && c.resource_url !== '' && (
-              <Button label="Open resource" variant="secondary" onPress={() => Linking.openURL(c.resource_url)} />
+            {i === 0 && (current || m.done) && info?.description ? (
+              <View style={{ backgroundColor: colors.accent, borderRadius: 8, padding: 12, marginBottom: 8 }}>
+                <Text style={styles.small}>Official definition (ESCO)</Text>
+                <Body style={{ marginBottom: 0 }}>{info.description}</Body>
+              </View>
+            ) : null}
+            {(current || m.done) && c.resource_url !== '' && (
+              <Button label={`${c.resource_label} ↗`} variant="secondary" hint="Opens an external website"
+                      onPress={() => Linking.openURL(c.resource_url)} />
             )}
             {current && (
               <View style={{ marginTop: 4 }}>
