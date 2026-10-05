@@ -1,0 +1,15 @@
+occupation_group,median_monthly_both_sexes_2024,median_monthly_men_2024,median_monthly_women_2024,suggested_income_estimate,location_in_source
+Manager,R25 000,R25 000,R24 000,R25 000 per month (2024 median for Managers),"p. 64 text (both sexes); Table 4.14 (by sex)"
+Professional,R25 000,R29 000,R25 000,R25 000 per month (2024 median for Professionals),"p. 64 text (both sexes); Table 4.14 (by sex)"
+Technician,R20 000,R20 000,R20 000,R20 000 per month (2024 median for Technicians),"p. 64 text (both sexes); Table 4.14 (by sex)"
+Clerk,,R9 750,R8 000,,"Table 4.14 (by sex only; both-sexes value is shown only in Figure 4.30)"
+Sales and services,,R6 500,R5 000,,"Table 4.14 (by sex only; both-sexes value is shown only in Figure 4.30)"
+Skilled agriculture,,R2 600,R1 733,,"Table 4.14 (by sex only; both-sexes value is shown only in Figure 4.30)"
+Craft and related trade,,R6 500,R5 000,,"Table 4.14 (by sex only; both-sexes value is shown only in Figure 4.30)"
+Plant and machine operator,,R6 500,R5 417,,"Table 4.14 (by sex only; both-sexes value is shown only in Figure 4.30)"
+Elementary,,R4 333,R3 683,,"Table 4.14 (by sex only; both-sexes value is shown only in Figure 4.30)"
+Domestic worker,,R2 000,R2 600,,"Table 4.14 (by sex only; both-sexes value is shown only in Figure 4.30)"
+All occupations,R6 000,R6 500,R5 300,R6 000 per month (2024 median for all employees),"p. 64 text; Table 4.14"
+Skilled (managers + professionals + technicians),R23 000,,,R23 000 per month (2024 median for skilled occupations),p. 64 text
+Semi-skilled,R6 500,,,R6 500 per month (2024 median for semi-skilled occupations),p. 64 text
+Low-skilled,R3 800,,,R3 800 per month (2024 median for low-skilled occupations),p. 64 text
