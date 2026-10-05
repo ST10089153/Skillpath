@@ -82,6 +82,7 @@ def test_vocabulary(client):
     v = client.get("/vocabulary").json()
     assert "skill_a" in v["skills"]
     assert {"occupation": "occ_alpha", "skills": ["skill_a", "skill_b", "skill_c"]} in v["occupations"]
+    assert sum(len(c["skills"]) for c in v["categories"]) == len(v["skills"])
 
 
 def test_recommendation_matches_engine_and_arm(client):

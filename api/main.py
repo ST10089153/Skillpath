@@ -191,13 +191,16 @@ def create_app(db_path: Optional[str] = None, skill_map_path: Optional[str] = No
 
     @app.get("/skills/{skill}")
     def skill_info(skill: str):
-        """Official ESCO description of a skill and the occupations (in the skill map) that require it."""
+        """What a skill means, how to show it, demand evidence, and the occupations that need it."""
         key = engine.normalise(skill)
         if key not in skill_map.vocabulary:
             raise HTTPException(404, "Skill not in the SkillPath vocabulary")
         d = descriptions.get(key, {})
         esco_uri = d.get("esco_uri", "")
-        return {"skill": key, "description": d.get("description", ""), "esco_uri": esco_uri,
+        return {"skill": key, "label": d.get("label", key), "category": d.get("category", ""),
+                "description": d.get("description", ""), "how_to_show": d.get("how_to_show", ""),
+                "demand_evidence": d.get("demand_evidence", ""), "demand_source": d.get("demand_source", ""),
+                "esco_uri": esco_uri,
                 "esco_url": f"https://esco.ec.europa.eu/en/classification/skill?uri={esco_uri}" if esco_uri else "",
                 "occupations": [o.name for o in skill_map.occupations if key in o.skills]}
 
@@ -226,7 +229,14 @@ def create_app(db_path: Optional[str] = None, skill_map_path: Optional[str] = No
 
     @app.get("/vocabulary")
     def vocabulary():
-        return {"occupations": skill_map.by_occupation(), "skills": sorted(skill_map.vocabulary)}
+        """Skills grouped by category (for drop-down pickers) and by occupation."""
+        groups: dict[str, list[str]] = {}
+        for sk in sorted(skill_map.vocabulary):
+            d = descriptions.get(sk, {})
+            groups.setdefault(d.get("category") or "Other", []).append(sk)
+        labels = {sk: descriptions.get(sk, {}).get("label", sk) for sk in skill_map.vocabulary}
+        return {"categories": [{"category": c, "skills": groups[c]} for c in sorted(groups)],
+                "labels": labels, "occupations": skill_map.by_occupation(), "skills": sorted(skill_map.vocabulary)}
 
     @app.get("/users/{user_id}")
     def view_my_data(user_id: str, conn=Depends(get_conn)):

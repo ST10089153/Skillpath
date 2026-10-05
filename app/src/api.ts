@@ -68,6 +68,11 @@ export interface ModuleContent {
 
 export interface SkillInfo {
   skill: string;
+  label: string;
+  category: string;
+  how_to_show: string;
+  demand_evidence: string;
+  demand_source: string;
   description: string;
   esco_uri: string;
   esco_url: string;
@@ -108,7 +113,12 @@ export const api = {
   createUser: () =>
     call<{ user_id: string; arm: string }>('POST', '/users', { consent: true, age_confirmed: true }),
   vocabulary: () =>
-    call<{ occupations: { occupation: string; skills: string[] }[]; skills: string[] }>('GET', '/vocabulary'),
+    call<{
+      categories: { category: string; skills: string[] }[];
+      labels: Record<string, string>;
+      occupations: { occupation: string; skills: string[] }[];
+      skills: string[];
+    }>('GET', '/vocabulary'),
   modules: () => call<ModuleLibrary>('GET', '/modules'),
   skill: (skill: string) => call<SkillInfo>('GET', `/skills/${encodeURIComponent(skill)}`),
   myData: (id: string) => call<Record<string, unknown>>('GET', `/users/${id}`),
@@ -132,13 +142,14 @@ export function slugify(skill: string): string {
   return skill.toLowerCase().trim().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'skill';
 }
 
-export function moduleContent(lib: ModuleLibrary | null, skill: string, index: number, escoUrl = ''): ModuleContent {
+export function moduleContent(lib: ModuleLibrary | null, skill: string, index: number, escoUrl = '', howToShow = ''): ModuleContent {
   const list = lib?.skills?.[slugify(skill)] ?? lib?.default ?? [];
   const item = list[index] ?? { title: `Module ${index + 1}`, description: '', resource_label: '', resource_url: '' };
   const fill = (s: string) => (s || '')
     .split('{skill}').join(skill)
     .split('{query}').join(encodeURIComponent(skill))
-    .split('{esco_url}').join(escoUrl);
+    .split('{esco_url}').join(escoUrl)
+    .split('{how_to_show}').join(howToShow);
   const url = fill(item.resource_url);
   return { title: fill(item.title), description: fill(item.description),
            resource_label: item.resource_label || 'Open resource', resource_url: url };

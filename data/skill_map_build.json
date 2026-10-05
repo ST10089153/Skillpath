@@ -1,7 +1,33 @@
 {
- "retrieved": "2026-10-05",
- "esco_api": "https://ec.europa.eu/esco/api",
+ "esco_retrieved": "2026-10-05",
  "occupations": 24,
- "distinct_skills": 392,
- "esco_version": "current release served by the API on the retrieval date"
+ "skills": 71,
+ "skills_used_by_no_occupation": [],
+ "skills_per_occupation": {
+  "Agricultural Scientist": 9,
+  "Chemist": 12,
+  "Chemistry Technician": 11,
+  "Communication Coordinator": 13,
+  "Data Scientist": 8,
+  "Environmental Scientist": 10,
+  "External Auditor": 13,
+  "Financial Accountant": 13,
+  "General Biologist": 18,
+  "Human Resource Advisor": 7,
+  "ICT Security Specialist": 15,
+  "ICT Systems Analyst": 18,
+  "Librarian": 10,
+  "Management Consultant": 14,
+  "Marketing Practitioner": 18,
+  "Policy Analyst": 15,
+  "Software Developer": 17,
+  "Supply Chain Practitioner": 7,
+  "Systems Administrator": 13,
+  "Tax Professional": 11,
+  "Technical Writer": 12,
+  "Translator": 10,
+  "Water Quality Analyst": 11,
+  "Web Developer": 16
+ },
+ "shared_skills": 68
 }

@@ -21,6 +21,10 @@ AI coding assistant, on 2026-10-05, from a specification written by the research
   model (all-MiniLM-L6-v2) locally. This is an AI component *inside* SkillPath; it is separate from the AI
   assistant used to write the code.
 
+- Drafted the condensed skill taxonomy (`data/skill_taxonomy.csv`: 71 skills, definitions, "how to show it"
+  tasks, WEF cluster assignment, evidencing ESCO labels, CV keywords) and extracted WEF Future of Jobs 2025
+  figures (`data/wef_skills_2025.csv`). These are design choices for the researcher to review and approve.
+
 ## What the AI assistant did not do
 - It did not create, fill in or edit synthetic profiles, CVs, acceptable recommendations, test output logs
   or results. No skill, occupation or income figure was typed by hand: all come from the cited sources via the script.

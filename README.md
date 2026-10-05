@@ -18,8 +18,10 @@ Evaluation is by **controlled synthetic testing**: researcher-built synthetic pr
 | `skillpath/cv.py` | CV skill extraction with a locally hosted AI model (all-MiniLM-L6-v2 via fastembed). The model (~90 MB) downloads once into `models/` (git-ignored) on first use, then works offline. |
 | `api/` | FastAPI backend with SQLite event logging (Milestone 2). |
 | `app/` | Expo (React Native, TypeScript) mobile-first app (Milestone 3). |
-| `data/skill_map.csv` | Occupation-skill map built from DHET 2024 OIHD + ESCO + Stats SA by `scripts/build_skill_map.py` (24 occupations, 392 skills). Loaded if present. |
-| `data/skill_descriptions.json` | Official ESCO description of every skill (shown in the app). |
+| `data/skill_map.csv` | Occupation-skill map (24 DHET occupations × 71 condensed skills) built by `scripts/build_skill_map.py`. Loaded if present. |
+| `data/skill_taxonomy.csv` | The condensed skill list: category, definition, how to show it, WEF demand cluster, evidencing ESCO labels, CV keywords. Edit this to change skills, then rebuild. |
+| `data/esco_occupation_skills.json`, `data/wef_skills_2025.csv` | Cached ESCO occupation skills and WEF Future of Jobs 2025 figures used by the build. |
+| `data/skill_descriptions.json` | Per-skill category, definition, how to show it and demand evidence (shown in the app). |
 | `data/skill_map.example.csv` | Four FAKE rows for development, used when `skill_map.csv` is absent. |
 | `data/modules.json` | Placeholder module content shown in the app. |
 | `data/income_reference_statssa.csv` | Stats SA 2024 median earnings by occupation group, for the researcher to review (see `data/INCOME_SOURCES.md`). Not read by code. |
@@ -50,11 +52,12 @@ This runs the engine unit tests, the API tests, and an integration test that exe
 ## Rebuilding the skill map
 
 ```bash
-python scripts/build_skill_map.py
+python scripts/fetch_esco_occupations.py   # online, only when refreshing ESCO data
+python scripts/build_skill_map.py          # offline: rebuilds the map from data/skill_taxonomy.csv
+python scripts/make_skill_reference.py     # refreshes profiles/skill_reference.xlsx
 ```
 
-Needs internet. Re-running fetches the current ESCO release, so record the date (written to
-`data/skill_map_build.json`) and commit the outputs before any test run.
+Commit the outputs before any test run so `--app-version` identifies the exact data used.
 
 ## Data collection (the study)
 

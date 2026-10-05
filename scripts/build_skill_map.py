@@ -1,32 +1,39 @@
-"""Build data/skill_map.csv and data/skill_descriptions.json from published sources.
+"""Build SkillPath's skill map from published sources (condensed, measurable, high-demand skills).
 
-    python scripts/build_skill_map.py            # needs internet (ESCO public API)
+    python scripts/fetch_esco_occupations.py   # 1. online: cache ESCO skills of the 24 occupations
+    python scripts/build_skill_map.py          # 2. offline: build data/skill_map.csv and companions
 
 SOURCES
-  Occupations  DHET (2024) National List of Occupations in High Demand: 2024.
-               Government Gazette No. 50510, Notice 2414 of 2024, 16 April 2024 (Table 2).
-  Skills       ESCO - European Skills, Competences, Qualifications and Occupations
-               (European Commission), public API https://ec.europa.eu/esco/api :
-               the occupation's "essential skills" (hasEssentialSkill) and each skill's description.
-  Income       Statistics South Africa (2024) Labour Market Dynamics in South Africa, 2024.
-               Report 02-11-02 (2024), section 4.3, p. 64: median monthly earnings of employees, 2024,
-               by occupation group. Matched mechanically by the ISCO major group of the ESCO occupation.
+  Occupations  DHET (2024) National List of Occupations in High Demand: 2024. Government Gazette
+               No. 50510, Notice 2414 of 2024, 16 April 2024 (Table 2).
+  Skills       data/skill_taxonomy.csv: a condensed list of concrete, measurable skills grouped in
+               categories. Each skill lists the ESCO skill labels (European Commission ESCO API) that
+               evidence it. An occupation REQUIRES a SkillPath skill when any of those ESCO labels is an
+               essential or optional skill of the occupation in ESCO (data/esco_occupation_skills.json).
+  Demand       (a) needed by DHET high-demand occupations (count in the evidence file), and
+               (b) the skill's World Economic Forum cluster: Future of Jobs Report 2025, Figure 3.4
+               "Skills on the rise, 2025-2030" (global rank, p. 37) and the South Africa economy
+               profile (p. 196), in data/wef_skills_2025.csv.
+  Income       Statistics South Africa (2024) Labour Market Dynamics in South Africa, 2024,
+               Report 02-11-02, p. 64: median monthly earnings by occupation group, matched by the
+               ISCO major group of the ESCO occupation.
 
-SELECTION RULE (documented in DECISIONS.md)
-  From the 2024 OIHD list: OFO major groups 2-3 (professionals, technicians) with a minimum
-  qualification at NQF 6-7 (diploma / bachelor's), six per discipline of the profile template.
-  Each is matched to the ESCO occupation whose 4-digit ISCO unit group equals the OFO unit group;
-  where no ESCO occupation shares the unit group, the closest ESCO occupation by title is used and
-  flagged with isco_unit_match = N.
+OCCUPATION SELECTION RULE (DECISIONS.md #32)
+  OIHD 2024 occupations in OFO major groups 2-3 with minimum qualification NQF 6-7, six per
+  discipline of the profile template, matched to the ESCO occupation sharing the 4-digit ISCO unit
+  group (else flagged isco_unit_match = N).
 
-The output is deterministic for a given ESCO release (rows and skills sorted). The retrieval date is
-written to data/skill_map_build.json.
+OUTPUTS (deterministic for the same inputs)
+  data/skill_map.csv                 occupation, essential_skills, income_estimate, source, + audit columns
+  data/skill_descriptions.json       per skill: category, definition, how_to_show, WEF evidence, ESCO aliases,
+                                     CV keywords (common tool names, curated for CV matching only)
+  data/skill_occupation_evidence.csv which ESCO label links each skill to each occupation (E/O)
+  data/skill_map_build.json          build metadata and coverage
 """
 
 from __future__ import annotations
 
 import csv
-import datetime as dt
 import json
 import os
 import sys
@@ -67,12 +74,9 @@ SELECTION = [
 ]
 
 # Stats SA (2024), Labour Market Dynamics in South Africa 2024, p. 64 (both sexes, 2024).
-# ISCO major group -> (group label, median). Only groups whose both-sexes median is given as text.
-INCOME_BY_ISCO_MAJOR = {
-    "1": ("Managers", "R25 000"),
-    "2": ("Professionals", "R25 000"),
-    "3": ("Technicians", "R20 000"),
-}
+INCOME_BY_ISCO_MAJOR = {"1": ("Managers", "R25 000"), "2": ("Professionals", "R25 000"), "3": ("Technicians", "R20 000")}
+
+WEF_SOURCE = "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196"
 
 
 def get(path: str, **params) -> dict:
@@ -96,61 +100,95 @@ def find_occupation(label: str) -> dict:
     return get("resource/occupation", uri=exact[0]["uri"])
 
 
-def clean(label: str) -> str:
-    # ';' separates skills in skill_map.csv, so it must not appear inside a skill name
-    return " ".join(label.replace(";", ",").split())
+def split(s: str) -> list[str]:
+    return [x.strip() for x in s.split(";") if x.strip()]
 
 
 def main():
-    rows, skill_uris = [], {}
-    for disc, ofo, ofo_title, min_qual, esco_label in SELECTION:
-        occ = find_occupation(esco_label)
-        isco = str(occ.get("code", ""))
-        skills = {}
-        for s in occ["_links"].get("hasEssentialSkill", []):
-            skills[clean(s["title"])] = s["uri"]
-        skill_uris.update(skills)
+    cache = json.load(open(os.path.join(ROOT, "data", "esco_occupation_skills.json"), encoding="utf-8"))
+    occs = cache["occupations"]
+    taxonomy = list(csv.DictReader(open(os.path.join(ROOT, "data", "skill_taxonomy.csv"), encoding="utf-8")))
+    wef = {r["wef_skill"]: r for r in csv.DictReader(open(os.path.join(ROOT, "data", "wef_skills_2025.csv"), encoding="utf-8"))}
+
+    all_labels = {l for o in occs.values() for l in o["essential"] + o["optional"]}
+    problems = []
+    for t in taxonomy:
+        if ";" in t["skill"]:
+            problems.append(f"skill name contains ';': {t['skill']}")
+        if t["wef_skill"] not in wef:
+            problems.append(f"{t['skill']}: unknown WEF skill '{t['wef_skill']}'")
+        for lab in split(t["esco_labels"]):
+            if lab not in all_labels:
+                problems.append(f"{t['skill']}: ESCO label not used by any selected occupation: '{lab}'")
+    if problems:
+        print("\n".join(problems))
+        sys.exit("Fix data/skill_taxonomy.csv")
+
+    evidence, occ_skills = [], {name: set() for name in occs}
+    for t in taxonomy:
+        labels = set(split(t["esco_labels"]))
+        for name, o in occs.items():
+            ess = sorted(labels & set(o["essential"]))
+            opt = sorted(labels & set(o["optional"]))
+            if ess or opt:
+                occ_skills[name].add(t["skill"])
+                evidence.append({"skill": t["skill"], "occupation": name,
+                                 "esco_essential_labels": "; ".join(ess), "esco_optional_labels": "; ".join(opt)})
+
+    rows = []
+    for name, o in sorted(occs.items(), key=lambda kv: kv[0].lower()):
+        isco = o["isco_code"]
         group, median = INCOME_BY_ISCO_MAJOR.get(isco[:1], ("", ""))
         income = f"{median} per month (Stats SA 2024 median for {group}, all employees)" if median else ""
         rows.append({
-            "occupation": ofo_title,
-            "essential_skills": "; ".join(sorted(skills, key=str.lower)),
+            "occupation": name,
+            "essential_skills": "; ".join(sorted(occ_skills[name], key=str.lower)),
             "income_estimate": income,
-            "source": (f"Occupation: DHET 2024 National List of Occupations in High Demand (OFO 2021-{ofo}). "
-                       f"Skills: ESCO essential skills of '{occ['title']}' (ISCO {isco}). "
+            "source": (f"Occupation: DHET 2024 National List of Occupations in High Demand (OFO {o['ofo_code']}). "
+                       f"Skills: SkillPath skills evidenced by ESCO essential/optional skills of '{o['esco_occupation']}' "
+                       f"(ISCO {isco}); demand: WEF Future of Jobs 2025. "
                        + ("Income: Stats SA, Labour Market Dynamics in South Africa 2024, p. 64." if income else "")).strip(),
-            "discipline": disc,
-            "ofo_code": f"2021-{ofo}",
-            "minimum_qualification": min_qual,
-            "esco_occupation": occ["title"],
-            "esco_uri": occ["uri"],
-            "isco_code": isco,
-            "isco_unit_match": "Y" if isco[:4] == ofo[:4] else "N",
-            "essential_skill_count": len(skills),
+            "discipline": o["discipline"], "ofo_code": o["ofo_code"], "minimum_qualification": o["minimum_qualification"],
+            "esco_occupation": o["esco_occupation"], "esco_uri": o["esco_uri"], "isco_code": isco,
+            "isco_unit_match": "Y" if isco[:4] == o["ofo_code"][5:9] else "N",
+            "skill_count": len(occ_skills[name]),
         })
-        print(f"{ofo_title:28} -> {occ['title']:28} ISCO {isco:12} {len(skills):3} skills")
-        time.sleep(0.2)
 
-    rows.sort(key=lambda r: r["occupation"].lower())
     with open(os.path.join(ROOT, "data", "skill_map.csv"), "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0]))
         w.writeheader()
         w.writerows(rows)
+    with open(os.path.join(ROOT, "data", "skill_occupation_evidence.csv"), "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=list(evidence[0]))
+        w.writeheader()
+        w.writerows(sorted(evidence, key=lambda e: (e["skill"].lower(), e["occupation"].lower())))
 
-    # Skill descriptions (used by the app to explain each recommended skill)
+    needed_by = {t["skill"]: sorted(n for n, s in occ_skills.items() if t["skill"] in s) for t in taxonomy}
     descriptions = {}
-    for i, (label, uri) in enumerate(sorted(skill_uris.items(), key=lambda kv: kv[0].lower())):
-        s = get("resource/skill", uri=uri)
-        desc = s.get("description", {}).get("en", {}).get("literal", "") or ""
-        descriptions[label.lower()] = {"label": label, "description": " ".join(desc.split()), "esco_uri": uri}
-        if i % 50 == 0:
-            print(f"  skill descriptions: {i}/{len(skill_uris)}")
-        time.sleep(0.1)
+    for t in taxonomy:
+        wr = wef[t["wef_skill"]]
+        za = []
+        if wr["za_core_skill_2025_pct"]:
+            za.append(f"{wr['za_core_skill_2025_pct']}% of South African employers rate it a core skill in 2025")
+        if wr["za_increasing_use_2030_pct"]:
+            za.append(f"{wr['za_increasing_use_2030_pct']}% expect its use to increase by 2030")
+        demand = (f"WEF skill '{t['wef_skill']}': ranked {wr['global_rank_skills_on_the_rise']} of 26 skills on the "
+                  f"rise globally, 2025-2030" + (f"; {'; '.join(za)}" if za else "") + ".")
+        descriptions[" ".join(t["skill"].lower().split())] = {
+            "label": t["skill"], "category": t["category"], "description": t["definition"],
+            "how_to_show": t["how_to_show"], "wef_skill": t["wef_skill"],
+            "wef_global_rank": int(wr["global_rank_skills_on_the_rise"]), "demand_evidence": demand,
+            "demand_source": WEF_SOURCE, "needed_by_occupations": needed_by[t["skill"]],
+            "esco_aliases": split(t["esco_labels"]), "keywords": split(t.get("keywords", "")), "esco_uri": "",
+        }
     with open(os.path.join(ROOT, "data", "skill_descriptions.json"), "w", encoding="utf-8") as f:
         json.dump(descriptions, f, ensure_ascii=False, indent=1, sort_keys=True)
 
-    meta = {"retrieved": dt.date.today().isoformat(), "esco_api": API, "esco_version": "current release served by the API on the retrieval date",
-            "occupations": len(rows), "distinct_skills": len(skill_uris)}
+    unused = [s for s, v in needed_by.items() if not v]
+    meta = {"esco_retrieved": cache["retrieved"], "occupations": len(rows), "skills": len(taxonomy),
+            "skills_used_by_no_occupation": unused,
+            "skills_per_occupation": {r["occupation"]: r["skill_count"] for r in rows},
+            "shared_skills": sum(1 for v in needed_by.values() if len(v) > 1)}
     with open(os.path.join(ROOT, "data", "skill_map_build.json"), "w", encoding="utf-8") as f:
         json.dump(meta, f, indent=1)
     print(json.dumps(meta, indent=1))

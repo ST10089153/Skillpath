@@ -12,6 +12,9 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
   const [why, setWhy] = useState(false);
   const [showAlts, setShowAlts] = useState(false);
   const [gaps, setGaps] = useState(false);
+  const [labels, setLabels] = useState<Record<string, string>>({});
+  const label = (x: string) => labels[x] ?? x;
+  useEffect(() => { api.vocabulary().then((v) => setLabels(v.labels ?? {})).catch(() => undefined); }, []);
   const [note, setNote] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -57,12 +60,15 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
       <Card style={{ borderColor: colors.primary, borderWidth: 2 }}>
         <Text style={[styles.small, { textTransform: 'uppercase', letterSpacing: 1 }]}>Recommended for you</Text>
         <Text style={{ fontSize: 32, fontWeight: '800', color: colors.text, marginVertical: 8 }} accessibilityRole="header">
-          {rec.recommended_skill}
+          {info?.label ?? rec.recommended_skill}
         </Text>
+        {info?.category ? <Text style={[styles.small, { marginBottom: 6 }]}>{info.category}</Text> : null}
         {info?.description ? <Body>{info.description}</Body> : null}
         {info && info.occupations.length > 0 && (
           <Body muted>Asked for by: {info.occupations.join(', ')}</Body>
         )}
+        {info?.how_to_show ? <Body><Text style={{ fontWeight: '700' }}>How you will show it: </Text>{info.how_to_show}</Body> : null}
+        {info?.demand_evidence ? <Body muted>Why it is in demand: {info.demand_evidence}</Body> : null}
         <Body muted>Six short steps, 5 to 10 minutes each, using free resources.</Body>
         {rec.income_displayed !== '' && (
           <View style={{ backgroundColor: colors.accent, borderRadius: 8, padding: 10, marginTop: 4 }}>
@@ -106,7 +112,7 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
               {o.occupation}: you have {o.skills_held} of {o.skills_total}
             </Body>
             <Body muted style={{ marginBottom: 2 }}>Still to learn ({o.skills_missing.length}):</Body>
-            <Body>{o.skills_missing.map((m) => (m === rec.recommended_skill ? `★ ${m} (start here)` : m)).join(' · ')}</Body>
+            <Body>{o.skills_missing.map((m) => (m === rec.recommended_skill ? `★ ${label(m)} (start here)` : label(m))).join(' · ')}</Body>
           </View>
         ))}
       </Pressable>
@@ -120,7 +126,7 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
           <Text style={styles.h2}>Other good next steps</Text>
           {rec.alternatives.length === 0 && <Body muted>No alternatives for this profile.</Body>}
           {rec.alternatives.map((a) => (
-            <Button key={a} label={`Choose ${a}`} variant="secondary" disabled={busy}
+            <Button key={a} label={`Choose ${label(a)}`} variant="secondary" disabled={busy}
                     onPress={() => run(() => api.swap(userId, a), onAdopted)} />
           ))}
         </Card>

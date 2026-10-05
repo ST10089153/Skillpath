@@ -1,12 +1,42 @@
 {
-  "_note": "Six-step learning plan for any recommended skill. SkillPath recommends WHAT to learn and WHERE (free, external resources); it does not host lesson content. Tokens: {skill} = skill name, {query} = URL-encoded skill name, {esco_url} = the skill's official ESCO page. Add skill-specific plans under 'skills' keyed by skill slug (six entries each).",
+  "_note": "Six-step learning plan for any recommended skill. SkillPath recommends WHAT to learn and WHERE (free, external resources); it does not host lesson content. Tokens: {skill} = skill name, {query} = URL-encoded skill name, {how_to_show} = the measurable task that shows the skill, {esco_url} = ESCO page if available. Add skill-specific plans under 'skills' keyed by skill slug (six entries each).",
   "default": [
-    {"title": "What is {skill}?", "description": "Read the official definition of this skill (shown below) and note one way it is used at work. Takes about 5 minutes.", "resource_label": "Official definition (ESCO)", "resource_url": "{esco_url}"},
-    {"title": "Watch a short introduction", "description": "Find a short introductory video on {skill} (under 10 minutes) and write down two things you learnt. Video uses mobile data, so Wi-Fi is best.", "resource_label": "Introductory videos (YouTube)", "resource_url": "https://www.youtube.com/results?search_query={query}%20introduction"},
-    {"title": "Start a free course", "description": "Choose a free or free-to-audit course on {skill} and complete its first short lesson.", "resource_label": "Free courses (Coursera)", "resource_url": "https://www.coursera.org/search?query={query}"},
-    {"title": "Practise with a tutorial", "description": "Follow a beginner tutorial on {skill} and do each step yourself rather than only watching.", "resource_label": "Beginner tutorials (YouTube)", "resource_url": "https://www.youtube.com/results?search_query={query}%20tutorial%20for%20beginners"},
-    {"title": "Go a step deeper", "description": "Pick one more lesson on {skill} from a different provider to see it explained another way.", "resource_label": "Free courses (edX)", "resource_url": "https://www.edx.org/search?q={query}"},
-    {"title": "Put it to work", "description": "Add {skill} to your CV with one line on how you practised it, then look for opportunities that ask for it. SAYouth.mobi is zero-rated (no data cost) on South African networks.", "resource_label": "Opportunities (SAYouth.mobi)", "resource_url": "https://sayouth.mobi"}
+    {
+      "title": "What is {skill}?",
+      "description": "Read what this skill means and what you will be able to show at the end (below). Takes about 5 minutes.",
+      "resource_label": "",
+      "resource_url": ""
+    },
+    {
+      "title": "Watch a short introduction",
+      "description": "Find a short introductory video on {skill} (under 10 minutes) and write down two things you learnt. Video uses mobile data, so Wi-Fi is best.",
+      "resource_label": "Introductory videos (YouTube)",
+      "resource_url": "https://www.youtube.com/results?search_query={query}%20introduction"
+    },
+    {
+      "title": "Start a free course",
+      "description": "Choose a free or free-to-audit course on {skill} and complete its first short lesson.",
+      "resource_label": "Free courses (Coursera)",
+      "resource_url": "https://www.coursera.org/search?query={query}"
+    },
+    {
+      "title": "Practise with a tutorial",
+      "description": "Follow a beginner tutorial on {skill} and do each step yourself rather than only watching.",
+      "resource_label": "Beginner tutorials (YouTube)",
+      "resource_url": "https://www.youtube.com/results?search_query={query}%20tutorial%20for%20beginners"
+    },
+    {
+      "title": "Go a step deeper",
+      "description": "Pick one more lesson on {skill} from a different provider to see it explained another way.",
+      "resource_label": "Free courses (edX)",
+      "resource_url": "https://www.edx.org/search?q={query}"
+    },
+    {
+      "title": "Show what you can do",
+      "description": "Prove the skill: {how_to_show} Then add it to your CV with one line describing what you did, and look for opportunities that ask for it. SAYouth.mobi is zero-rated (no data cost) on South African networks.",
+      "resource_label": "Opportunities (SAYouth.mobi)",
+      "resource_url": "https://sayouth.mobi"
+    }
   ],
   "skills": {}
 }

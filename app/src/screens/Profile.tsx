@@ -26,7 +26,9 @@ function Chip({ label, on, onPress }: { label: string; on: boolean; onPress: () 
 }
 
 export default function Profile({ userId, onDone }: { userId: string; onDone: () => void }) {
-  const [groups, setGroups] = useState<{ occupation: string; skills: string[] }[] | null>(null);
+  const [groups, setGroups] = useState<{ category: string; skills: string[] }[] | null>(null);
+  const [labels, setLabels] = useState<Record<string, string>>({});
+  const [open, setOpen] = useState<string | null>(null);
   const [all, setAll] = useState<string[]>([]);
   const [selected, setSelected] = useState<string[]>([]);
   const [level, setLevel] = useState<Competency | null>(null);
@@ -40,15 +42,16 @@ export default function Profile({ userId, onDone }: { userId: string; onDone: ()
   useEffect(() => {
     api.event(userId, 'assessment_started');
     api.vocabulary()
-      .then((v) => { setGroups(v.occupations); setAll(v.skills); })
+      .then((v) => { setGroups(v.categories); setAll(v.skills); setLabels(v.labels ?? {}); })
       .catch((e) => setError(e.message));
   }, [userId]);
 
   const matches = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return q ? all.filter((s) => s.includes(q)) : [];
+    return q ? all.filter((s) => s.includes(q) || (labels[s] ?? '').toLowerCase().includes(q)) : [];
   }, [query, all]);
 
+  const label = (s: string) => labels[s] ?? s;
   const toggle = (s: string) =>
     setSelected((cur) => (cur.includes(s) ? cur.filter((x) => x !== s) : [...cur, s]));
 
@@ -106,7 +109,7 @@ export default function Profile({ userId, onDone }: { userId: string; onDone: ()
               <Pressable key={d.skill} accessibilityRole="checkbox" accessibilityState={{ checked: selected.includes(d.skill) }}
                          onPress={() => toggle(d.skill)} style={{ paddingVertical: 8, minHeight: 48 }}>
                 <Text style={{ fontSize: 17, color: colors.text }}>
-                  {selected.includes(d.skill) ? '☑' : '☐'} {d.skill}{' '}
+                  {selected.includes(d.skill) ? '☑' : '☐'} {label(d.skill)}{' '}
                   <Text style={styles.small}>({d.method === 'exact' ? 'named in CV' : `${Math.round(d.score * 100)}% match`})</Text>
                 </Text>
                 <Text style={styles.small}>From your CV: "{d.evidence}"</Text>
@@ -116,7 +119,7 @@ export default function Profile({ userId, onDone }: { userId: string; onDone: ()
         )}
       </Card>
 
-      <Body>Add or remove skills below. Search, or browse by occupation.</Body>
+      <Body>Add or remove skills below. Search, or open a category.</Body>
       <TextInput
         style={styles.input}
         placeholder="Search skills"
@@ -132,7 +135,7 @@ export default function Profile({ userId, onDone }: { userId: string; onDone: ()
         <Card style={{ backgroundColor: colors.accent }}>
           <Text style={styles.h2}>Selected ({selected.length})</Text>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-            {selected.map((s) => <Chip key={s} label={s} on onPress={() => toggle(s)} />)}
+            {selected.map((s) => <Chip key={s} label={label(s)} on onPress={() => toggle(s)} />)}
           </View>
         </Card>
       )}
@@ -143,18 +146,34 @@ export default function Profile({ userId, onDone }: { userId: string; onDone: ()
           <Text style={styles.h2}>Results</Text>
           {matches.length === 0 && <Body muted>No skills match "{query}".</Body>}
           <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-            {matches.map((s) => <Chip key={s} label={s} on={selected.includes(s)} onPress={() => toggle(s)} />)}
+            {matches.map((s) => <Chip key={s} label={label(s)} on={selected.includes(s)} onPress={() => toggle(s)} />)}
           </View>
         </Card>
       ) : (
-        groups?.map((g) => (
-          <Card key={g.occupation}>
-            <Text style={styles.h2}>{g.occupation}</Text>
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-              {g.skills.map((s) => <Chip key={s} label={s} on={selected.includes(s)} onPress={() => toggle(s)} />)}
+        groups?.map((g) => {
+          const isOpen = open === g.category;
+          const count = g.skills.filter((x) => selected.includes(x)).length;
+          return (
+            <View key={g.category} style={[styles.card, { padding: 0, overflow: 'hidden' }]}>
+              <Pressable
+                accessibilityRole="button"
+                accessibilityState={{ expanded: isOpen }}
+                accessibilityLabel={`${g.category}, ${g.skills.length} skills${count ? `, ${count} selected` : ''}`}
+                onPress={() => setOpen(isOpen ? null : g.category)}
+                style={{ flexDirection: 'row', alignItems: 'center', minHeight: 56, paddingHorizontal: 16 }}
+              >
+                <Text style={[styles.h2, { flex: 1, marginBottom: 0 }]}>{g.category}</Text>
+                {count > 0 && <Text style={[styles.small, { color: colors.primary, marginRight: 8 }]}>{count} selected</Text>}
+                <Text style={{ fontSize: 18, color: colors.muted }}>{isOpen ? '▴' : '▾'}</Text>
+              </Pressable>
+              {isOpen && (
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 16, paddingBottom: 8 }}>
+                  {g.skills.map((x) => <Chip key={x} label={label(x)} on={selected.includes(x)} onPress={() => toggle(x)} />)}
+                </View>
+              )}
             </View>
-          </Card>
-        ))
+          );
+        })
       )}
 
       <Title>How confident are you?</Title>

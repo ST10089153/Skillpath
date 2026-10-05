@@ -48,12 +48,12 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
 
   return (
     <Screen>
-      <Title>Pathway: {prog.skill}</Title>
+      <Title>Pathway: {info?.label ?? prog.skill}</Title>
       <Body muted>{prog.modules_completed} of {prog.total_modules} modules done</Body>
       {flash !== '' && <View style={styles.banner}><Body style={{ marginBottom: 0 }}>{flash}</Body></View>}
       <ErrorText error={error} />
       {prog.modules.map((m, i) => {
-        const c = moduleContent(lib, prog.skill, i, info?.esco_url ?? '');
+        const c = moduleContent(lib, info?.label ?? prog.skill, i, info?.esco_url ?? '', info?.how_to_show ?? '');
         const current = prog.current_module?.module_id === m.module_id;
         const difficulty = current && prog.current_module ? prog.current_module.difficulty : m.difficulty;
         const minutes = current && prog.current_module ? prog.current_module.minutes : m.minutes;
@@ -65,7 +65,7 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
             {(current || m.done) && <Body style={{ marginTop: 8 }}>{c.description}</Body>}
             {i === 0 && (current || m.done) && info?.description ? (
               <View style={{ backgroundColor: colors.accent, borderRadius: 8, padding: 12, marginBottom: 8 }}>
-                <Text style={styles.small}>Official definition (ESCO)</Text>
+                <Text style={styles.small}>What it means</Text>
                 <Body style={{ marginBottom: 0 }}>{info.description}</Body>
               </View>
             ) : null}
