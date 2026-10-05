@@ -1,0 +1,6 @@
+occupation,essential_skills,income_estimate,source
+occ_beta,skill_a; skill_b; skill_d,R2 per month (fake),Fake source B (test fixture)
+occ_alpha,skill_a; skill_b; skill_c,R1 per month (fake),Fake source A (test fixture)
+occ_gamma,skill_c; skill_e; skill_f,,Fake source G (test fixture)
+occ_delta,skill_x; skill_y,R4 per month (fake),Fake source D (test fixture)
+occ_epsilon,multi word skill,,Fake source E (test fixture)

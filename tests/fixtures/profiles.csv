@@ -1,0 +1,5 @@
+profile_id,competency_level,discipline,employment_goal,qualification,current_skills,target_occupation,designed_to_test,acceptable_recommendations,is_edge_case,cv_file
+FX01,limited,fake_discipline,in-field,fake_qual,skill_a; skill_b,occ_alpha,fixture: basic recommendation,skill_c,N,none
+FX02,moderate,fake_discipline,pivot,fake_qual,skill_e; skill_f,occ_gamma,fixture: no income available,skill_c,N,none
+FX03,edge,mixed,n/a,,,,fixture: empty profile,,Y,none
+FX04,edge,mixed,n/a,fake_qual,not_a_skill,,fixture: unrecognised skills only,,Y,none
