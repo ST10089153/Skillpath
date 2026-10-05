@@ -1,0 +1,1 @@
+run_id,timestamp,app_version,logic_version,profile_id,scenario,step,input_action,recommended_skill,alternatives,explanation_present,explanation_text,income_displayed,pathway_modules,module_difficulties,roadmap_revised,milestone_awarded,notification_triggered,error,notes
