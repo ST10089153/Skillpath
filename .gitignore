@@ -10,3 +10,4 @@ node_modules/
 app/.expo/
 app/dist/
 models/
+runs/*.zip

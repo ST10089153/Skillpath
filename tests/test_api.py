@@ -222,3 +222,16 @@ def test_real_skill_descriptions_cover_vocabulary():
         pytest.skip("real skill map not built")
     desc = json.load(open(desc_path, encoding="utf-8"))
     assert SkillMap.from_csv(sm_path).vocabulary <= set(desc)
+
+
+def test_admin_export_all_zip(client):
+    import zipfile
+    uid = new_user(client)
+    client.get(f"/users/{uid}/recommendation")
+    assert client.get("/admin/export/all").status_code == 401
+    r = client.get("/admin/export/all", headers={"X-Admin-Token": TOKEN})
+    assert r.status_code == 200 and r.headers["content-type"] == "application/zip"
+    z = zipfile.ZipFile(io.BytesIO(r.content))
+    assert {"users.csv", "pathways.csv", "events.csv", "README.txt"} <= set(z.namelist())
+    users = z.read("users.csv").decode()
+    assert uid in users and "email" not in users.splitlines()[0]

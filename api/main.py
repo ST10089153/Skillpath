@@ -20,7 +20,7 @@ import threading
 
 from fastapi import Depends, FastAPI, File, Header, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import PlainTextResponse, Response
 from pydantic import BaseModel
 
 from skillpath import assignment, engine
@@ -372,12 +372,36 @@ def create_app(db_path: Optional[str] = None, skill_map_path: Optional[str] = No
                   for t in ("events", "pathways", "users")}
         return {"deleted": True, "rows": counts}
 
-    @app.get("/admin/export", response_class=PlainTextResponse)
-    def export(x_admin_token: str = Header(""), conn=Depends(get_conn)):
+    def require_admin(token: str):
         if not admin_token:
             raise HTTPException(503, "Set SKILLPATH_ADMIN_TOKEN in .env to enable the export")
-        if not secrets.compare_digest(x_admin_token, admin_token):
+        if not secrets.compare_digest(token, admin_token):
             raise HTTPException(401, "Invalid admin token")
+
+    @app.get("/admin/export/all")
+    def export_all(x_admin_token: str = Header(""), conn=Depends(get_conn)):
+        """ZIP of every table (users, pathways, events) as CSV, plus a README. Pseudonymous IDs only."""
+        require_admin(x_admin_token)
+        import zipfile
+        buf = io.BytesIO()
+        stamp = clock().strftime("%Y%m%d-%H%M%S")
+        with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
+            for table in ("users", "pathways", "events"):
+                cur = conn.execute(f"SELECT * FROM {table} ORDER BY rowid")
+                out = io.StringIO()
+                w = csv.writer(out)
+                w.writerow([c[0] for c in cur.description])
+                w.writerows(list(r) for r in cur)
+                z.writestr(f"{table}.csv", out.getvalue())
+            z.writestr("README.txt", f"SkillPath app data export {stamp}. Pseudonymous IDs only; no names, emails or "
+                                     f"phone numbers are collected. Tables: users, pathways, events. Event types: "
+                                     f"{', '.join(sorted(db.EVENT_TYPES))}." + os.linesep)
+        return Response(buf.getvalue(), media_type="application/zip",
+                        headers={"Content-Disposition": f"attachment; filename=skillpath_export_{stamp}.zip"})
+
+    @app.get("/admin/export", response_class=PlainTextResponse)
+    def export(x_admin_token: str = Header(""), conn=Depends(get_conn)):
+        require_admin(x_admin_token)
         buf = io.StringIO()
         w = csv.writer(buf)
         w.writerow(db.EXPORT_COLUMNS)

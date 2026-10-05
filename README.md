@@ -59,7 +59,32 @@ python scripts/make_skill_reference.py     # refreshes profiles/skill_reference.
 
 Commit the outputs before any test run so `--app-version` identifies the exact data used.
 
-## Data collection (the study)
+## Evaluation run for Part 3 (recommended)
+
+One command runs the whole evaluation and stores a replication package:
+
+```bash
+python run_evaluation.py profiles.csv --label final
+```
+
+It runs `prepare_profiles.py`, `run_synthetic_tests.py --engine skillpath` and `analyse_outputs.py` (all
+unmodified) on copies of your inputs and writes `runs/EVAL<date-time>-final/` plus a `.zip` for export:
+
+| File | Use in Part 3 |
+|---|---|
+| `PART3_RESULTS.md` | Section 5 tables: DSR criteria, A/B comparison, U2 by competency, discipline and goal, what SkillPath recommended |
+| `results/results.xlsx`, `results/fig_criteria.png`, `results/fig_match.png` | Tables and figures from `analyse_outputs.py` |
+| `test_output_log.csv` | Raw system outputs (annexure / supervisor) |
+| `profiles_ready.csv`, `inputs/` | Exact inputs, including acceptable sets fixed before testing |
+| `run_outputs_summary.csv` | Per-profile recommendation, category and WEF demand cluster |
+| `manifest.json` | Date, git commit, package versions, engine constants, commands, exit codes, SHA-256 of every file |
+| `code/`, `README_RUN.txt` | Code snapshot and the commands to reproduce the run |
+
+Commit your changes first: the run refuses to start with uncommitted code or data, so the build is traceable
+(`--allow-dirty` exists for trial runs only). If `prepare_profiles.py` reports problems the run stops; fix the
+sheet and rerun.
+
+## Data collection (the three commands individually)
 
 Put your skill map at `data/skill_map.csv` and your specification sheet at `profiles.csv`, then run, from the repository root:
 
@@ -103,6 +128,7 @@ Interactive docs: http://localhost:8000/docs. Data is stored in `skillpath.db` (
 | `POST /users/{id}/events` | App-reported events: `session_start`, `session_end`, `assessment_started`, `notification_opened`. |
 | `DELETE /users/{id}` | Deletes every row for that user (POPIA). |
 | `GET /admin/export` | Events CSV (`user_id, arm, event_type, timestamp, item_id`); requires header `X-Admin-Token`. |
+| `GET /admin/export/all` | ZIP of every table (users, pathways, events) as CSV; requires `X-Admin-Token`. |
 
 ```bash
 curl -H "X-Admin-Token: <your token>" http://localhost:8000/admin/export -o events.csv
