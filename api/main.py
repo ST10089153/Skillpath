@@ -78,6 +78,7 @@ def create_app(db_path: Optional[str] = None, skill_map_path: Optional[str] = No
     skill_map_path = skill_map_path or env.get("SKILLPATH_SKILL_MAP") or engine.default_skill_map_path(ROOT)
     admin_token = admin_token if admin_token is not None else env.get("SKILLPATH_ADMIN_TOKEN", "")
     skill_map = engine.SkillMap.from_csv(skill_map_path)
+    modules_path = os.path.join(ROOT, "data", "modules.json")
     eng = engine.Engine(skill_map)
 
     app = FastAPI(title="SkillPath API", version="0.2.0",
@@ -163,6 +164,12 @@ def create_app(db_path: Optional[str] = None, skill_map_path: Optional[str] = No
         user = get_user(conn, user_id)
         log(conn, user, "onboarding_complete")
         return {"user_id": user_id, "arm": chosen, "consent": True, "consent_at": ts}
+
+    @app.get("/modules")
+    def module_content():
+        """Placeholder module content (title, description, optional resource link) from data/modules.json."""
+        with open(modules_path, encoding="utf-8") as f:
+            return json.load(f)
 
     @app.get("/vocabulary")
     def vocabulary():

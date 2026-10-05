@@ -197,3 +197,8 @@ def test_admin_export_requires_token(client):
 def test_export_disabled_without_token(tmp_path):
     c = TestClient(create_app(db_path=str(tmp_path / "x.db"), skill_map_path=SKILL_MAP_CSV, admin_token=""))
     assert c.get("/admin/export", headers={"X-Admin-Token": ""}).status_code == 503
+
+
+def test_module_content_has_six_placeholders(client):
+    m = client.get("/modules").json()
+    assert len(m["default"]) == 6 and all(x["title"] and x["description"] for x in m["default"])

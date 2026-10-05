@@ -1,0 +1,12 @@
+{
+  "_note": "PLACEHOLDER learning content for the prototype. Not research data. '{skill}' is replaced with the skill name. Add skill-specific content under 'skills' keyed by skill slug (e.g. 'data_analysis'); each list must have 6 entries.",
+  "default": [
+    {"title": "Get oriented: what is {skill}?", "description": "A short overview of what {skill} means at work and where it is used. You will see one simple example of it in practice.", "resource_url": ""},
+    {"title": "Key terms in {skill}", "description": "Learn the handful of words people use when they talk about {skill}. Knowing them makes later steps easier to follow.", "resource_url": ""},
+    {"title": "A first small task", "description": "Try a guided, low-stakes task that uses {skill}. Follow the steps and compare your result with the worked example.", "resource_url": ""},
+    {"title": "Practise with a real-world case", "description": "Apply {skill} to a short workplace scenario. The case is a little more open, so you make a few decisions yourself.", "resource_url": ""},
+    {"title": "Spot and fix common mistakes", "description": "Review typical errors people make with {skill} and practise correcting them. This builds accuracy and confidence.", "resource_url": ""},
+    {"title": "Show what you can do", "description": "Complete a short task you could describe in a CV or interview. It brings together everything from this pathway.", "resource_url": ""}
+  ],
+  "skills": {}
+}
