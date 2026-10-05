@@ -114,3 +114,15 @@ EXPO_PUBLIC_API_URL=http://192.168.1.10:8000 npx expo start   # PowerShell: $env
 No names, emails or phone numbers are collected. Users are identified by a random pseudonymous ID. All data stays in
 a local SQLite file, there are no third-party analytics or trackers, and users can view and delete their data in
 Settings. Secrets (`.env`) and the database are git-ignored.
+
+## Quick start (Windows)
+
+From the repository folder in PowerShell (or the VS Code terminal):
+
+```powershell
+.\start.ps1          # browser: opens http://localhost:8081
+.\start.ps1 -Phone   # phone: scan the QR code with Expo Go
+```
+
+The API opens in its own window titled 'SkillPath API'. Ctrl+C stops the app; close that window to stop the API.
+
