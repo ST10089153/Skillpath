@@ -1,0 +1,116 @@
+# SkillPath
+
+Research prototype for an Honours Design Science Research study (REIT8419, The Independent Institute of
+Education). SkillPath reads a graduate's current skills, recommends the highest-leverage **next skill**
+through adjacency-first logic, and delivers a six-module micro-learning pathway with visible milestones.
+
+Evaluation is by **controlled synthetic testing**: researcher-built synthetic profiles are fed to the engine by
+`run_synthetic_tests.py`, and the logged outputs are analysed by `analyse_outputs.py`. No real users take part.
+
+> AI-generated suggestion based on published labour-market literature. Not professional career or financial advice.
+
+## Repository layout
+
+| Path | What it is |
+|---|---|
+| `skillpath/` | The engine (pure, deterministic rules). `config.py` holds every design constant. |
+| `skillpath_adapter.py` | `SkillPathEngine` class imported by the harness (`--engine skillpath`). |
+| `api/` | FastAPI backend with SQLite event logging (Milestone 2). |
+| `app/` | Expo (React Native, TypeScript) mobile-first app (Milestone 3). |
+| `data/skill_map.csv` | **Researcher-built** occupation-skill map (not created by code). Loaded if present. |
+| `data/skill_map.example.csv` | Four FAKE rows for development, used when `skill_map.csv` is absent. |
+| `data/modules.json` | Placeholder module content shown in the app. |
+| `data/income_reference_statssa.csv` | Stats SA 2024 median earnings by occupation group, for the researcher to review (see `data/INCOME_SOURCES.md`). Not read by code. |
+| `run_synthetic_tests.py`, `analyse_outputs.py`, `prepare_profiles.py` | Researcher-provided scripts. **Unmodified.** |
+| `templates/` | Researcher-provided CSV templates. |
+| `tests/` | pytest suite; `tests/fixtures/` holds tiny, obviously fake fixtures only. |
+| `DECISIONS.md`, `TRACEABILITY.md`, `AI_USE.md` | Design decision log, directive traceability, AI-use disclosure. |
+
+## Setup
+
+Requires Python 3.10+ (tested on 3.13) and, for the app, Node 18+ (tested on Node 24).
+
+```bash
+python -m venv .venv
+.venv/Scripts/activate        # Windows (Git Bash: source .venv/Scripts/activate); macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+## Run the tests
+
+```bash
+pytest
+```
+
+This runs the engine unit tests, the API tests, and an integration test that executes the real harness
+(`run_synthetic_tests.py ... --engine skillpath`) on the fake fixture and then `analyse_outputs.py` on its log.
+
+## Data collection (the study)
+
+Put your skill map at `data/skill_map.csv` and your specification sheet at `profiles.csv`, then run, from the repository root:
+
+```bash
+python prepare_profiles.py profiles.csv data/skill_map.csv --fill-acceptable
+python run_synthetic_tests.py profiles_ready.csv data/skill_map.csv --app-version $(git rev-parse --short HEAD) --engine skillpath
+python analyse_outputs.py profiles_ready.csv test_output_log.csv
+```
+
+- Commit all code changes first so `--app-version` identifies the exact engine build tested.
+- `prepare_profiles.py` exits with code 1 if it finds problems; it still writes `profiles_ready.csv` when
+  `--fill-acceptable` is used. Review its report before continuing.
+- Outputs: `test_output_log.csv` (raw log) and `results/` (`results.xlsx`, figures, `analysis_log.txt`).
+- `$(git rev-parse --short HEAD)` works in Git Bash, macOS/Linux shells and PowerShell.
+
+## API (Milestone 2)
+
+```bash
+cp .env.example .env          # then set SKILLPATH_ADMIN_TOKEN
+uvicorn api.main:app --reload --port 8000
+```
+
+Interactive docs: http://localhost:8000/docs. Data is stored in `skillpath.db` (SQLite, local, git-ignored).
+
+| Method and path | Purpose |
+|---|---|
+| `POST /users` | Body `{consent, age_confirmed}`. Creates a pseudonymous user (`U` + 6 hex) and assigns arm A/B (SHA-256 parity). Researcher override: `?arm=A` or `?arm=B`. |
+| `GET /vocabulary` | Skills grouped by occupation. |
+| `GET /modules` | Placeholder module content (`data/modules.json`). |
+| `GET /users/{id}` | View my data (profile, pathway, events). |
+| `POST /users/{id}/profile` | Body `{skills: [...], competency_level}`. |
+| `GET /users/{id}/recommendation` | Calls the engine with the user's arm. |
+| `POST /users/{id}/pathway/accept` | Accept the recommendation. |
+| `POST /users/{id}/pathway/swap` | Body `{skill}`; switch to an alternative (DD6). |
+| `POST /users/{id}/pathway/defer` | "Not now" (DD6). |
+| `POST /users/{id}/modules/{module_id}/result` | Body `{passed}`; calls the engine's `progress`. |
+| `GET /users/{id}/progress` | Milestones, current module, difficulty. |
+| `GET /users/{id}/nudge` | Nudge decision from days since last activity (at most one per day). |
+| `POST /users/{id}/events` | App-reported events: `session_start`, `session_end`, `assessment_started`, `notification_opened`. |
+| `DELETE /users/{id}` | Deletes every row for that user (POPIA). |
+| `GET /admin/export` | Events CSV (`user_id, arm, event_type, timestamp, item_id`); requires header `X-Admin-Token`. |
+
+```bash
+curl -H "X-Admin-Token: <your token>" http://localhost:8000/admin/export -o events.csv
+```
+
+## App (Milestone 3)
+
+```bash
+cd app
+npm install
+npx expo start --web          # browser
+npx expo start                # scan the QR code with Expo Go on a phone
+```
+
+The app calls the API at `http://localhost:8000` by default. On a phone, localhost is the phone itself, so start
+the API on all interfaces and point the app at your computer's LAN IP:
+
+```bash
+uvicorn api.main:app --host 0.0.0.0 --port 8000
+EXPO_PUBLIC_API_URL=http://192.168.1.10:8000 npx expo start   # PowerShell: $env:EXPO_PUBLIC_API_URL="http://192.168.1.10:8000"; npx expo start
+```
+
+## Privacy (POPIA by design)
+
+No names, emails or phone numbers are collected. Users are identified by a random pseudonymous ID. All data stays in
+a local SQLite file, there are no third-party analytics or trackers, and users can view and delete their data in
+Settings. Secrets (`.env`) and the database are git-ignored.
