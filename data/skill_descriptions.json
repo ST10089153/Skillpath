@@ -170,39 +170,6 @@
   "wef_global_rank": 19,
   "wef_skill": "Resource management and operations"
  },
- "business & report writing": {
-  "category": "Marketing & communication",
-  "demand_evidence": "WEF skill 'Reading, writing and mathematics': ranked 25 of 26 skills on the rise globally, 2025-2030.",
-  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
-  "description": "Write clear reports, emails and business documents.",
-  "esco_aliases": [
-   "write work-related reports",
-   "write technical reports",
-   "draft corporate emails",
-   "provide written content",
-   "write routine reports",
-   "report analysis results",
-   "compile content"
-  ],
-  "esco_uri": "",
-  "how_to_show": "Write a 2-page work report assessed against a rubric.",
-  "keywords": [],
-  "label": "Business & report writing",
-  "needed_by_occupations": [
-   "Chemist",
-   "Chemistry Technician",
-   "Communication Coordinator",
-   "Data Scientist",
-   "General Biologist",
-   "Human Resource Advisor",
-   "Management Consultant",
-   "Marketing Practitioner",
-   "Technical Writer",
-   "Translator"
-  ],
-  "wef_global_rank": 25,
-  "wef_skill": "Reading, writing and mathematics"
- },
  "business analysis & process improvement": {
   "category": "Business & operations",
   "demand_evidence": "WEF skill 'Systems thinking': ranked 11 of 26 skills on the rise globally, 2025-2030.",
@@ -551,41 +518,6 @@
   ],
   "wef_global_rank": 18,
   "wef_skill": "Marketing and media"
- },
- "document & records management": {
-  "category": "Digital workplace",
-  "demand_evidence": "WEF skill 'Dependability and attention to detail': ranked 24 of 26 skills on the rise globally, 2025-2030.",
-  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
-  "description": "Organise, classify and archive documents so they can be found and trusted.",
-  "esco_aliases": [
-   "ensure proper document management",
-   "archive scientific documentation",
-   "organise business documents",
-   "manage content metadata",
-   "information categorisation",
-   "organise information",
-   "keep task records",
-   "record test data"
-  ],
-  "esco_uri": "",
-  "how_to_show": "Design a filing or metadata scheme and apply it to a set of documents.",
-  "keywords": [],
-  "label": "Document & records management",
-  "needed_by_occupations": [
-   "Chemist",
-   "Chemistry Technician",
-   "Data Scientist",
-   "General Biologist",
-   "ICT Security Specialist",
-   "Librarian",
-   "Marketing Practitioner",
-   "Policy Analyst",
-   "Supply Chain Practitioner",
-   "Technical Writer",
-   "Water Quality Analyst"
-  ],
-  "wef_global_rank": 24,
-  "wef_skill": "Dependability and attention to detail"
  },
  "environmental compliance & impact assessment": {
   "category": "Science & laboratory",
@@ -1432,39 +1364,6 @@
   ],
   "wef_global_rank": 17,
   "wef_skill": "Programming"
- },
- "quality assurance": {
-  "category": "Business & operations",
-  "demand_evidence": "WEF skill 'Quality control': ranked 20 of 26 skills on the rise globally, 2025-2030.",
-  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
-  "description": "Apply quality standards and checks to work products.",
-  "esco_aliases": [
-   "quality assurance methodologies",
-   "quality standards",
-   "conduct quality control analysis",
-   "oversee quality control",
-   "conduct content quality assurance",
-   "attend to ICT systems quality",
-   "good manufacturing practices"
-  ],
-  "esco_uri": "",
-  "how_to_show": "Design and apply a quality checklist to a product or process.",
-  "keywords": [],
-  "label": "Quality assurance",
-  "needed_by_occupations": [
-   "Chemist",
-   "Chemistry Technician",
-   "General Biologist",
-   "ICT Security Specialist",
-   "Management Consultant",
-   "Policy Analyst",
-   "Supply Chain Practitioner",
-   "Systems Administrator",
-   "Technical Writer",
-   "Web Developer"
-  ],
-  "wef_global_rank": 20,
-  "wef_skill": "Quality control"
  },
  "r, sas or matlab": {
   "category": "Data & AI",

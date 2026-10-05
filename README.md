@@ -18,7 +18,7 @@ Evaluation is by **controlled synthetic testing**: researcher-built synthetic pr
 | `skillpath/cv.py` | CV skill extraction with a locally hosted AI model (all-MiniLM-L6-v2 via fastembed). The model (~90 MB) downloads once into `models/` (git-ignored) on first use, then works offline. |
 | `api/` | FastAPI backend with SQLite event logging (Milestone 2). |
 | `app/` | Expo (React Native, TypeScript) mobile-first app (Milestone 3). |
-| `data/skill_map.csv` | Occupation-skill map (24 DHET occupations × 71 condensed skills) built by `scripts/build_skill_map.py`. Loaded if present. |
+| `data/skill_map.csv` | Occupation-skill map (24 DHET occupations × 68 condensed skills) built by `scripts/build_skill_map.py`. Loaded if present. |
 | `data/skill_taxonomy.csv` | The condensed skill list: category, definition, how to show it, WEF demand cluster, evidencing ESCO labels, CV keywords. Edit this to change skills, then rebuild. |
 | `data/esco_occupation_skills.json`, `data/wef_skills_2025.csv` | Cached ESCO occupation skills and WEF Future of Jobs 2025 figures used by the build. |
 | `data/skill_descriptions.json` | Per-skill category, definition, how to show it and demand evidence (shown in the app). |
