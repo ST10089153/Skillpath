@@ -28,6 +28,20 @@
       "problemMatcher": []
     },
     {
+      "label": "SkillPath: App (web, live link)",
+      "detail": "Use with VS Code port forwarding: paste the forwarded address of port 8000",
+      "type": "shell",
+      "command": "npx",
+      "args": ["expo", "start", "--web"],
+      "options": {
+        "cwd": "${workspaceFolder}/app",
+        "env": { "EXPO_PUBLIC_API_URL": "${input:forwardedApiUrl}" }
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": { "panel": "dedicated", "group": "skillpath" }
+    },
+    {
       "label": "SkillPath: Run tests",
       "type": "shell",
       "command": "${workspaceFolder}/.venv/Scripts/python",
@@ -35,6 +49,13 @@
       "options": { "cwd": "${workspaceFolder}" },
       "group": { "kind": "test", "isDefault": true },
       "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "forwardedApiUrl",
+      "type": "promptString",
+      "description": "Forwarded address of port 8000 from the VS Code Ports panel (e.g. https://abc123-8000.euw.devtunnels.ms)"
     }
   ]
 }
