@@ -2,6 +2,9 @@
 // Set EXPO_PUBLIC_API_URL (e.g. http://192.168.1.10:8000) when running on a phone via Expo Go.
 export const API_URL = (process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8000').replace(/\/$/, '');
 
+// Skips the warning page that VS Code dev tunnels show for public forwarded ports; ignored elsewhere.
+const TUNNEL_HEADERS = { 'X-Tunnel-Skip-AntiPhishing-Page': 'true' };
+
 export type Competency = 'limited' | 'foundational' | 'moderate';
 
 export interface NearestOccupation {
@@ -87,7 +90,7 @@ export interface ModuleLibrary {
 async function call<T>(method: string, path: string, body?: unknown): Promise<T> {
   const res = await fetch(`${API_URL}${path}`, {
     method,
-    headers: body === undefined ? undefined : { 'Content-Type': 'application/json' },
+    headers: body === undefined ? TUNNEL_HEADERS : { ...TUNNEL_HEADERS, 'Content-Type': 'application/json' },
     body: body === undefined ? undefined : JSON.stringify(body),
   });
   const data = await res.json().catch(() => ({}));
@@ -102,7 +105,7 @@ async function upload<T>(path: string, f: PickedFile): Promise<T> {
   const form = new FormData();
   if (f.file) form.append('file', f.file, f.name); // web
   else form.append('file', { uri: f.uri, name: f.name, type: f.mimeType || 'application/octet-stream' } as unknown as Blob);
-  const res = await fetch(`${API_URL}${path}`, { method: 'POST', body: form });
+  const res = await fetch(`${API_URL}${path}`, { method: 'POST', body: form, headers: TUNNEL_HEADERS });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(typeof data?.detail === 'string' ? data.detail : `Upload failed (${res.status})`);
   return data as T;
