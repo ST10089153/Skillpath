@@ -164,6 +164,7 @@ From the repository folder in PowerShell (or the VS Code terminal):
 ```powershell
 .\start.ps1          # browser: opens http://localhost:8081
 .\start.ps1 -Phone   # phone: scan the QR code with Expo Go
+.\start.ps1 -Live    # public live link (Cloudflare quick tunnel; install once: winget install --id Cloudflare.cloudflared)
 ```
 
 The API opens in its own window titled 'SkillPath API'. Ctrl+C stops the app; close that window to stop the API.
