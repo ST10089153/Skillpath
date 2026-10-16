@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Text, View } from 'react-native';
 
 import { api, Progress } from '../api';
-import { Body, Card, EmptyState, ErrorText, Loading, PRISM, ProgressBar, Screen, SectionLabel, Title, colors, fonts, styles } from '../ui';
+import { Body, EmptyState, ErrorText, Loading, ProgressBar, Screen, SectionLabel, Title, colors, fonts, styles } from '../ui';
 
 const MODULES_PER_MILESTONE = 3; // mirrors skillpath/config.py (display only)
 
@@ -32,13 +31,13 @@ export default function ProgressScreen({ userId }: { userId: string }) {
         </EmptyState>
       ) : (
         <>
-          <Card bezel>
+          <View>
             <SectionLabel>Current pathway</SectionLabel>
             <Text style={styles.h2}>{labels[prog.skill] ?? prog.skill}</Text>
             <ProgressBar value={prog.modules_completed} total={total} />
             <Body muted style={styles.numeric}>{prog.modules_completed} of {total} modules ({pct}%)</Body>
             {prog.next_milestone_message ? <Body>{prog.next_milestone_message}</Body> : null}
-          </Card>
+          </View>
 
           <SectionLabel>Milestones</SectionLabel>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 12 }}>
@@ -50,18 +49,12 @@ export default function ProgressScreen({ userId }: { userId: string }) {
                   <Text style={{ fontSize: 11, letterSpacing: 1.2, textTransform: 'uppercase', fontFamily: fonts.mono, color: got ? colors.primary : colors.faint }}>{got ? 'Reached' : `${MODULES_PER_MILESTONE} modules`}</Text>
                 </>
               );
-              // A reached milestone is ringed with split light; one still to come is a quiet hairline circle.
-              return got ? (
-                <LinearGradient key={b} colors={PRISM} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
-                                accessibilityLabel={`${b} reached`}
-                                style={{ width: 96, height: 96, borderRadius: 48, padding: 2, marginRight: 12, marginBottom: 8,
-                                         ...({ boxShadow: '0 0 26px rgba(108,200,255,0.22), 0 0 30px rgba(240,123,208,0.18)' } as object) }}>
-                  <View style={{ flex: 1, borderRadius: 46, backgroundColor: colors.bg, alignItems: 'center', justifyContent: 'center' }}>{face}</View>
-                </LinearGradient>
-              ) : (
-                <View key={b} accessibilityLabel={`${b} not reached yet`}
-                      style={{ width: 96, height: 96, borderRadius: 48, marginRight: 12, marginBottom: 8, alignItems: 'center', justifyContent: 'center',
-                               borderWidth: 1, borderColor: colors.hairline }}>
+              // Milestones are interchanges on the route: a capsule marker, filled in the route colour once reached.
+              return (
+                <View key={b} accessibilityLabel={`${b} ${got ? 'reached' : 'not reached yet'}`}
+                      style={{ alignItems: 'center', marginRight: 28, marginBottom: 8 }}>
+                  <View style={{ width: 44, height: 24, borderRadius: 12, borderWidth: 4, borderColor: got ? '#FFFFFF' : colors.track,
+                                 backgroundColor: got ? colors.line : colors.bg, marginBottom: 10 }} />
                   {face}
                 </View>
               );

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { api } from '../api';
-import { Body, Button, Card, Checkbox, DISCLAIMER, ErrorText, Hero, Screen, colors, styles } from '../ui';
+import { Body, Button, Checkbox, DISCLAIMER, ErrorText, Hero, Screen, SectionLabel, colors } from '../ui';
 
 export default function Welcome({ onDone }: { onDone: (userId: string) => void }) {
   const [consent, setConsent] = useState(false);
@@ -25,7 +25,7 @@ export default function Welcome({ onDone }: { onDone: (userId: string) => void }
 
   return (
     <Screen>
-      <Hero icon="trail-sign" eyebrow="Research prototype" title="Find your next skill">
+      <Hero eyebrow="RESEARCH PROTOTYPE" title="Find your next skill">
         <Text style={{ color: colors.muted, fontSize: 16, lineHeight: 23 }}>
         SkillPath looks at the skills you already have (you can upload your CV or pick them yourself),
         shows what is missing for jobs close to your profile, and suggests the one skill to start with. You then
@@ -34,20 +34,17 @@ export default function Welcome({ onDone }: { onDone: (userId: string) => void }
         </Text>
       </Hero>
 
-      <Card>
-        <Text style={styles.h2}>What we store</Text>
+      <SectionLabel>What we store</SectionLabel>
         <Body>• A random ID (like U3F9A1C). We never ask for your name, email or phone number.</Body>
         <Body>• The skills you select, your self-rating, and your progress through the lessons.</Body>
         <Body>• If you upload a CV, it is read once by SkillPath's own built-in AI to suggest skills. It is never sent to outside AI services and is not saved.</Body>
         <Body>• When you use the app (for example, finishing a lesson), so we can study how SkillPath works.</Body>
         <Body>Your data stays on the research computer, and no tracking or analytics services are used. You can view or delete your data at any time in Settings.</Body>
-      </Card>
 
-      <Card>
-        <Text style={styles.h2}>Research prototype</Text>
+      <SectionLabel>Research prototype</SectionLabel>
         <Body>SkillPath is a prototype built for an Honours research study at The Independent Institute of Education. It may contain mistakes.</Body>
         <Body muted>{DISCLAIMER}</Body>
-      </Card>
+      <View style={{ height: 12 }} />
 
       <Checkbox
         checked={consent}

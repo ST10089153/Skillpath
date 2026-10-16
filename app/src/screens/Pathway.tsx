@@ -2,7 +2,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Linking, Text, View } from 'react-native';
 
 import { api, moduleContent, ModuleLibrary, Progress, SkillInfo } from '../api';
-import { BigNumber, Body, Button, Card, Difficulty, ErrorText, Loading, Screen, Title, colors, styles } from '../ui';
+import { RouteStops, Stop } from '../route';
+import { Body, Button, Difficulty, ErrorText, Hero, Loading, Screen, colors, styles } from '../ui';
+
+const MODULES_PER_MILESTONE = 3; // mirrors skillpath/config.py (display only)
 
 export default function Pathway({ userId, onGoToNextSkill }: { userId: string; onGoToNextSkill: () => void }) {
   const [prog, setProg] = useState<Progress | null>(null);
@@ -27,7 +30,7 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
     try {
       const r = await api.result(userId, moduleId, passed);
       setProg(r.progress);
-      setFlash(r.message || (passed ? 'Nice work. On to the next one.' : 'Thanks for letting us know. Try this step again when you are ready.'));
+      setFlash(r.message || (passed ? 'Stop passed. On to the next one.' : 'Thanks for telling us. Try this stop again when you are ready.'));
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -39,51 +42,64 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
   if (prog.status !== 'adopted') {
     return (
       <Screen>
-        <Title>Your pathway</Title>
-        <Body>You haven't started a pathway yet.</Body>
-        <Button label="See my next skill" onPress={onGoToNextSkill} />
+        <Hero eyebrow="No line yet" title="Your route will appear here">
+          <Body muted>Accept a recommended skill and its six stops will be laid out on this screen.</Body>
+        </Hero>
+        <Button label="See my next stop" onPress={onGoToNextSkill} />
       </Screen>
     );
   }
 
+  const skillName = info?.label ?? prog.skill;
+  const stops: Stop[] = prog.modules.map((m, i) => {
+    const c = moduleContent(lib, skillName, i, info?.esco_url ?? '', info?.how_to_show ?? '');
+    const here = prog.current_module?.module_id === m.module_id;
+    const difficulty = here && prog.current_module ? prog.current_module.difficulty : m.difficulty;
+    const minutes = here && prog.current_module ? prog.current_module.minutes : m.minutes;
+    const n = i + 1;
+    return {
+      key: m.module_id,
+      number: n,
+      title: c.title,
+      meta: `${minutes} MIN · LEVEL ${difficulty}/5`,
+      state: m.done ? 'done' : here ? 'here' : 'next',
+      interchange: n % MODULES_PER_MILESTONE === 0 ? `Milestone MS${n / MODULES_PER_MILESTONE}` : undefined,
+      children: here ? (
+        <View style={{ marginTop: 6 }}>
+          <Difficulty level={difficulty} />
+          <Body style={{ marginTop: 10 }}>{c.description}</Body>
+          {i === 0 && info?.description ? (
+            <View style={{ borderLeftWidth: 3, borderLeftColor: colors.track, paddingLeft: 12, marginVertical: 6 }}>
+              <Text style={[styles.numeric, { fontSize: 12, color: colors.faint }]}>WHAT IT MEANS</Text>
+              <Body style={{ marginBottom: 0 }}>{info.description}</Body>
+            </View>
+          ) : null}
+          {c.resource_url !== '' && (
+            <Button label={c.resource_label} icon="open-outline" variant="secondary" hint="Opens an external website"
+                    onPress={() => Linking.openURL(c.resource_url)} />
+          )}
+          <Button label="I completed this" icon="checkmark" disabled={busy} onPress={() => report(m.module_id, true)} />
+          <Button label="I struggled with this" icon="refresh" variant="tonal" disabled={busy} onPress={() => report(m.module_id, false)} />
+        </View>
+      ) : undefined,
+    };
+  });
+
   return (
     <Screen>
-      <Title>Pathway: {info?.label ?? prog.skill}</Title>
-      <Body muted style={styles.numeric}>{prog.modules_completed} of {prog.total_modules} modules done</Body>
+      <Hero eyebrow={`${skillName.toUpperCase()} LINE`} title={prog.completed ? 'End of the line' : 'Your route'}>
+        <Text style={[styles.numeric, { fontSize: 13, color: colors.muted }]}>
+          {`${prog.modules_completed} OF ${prog.total_modules} STOPS PASSED · ABOUT ${prog.modules.reduce((t, m) => t + m.minutes, 0)} MIN IN TOTAL`}
+        </Text>
+      </Hero>
       {flash !== '' && <View style={styles.banner}><Body style={{ marginBottom: 0 }}>{flash}</Body></View>}
       <ErrorText error={error} />
-      {prog.modules.map((m, i) => {
-        const c = moduleContent(lib, info?.label ?? prog.skill, i, info?.esco_url ?? '', info?.how_to_show ?? '');
-        const current = prog.current_module?.module_id === m.module_id;
-        const difficulty = current && prog.current_module ? prog.current_module.difficulty : m.difficulty;
-        const minutes = current && prog.current_module ? prog.current_module.minutes : m.minutes;
-        return (
-          <Card key={m.module_id} style={current ? { borderColor: colors.primary } : m.done ? { opacity: 0.75 } : undefined}>
-            <BigNumber n={i + 1} />
-            <Text style={[styles.small, styles.numeric]}>Module {i + 1} · about {minutes} min {m.done ? '· ✓ Done' : ''}</Text>
-            <Text style={[styles.h2, { marginTop: 4 }]}>{c.title}</Text>
-            <Difficulty level={difficulty} />
-            {(current || m.done) && <Body style={{ marginTop: 8 }}>{c.description}</Body>}
-            {i === 0 && (current || m.done) && info?.description ? (
-              <View style={{ borderLeftWidth: 2, borderLeftColor: colors.primary, paddingLeft: 14, paddingVertical: 4, marginVertical: 8 }}>
-                <Text style={styles.small}>What it means</Text>
-                <Body style={{ marginBottom: 0 }}>{info.description}</Body>
-              </View>
-            ) : null}
-            {(current || m.done) && c.resource_url !== '' && (
-              <Button label={`${c.resource_label} ↗`} variant="secondary" hint="Opens an external website"
-                      onPress={() => Linking.openURL(c.resource_url)} />
-            )}
-            {current && (
-              <View style={{ marginTop: 4 }}>
-                <Button label="I completed this" icon="checkmark-circle-outline" disabled={busy} onPress={() => report(m.module_id, true)} />
-                <Button label="I struggled with this" icon="help-buoy-outline" variant="secondary" disabled={busy} onPress={() => report(m.module_id, false)} />
-              </View>
-            )}
-          </Card>
-        );
-      })}
-      {prog.completed && <Card style={{ borderColor: colors.primary }}><Body>You've finished this pathway. Well done.</Body></Card>}
+      <View style={{ marginTop: 10 }}><RouteStops stops={stops} /></View>
+      {prog.completed && (
+        <View style={[styles.banner, { marginTop: 18 }]}>
+          <Body style={{ marginBottom: 0 }}>You've reached the end of this line. Well done.</Body>
+        </View>
+      )}
     </Screen>
   );
 }

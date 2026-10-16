@@ -1,17 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { api, Recommendation, SkillInfo } from '../api';
-import { Body, Button, Card, ErrorText, Hero, Loading, Pill, Screen, Title, colors, styles } from '../ui';
+import { Branches, ofoCode } from '../route';
+import { Body, Button, ErrorText, Hero, Loading, Screen, SectionLabel, TextLink, TicketRow, colors, styles } from '../ui';
 
 export default function NextSkill({ userId, onAdopted, onEditProfile }: {
   userId: string; onAdopted: () => void; onEditProfile: () => void;
 }) {
   const [rec, setRec] = useState<Recommendation | null>(null);
   const [info, setInfo] = useState<SkillInfo | null>(null);
-  const [why, setWhy] = useState(false);
-  const [showAlts, setShowAlts] = useState(false);
-  const [gaps, setGaps] = useState(false);
   const [labels, setLabels] = useState<Record<string, string>>({});
   const label = (x: string) => labels[x] ?? x;
   useEffect(() => { api.vocabulary().then((v) => setLabels(v.labels ?? {})).catch(() => undefined); }, []);
@@ -47,98 +45,69 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
   if (!rec.recommended_skill) {
     return (
       <Screen>
-        <Title>Your next skill</Title>
-        <Card><Body>{rec.explanation}</Body></Card>
+        <Hero eyebrow="No stop found" title="We need more to go on">
+          <Body>{rec.explanation}</Body>
+        </Hero>
         <Button label="Edit my skills" onPress={onEditProfile} />
       </Screen>
     );
   }
 
+  const name = info?.label ?? label(rec.recommended_skill);
+  const branches = rec.nearest_occupations.map((o) => ({
+    key: o.occupation,
+    title: o.occupation,
+    code: ofoCode(o.source),
+    held: o.skills_held,
+    total: o.skills_total,
+    missing: o.skills_missing.map((m) => ({ label: label(m), isThis: m === rec.recommended_skill })),
+    source: o.source ? `Source: ${o.source}` : 'Source: not recorded',
+  }));
+
   return (
     <Screen>
-      <Hero icon="compass" eyebrow="Recommended for you" title={info?.label ?? rec.recommended_skill}>
-        {info?.category ? <Text style={{ color: colors.primary, fontSize: 14, fontWeight: '600', marginBottom: 6 }}>{info.category}</Text> : null}
-        {info?.description ? <Text style={{ color: colors.muted, fontSize: 16, lineHeight: 23 }}>{info.description}</Text> : null}
+      <Hero eyebrow="NEXT STOP · RECOMMENDED FOR YOU" title={name}>
+        {info?.description ? <Body muted>{info.description}</Body> : null}
       </Hero>
-      <Card>
-        {info && info.occupations.length > 0 && (
-          <Body muted>Asked for by: {info.occupations.join(', ')}</Body>
-        )}
-        {info?.how_to_show ? <Body><Text style={{ fontFamily: 'Lexend_600SemiBold' }}>How you will show it: </Text>{info.how_to_show}</Body> : null}
-        {info?.demand_evidence ? <Body muted>Why it is in demand: {info.demand_evidence}</Body> : null}
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-          <Pill icon="layers-outline" label="6 short steps" />
-          <Pill icon="time-outline" label="5-10 min each" />
-          <Pill icon="pricetag-outline" label="Free resources" tone="success" />
-        </View>
-        {rec.income_displayed !== '' && (
-          <View style={{ backgroundColor: colors.warnBg, borderRadius: 6, padding: 12, marginTop: 8 }}>
-            <Text style={styles.small}>Income information</Text>
-            <Body style={{ marginBottom: 0 }}>{rec.income_displayed}</Body>
-          </View>
-        )}
-      </Card>
 
-      <Pressable
-        accessibilityRole="button"
-        accessibilityState={{ expanded: why }}
-        onPress={() => setWhy(!why)}
-        style={[styles.card, { minHeight: 52 }]}
-      >
-        <Text style={styles.h2}>{why ? '▾' : '▸'} Why this skill?</Text>
-        {why && (
-          <View>
-            <Body>{rec.explanation}</Body>
-            {rec.nearest_occupations.map((o) => (
-              <View key={o.occupation} style={{ marginTop: 6 }}>
-                <Body style={{ fontWeight: '600', marginBottom: 2 }}>{o.occupation}</Body>
-                <Body muted style={{ marginBottom: 2 }}>You have {o.skills_held} of {o.skills_total} skills</Body>
-                <Text style={styles.small}>Source: {o.source || 'not recorded'}</Text>
-              </View>
-            ))}
-          </View>
-        )}
-      </Pressable>
+      <View style={{ borderTopWidth: 1, borderTopColor: colors.hairline, marginBottom: 6 }}>
+        {info?.category ? <TicketRow label="Line" value={info.category} /> : null}
+        <TicketRow label="Stops" value="6 short steps · 5 to 10 min each · free resources" />
+        {info?.how_to_show ? <TicketRow label="Show it by" value={info.how_to_show} /> : null}
+        {info?.demand_evidence ? <TicketRow label="Demand" value={info.demand_evidence} /> : null}
+        {rec.income_displayed !== '' ? <TicketRow label="Income" value={rec.income_displayed} /> : null}
+      </View>
 
-      <Pressable
-        accessibilityRole="button"
-        accessibilityState={{ expanded: gaps }}
-        onPress={() => setGaps(!gaps)}
-        style={[styles.card, { minHeight: 52 }]}
-      >
-        <Text style={styles.h2}>{gaps ? '▾' : '▸'} What's missing?</Text>
-        {gaps && rec.nearest_occupations.map((o) => (
-          <View key={o.occupation} style={{ marginTop: 8 }}>
-            <Body style={{ fontWeight: '600', marginBottom: 2 }}>
-              {o.occupation}: you have {o.skills_held} of {o.skills_total}
-            </Body>
-            <Body muted style={{ marginBottom: 2 }}>Still to learn ({o.skills_missing.length}):</Body>
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-              {o.skills_missing.map((m) => (m === rec.recommended_skill
-                ? <Pill key={m} icon="star" tone="success" label={`${label(m)} · start here`} />
-                : <Pill key={m} label={label(m)} />))}
-            </View>
-          </View>
-        ))}
-      </Pressable>
+      <SectionLabel right={`${branches.length} nearest jobs`}>What's missing?</SectionLabel>
+      <Text style={[styles.numeric, { fontSize: 12, color: colors.faint, marginBottom: 4 }]}>
+        {`THIS STOP LEADS TO ${branches.length === 1 ? 'THIS JOB' : 'THESE JOBS'}`}
+      </Text>
+      <Branches branches={branches} />
+
+      <SectionLabel>Why this skill?</SectionLabel>
+      <Body>{rec.explanation}</Body>
 
       <ErrorText error={error} />
       {note !== '' && <View style={styles.banner}><Body style={{ marginBottom: 0 }}>{note}</Body></View>}
-      <Button label="Accept and start" icon="play" disabled={busy} onPress={() => run(() => api.accept(userId), onAdopted)} />
-      <Button label={showAlts ? 'Hide alternatives' : 'Show alternatives'} variant="secondary" onPress={() => setShowAlts(!showAlts)} />
-      {showAlts && (
-        <Card>
-          <Text style={styles.h2}>Other good next steps</Text>
-          {rec.alternatives.length === 0 && <Body muted>No alternatives for this profile.</Body>}
+      <View style={{ marginTop: 8 }}>
+        <Button label="Accept and start" disabled={busy} onPress={() => run(() => api.accept(userId), onAdopted)} />
+      </View>
+
+      {rec.alternatives.length > 0 && (
+        <>
+          <SectionLabel right={String(rec.alternatives.length)}>Other routes</SectionLabel>
           {rec.alternatives.map((a) => (
-            <Button key={a} label={`Choose ${label(a)}`} variant="secondary" disabled={busy}
+            <Button key={a} label={`Choose ${label(a)}`} variant="tonal" disabled={busy}
                     onPress={() => run(() => api.swap(userId, a), onAdopted)} />
           ))}
-        </Card>
+        </>
       )}
-      <Button label="Not now" variant="secondary" disabled={busy}
-              onPress={() => run(async () => setNote((await api.defer(userId)).message))} />
-      <Button label="Edit my skills" variant="secondary" onPress={onEditProfile} />
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 10 }}>
+        <View style={{ marginRight: 24 }}>
+          <TextLink label="Not now" onPress={() => run(async () => setNote((await api.defer(userId)).message))} />
+        </View>
+        <TextLink label="Edit my skills" onPress={onEditProfile} />
+      </View>
     </Screen>
   );
 }

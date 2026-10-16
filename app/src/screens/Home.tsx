@@ -1,29 +1,20 @@
-import { Ionicons } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 
-import { api, Progress } from '../api';
-import { Body, Button, Card, Hero, Loading, Pill, PressableScale, ProgressBar, Screen, SectionLabel, colors, fonts, styles } from '../ui';
+import { api, moduleContent, ModuleLibrary, Progress, SkillInfo } from '../api';
+import { RouteStrip } from '../route';
+import { Body, Button, Eyebrow, Hero, Loading, Screen, SectionLabel, TextLink, colors, styles } from '../ui';
 
 type Go = 'next' | 'pathway' | 'progress' | 'settings';
 
-function Action({ icon, label, onPress }: { icon: keyof typeof Ionicons.glyphMap; label: string; onPress: () => void }) {
-  return (
-    <PressableScale accessibilityRole="button" accessibilityLabel={label} onPress={onPress}
-                    style={{ flexBasis: '47%', flexGrow: 1, marginRight: 8 }}>
-      <Card style={{ alignItems: 'flex-start' }}>
-      <Ionicons name={icon} size={22} color={colors.primary} style={{ marginBottom: 14 }} />
-      <Text style={{ fontSize: 15, fontFamily: fonts.semibold, color: colors.text }}>{label}</Text>
-      <Ionicons name="arrow-forward" size={16} color={colors.faint} style={{ marginTop: 8 }} />
-      </Card>
-    </PressableScale>
-  );
-}
+const MODULES_PER_MILESTONE = 3; // mirrors skillpath/config.py (display only)
 
 export default function Home({ userId, go, onEditProfile }: { userId: string; go: (t: Go) => void; onEditProfile: () => void }) {
   const [skills, setSkills] = useState<string[] | null>(null);
   const [prog, setProg] = useState<Progress | null>(null);
   const [labels, setLabels] = useState<Record<string, string>>({});
+  const [lib, setLib] = useState<ModuleLibrary | null>(null);
+  const [info, setInfo] = useState<SkillInfo | null>(null);
 
   useEffect(() => {
     api.myData(userId).then((d) => {
@@ -32,66 +23,84 @@ export default function Home({ userId, go, onEditProfile }: { userId: string; go
     }).catch(() => setSkills([]));
     api.progress(userId).then(setProg).catch(() => setProg(null));
     api.vocabulary().then((v) => setLabels(v.labels ?? {})).catch(() => undefined);
+    api.modules().then(setLib).catch(() => setLib(null));
   }, [userId]);
+  useEffect(() => {
+    if (prog?.skill) api.skill(prog.skill).then(setInfo).catch(() => setInfo(null));
+  }, [prog?.skill]);
 
   if (skills === null) return <Screen><Loading /></Screen>;
-  const adopted = prog?.status === 'adopted';
   const label = (s: string) => labels[s.toLowerCase()] ?? s;
+  const adopted = prog?.status === 'adopted';
+
+  // No skills yet: the first job is to say where you are starting from.
+  if (!skills.length) {
+    return (
+      <Screen>
+        <Hero eyebrow="No starting point yet" title="Where are you starting from?">
+          <Body muted>Upload your CV or pick the skills you already have. It takes about two minutes.</Body>
+        </Hero>
+        <Button label="Add my skills" onPress={onEditProfile} />
+      </Screen>
+    );
+  }
+
+  // Skills but no pathway: point to the recommendation.
+  if (!adopted || !prog) {
+    return (
+      <Screen>
+        <Hero eyebrow="No line yet" title="Plan your first route">
+          <Body muted>SkillPath looks at the {skills.length} skills you have and finds the one stop that brings you closest to jobs near your profile.</Body>
+        </Hero>
+        <Button label="See my next stop" onPress={() => go('next')} />
+        <SkillsList skills={skills} label={label} onEdit={onEditProfile} />
+      </Screen>
+    );
+  }
+
+  const total = prog.total_modules;
+  const here = prog.completed ? null : (prog.current_module?.index ?? prog.modules_completed + 1); // index is 1-based
+  const interchanges = Array.from({ length: Math.floor(total / MODULES_PER_MILESTONE) }, (_, i) => (i + 1) * MODULES_PER_MILESTONE);
+  const nextInterchange = interchanges.find((n) => n > prog.modules_completed);
+  const skillName = info?.label ?? label(prog.skill);
+  const current = here ? moduleContent(lib, skillName, here - 1, info?.esco_url ?? '', info?.how_to_show ?? '') : null;
 
   return (
     <Screen>
-      <Hero icon="sparkles" eyebrow="SkillPath" title="Welcome back">
-        <Text style={{ color: colors.muted, fontSize: 16, lineHeight: 26, fontFamily: fonts.regular }}>
-          {adopted ? `You're building ${label(prog!.skill)}. Keep going.` : skills.length ? 'Your next skill is ready to explore.' : 'Start by telling SkillPath what you can already do.'}
-        </Text>
+      <Hero eyebrow={prog.completed ? 'End of the line' : 'You are here'}
+            title={prog.completed ? `All ${total} stops done` : `Stop ${here} of ${total}`}>
+        <Body muted>{`On the ${skillName} line.`}</Body>
       </Hero>
 
-      {!skills.length ? (
-        <Card>
-          <Text style={styles.h2}>Add your skills</Text>
-          <Body muted>Upload your CV or pick skills from a list. It takes about two minutes.</Body>
-          <Button label="Add my skills" icon="add-circle-outline" onPress={onEditProfile} />
-        </Card>
-      ) : adopted && prog ? (
-        <Card bezel>
-          <SectionLabel>Your pathway</SectionLabel>
-          <Text style={styles.h2}>{label(prog.skill)}</Text>
-          <ProgressBar value={prog.modules_completed} total={prog.total_modules} />
-          <Body muted style={styles.numeric}>{prog.modules_completed} of {prog.total_modules} steps done{prog.completed ? ' · complete' : ''}</Body>
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 4 }}>
-            {['MS1', 'MS2'].map((m) => (
-              <Pill key={m} label={prog.milestones.includes(m) ? `${m} reached` : `${m} to go`}
-                    tone={prog.milestones.includes(m) ? 'success' : 'accent'} icon={prog.milestones.includes(m) ? 'trophy' : 'flag-outline'} />
-            ))}
-          </View>
-          <Button label={prog.completed ? 'See my progress' : `Continue step ${(prog.current_module?.index ?? prog.modules_completed + 1)}`}
-                  icon="play" onPress={() => go(prog.completed ? 'progress' : 'pathway')} />
-        </Card>
+      <RouteStrip total={total} done={prog.modules_completed} here={here} interchanges={interchanges} />
+
+      {nextInterchange ? (
+        <Text style={[styles.numeric, { fontSize: 13, color: colors.muted, marginBottom: 18 }]}>
+          {`${nextInterchange - prog.modules_completed} ${nextInterchange - prog.modules_completed === 1 ? 'stop' : 'stops'} to milestone MS${nextInterchange / MODULES_PER_MILESTONE}`}
+        </Text>
+      ) : null}
+
+      {current ? (
+        <View style={styles.cardInner}>
+          <Eyebrow color={colors.primary}>{`STOP ${String(here).padStart(2, '0')} · ABOUT ${prog.current_module?.minutes ?? 6} MIN`}</Eyebrow>
+          <Text style={[styles.h2, { marginBottom: 12 }]}>{current.title}</Text>
+          <Button label={`Go to stop ${here}`} onPress={() => go('pathway')} />
+        </View>
       ) : (
-        <Card>
-          <SectionLabel>Next step</SectionLabel>
-          <Text style={styles.h2}>Your next skill is ready</Text>
-          <Body muted>See the one skill that brings you closest to jobs that match your profile.</Body>
-          <Button label="See my next skill" icon="compass" onPress={() => go('next')} />
-        </Card>
+        <Button label="See my progress" onPress={() => go('progress')} />
       )}
 
-      <SectionLabel>Quick actions</SectionLabel>
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginRight: -8 }}>
-        <Action icon="create-outline" label="Edit my skills" onPress={onEditProfile} />
-        <Action icon="compass-outline" label="Next skill" onPress={() => go('next')} />
-        <Action icon="trophy-outline" label="My progress" onPress={() => go('progress')} />
-        <Action icon="shield-checkmark-outline" label="Privacy & my data" onPress={() => go('settings')} />
-      </View>
-
-      {skills.length > 0 && (
-        <Card>
-          <SectionLabel>Your skills ({skills.length})</SectionLabel>
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-            {skills.slice(0, 12).map((s) => <Pill key={s} label={label(s)} />)}
-          </View>
-        </Card>
-      )}
+      <SkillsList skills={skills} label={label} onEdit={onEditProfile} />
     </Screen>
+  );
+}
+
+function SkillsList({ skills, label, onEdit }: { skills: string[]; label: (s: string) => string; onEdit: () => void }) {
+  return (
+    <>
+      <SectionLabel right={String(skills.length)}>Skills you have</SectionLabel>
+      <Body muted>{skills.map(label).join(' · ')}</Body>
+      <TextLink label="Edit my skills" onPress={onEdit} />
+    </>
   );
 }
