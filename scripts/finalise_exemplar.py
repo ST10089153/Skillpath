@@ -15,6 +15,7 @@ Sources for every value filled here:
   - search log: only what the report already documents (databases from Annexure Q, the 12 May - 20 June 2026
     window from Section 3.1, filters from Table 2, totals from the PRISMA flow); no per-database counts are invented
   - codebook rows: codes restated from the report's own Table 7 directives and Table B5 findings
+  - PwC reference: the landing page now shows the 2026 edition, so the 2025 report PDF is cited (checked 16 October 2026)
 Left for the researcher: the AI use disclosure (cover page and Annexure A).
 """
 
@@ -196,6 +197,19 @@ def main():
                 f"{ETHICS_REF}, valid until 9 October 2027, signed by Dr T Muchenje (Postgraduate Academic Lead) and "
                 "Mr H Mpofu (Head of Computer Science) (attached). F3. Data Management Plan, DMP ID "
                 "https://doi.org/10.48321/D176484D69.")
+
+    # 12. PwC: the cited landing page now shows the 2026 edition; point to the 2025 report itself (checked 16 Oct 2026)
+    ref = para(d, "PwC, 2025.")
+    old = ref.text
+    new = old[:old.index("Available at:")] + ("Available at: https://www.pwc.com/gx/en/issues/artificial-intelligence/"
+                                               "job-barometer/2025/report.pdf [Accessed 16 October 2026].")
+    title = "The fearless future: 2025 global AI jobs barometer"
+    for r in list(ref.runs):
+        r._r.getparent().remove(r._r)
+    pre, post = new.split(title)
+    ref.add_run(pre)
+    ref.add_run(title).italic = True
+    ref.add_run(post)
 
     apply_format(d)
     n = body_word_count(d)
