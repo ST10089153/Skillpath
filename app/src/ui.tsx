@@ -7,9 +7,9 @@
 //  - pill buttons with a trailing icon "island"; hover, press and visible keyboard-focus states on every control
 //  - staggered fade-and-rise entrances on a custom spring-like curve; skeleton loading; all motion is skipped
 //    when the device's reduce-motion setting is on
-// Prism: light split into a spectrum marks only the key moments (shimmering edge line on the hero and key
-// cards, a refracted-light streak in the hero, the primary button's rim, progress fill, reached milestones, the
-// active tab). Decorative only: text never carries the spectrum, and the shimmer stops under reduce-motion.
+// Prism: light split into a spectrum marks only the key moments (a refracted-light streak in the hero, the
+// primary button's rim, progress fill, reached milestones, the active tab). Decorative only: text never carries
+// the spectrum, and the active-tab shimmer stops under reduce-motion.
 // Fonts are free Google Fonts bundled with the app (system font until loaded). Every text/background pair
 // meets WCAG AA (4.5:1 or better).
 import { Ionicons } from '@expo/vector-icons';
@@ -225,7 +225,6 @@ export function Card({ children, style, animate = true, bezel = false }: {
   const core = (
     <LinearGradient colors={surfaces.card} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
                     style={[styles.cardInner, bezel && { borderRadius: 12, overflow: 'hidden' }, style]}>
-      {bezel ? <PrismLine height={1.5} style={styles.prismEdge} /> : null}
       {children}
     </LinearGradient>
   );
@@ -246,7 +245,6 @@ export function Hero({ eyebrow, title, children }: {
       <LinearGradient colors={surfaces.hero} start={{ x: 1, y: 0 }} end={{ x: 0, y: 1 }} style={styles.hero}>
         <View style={styles.heroGlow} pointerEvents="none" />
         <Refraction />
-        <PrismLine height={1.5} style={styles.prismEdge} />
         {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
         <Text style={styles.heroTitle} accessibilityRole="header">{title}</Text>
         {children}
@@ -435,7 +433,6 @@ export const styles = StyleSheet.create({
   heroGlow: { position: 'absolute', top: -90, right: -70, width: 220, height: 220, borderRadius: 110,
               backgroundColor: 'rgba(251,215,132,0.10)',
               ...(WEB ? ({ filter: 'blur(30px)' } as object) : {}) },
-  prismEdge: { position: 'absolute', top: 0, left: 18, right: 18, opacity: 0.9 },
   prismRim: { borderRadius: 999, padding: 1.5 },
   refraction: { position: 'absolute', top: 26, right: -70, width: 320, height: 22, opacity: WEB ? 0.30 : 0.14,
                 transform: [{ rotate: '-24deg' }], borderRadius: 11,
