@@ -1,0 +1,33 @@
+{
+ "esco_retrieved": "2026-10-05",
+ "occupations": 24,
+ "skills": 68,
+ "skills_used_by_no_occupation": [],
+ "skills_per_occupation": {
+  "Agricultural Scientist": 9,
+  "Chemist": 9,
+  "Chemistry Technician": 8,
+  "Communication Coordinator": 12,
+  "Data Scientist": 6,
+  "Environmental Scientist": 10,
+  "External Auditor": 13,
+  "Financial Accountant": 13,
+  "General Biologist": 15,
+  "Human Resource Advisor": 6,
+  "ICT Security Specialist": 13,
+  "ICT Systems Analyst": 18,
+  "Librarian": 9,
+  "Management Consultant": 12,
+  "Marketing Practitioner": 16,
+  "Policy Analyst": 13,
+  "Software Developer": 17,
+  "Supply Chain Practitioner": 5,
+  "Systems Administrator": 12,
+  "Tax Professional": 11,
+  "Technical Writer": 9,
+  "Translator": 9,
+  "Water Quality Analyst": 10,
+  "Web Developer": 15
+ },
+ "shared_skills": 65
+}

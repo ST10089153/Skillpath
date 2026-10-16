@@ -1,0 +1,206 @@
+{
+ "steady": {
+  "description": "Accepts the recommendation and completes one module a day until the pathway is done.",
+  "decision": "accept",
+  "days": [
+   {
+    "day": 0,
+    "modules": [
+     true
+    ]
+   },
+   {
+    "day": 1,
+    "modules": [
+     true
+    ]
+   },
+   {
+    "day": 2,
+    "modules": [
+     true
+    ]
+   },
+   {
+    "day": 3,
+    "modules": [
+     true
+    ]
+   },
+   {
+    "day": 4,
+    "modules": [
+     true
+    ]
+   },
+   {
+    "day": 5,
+    "modules": [
+     true
+    ]
+   }
+  ]
+ },
+ "struggler": {
+  "description": "Accepts; struggles twice in a row on module 2 (roadmap revision), returns next day and finishes.",
+  "decision": "accept",
+  "days": [
+   {
+    "day": 0,
+    "modules": [
+     true
+    ]
+   },
+   {
+    "day": 1,
+    "modules": [
+     false,
+     false
+    ]
+   },
+   {
+    "day": 2,
+    "modules": [
+     true,
+     true
+    ]
+   },
+   {
+    "day": 3,
+    "modules": [
+     true,
+     true
+    ]
+   },
+   {
+    "day": 4,
+    "modules": [
+     true
+    ]
+   }
+  ]
+ },
+ "drifter": {
+  "description": "Accepts; completes 2 modules, goes quiet, returns when nudged and completes the pathway.",
+  "decision": "accept",
+  "days": [
+   {
+    "day": 0,
+    "modules": [
+     true
+    ]
+   },
+   {
+    "day": 1,
+    "modules": [
+     true
+    ]
+   },
+   {
+    "day": 3,
+    "modules": [
+     true,
+     true
+    ],
+    "via_nudge": true
+   },
+   {
+    "day": 4,
+    "modules": [
+     true,
+     true
+    ]
+   }
+  ]
+ },
+ "explorer": {
+  "description": "Looks at alternatives and swaps to the first one; completes 4 modules, then stops.",
+  "decision": "swap",
+  "days": [
+   {
+    "day": 0,
+    "modules": [
+     true,
+     true
+    ]
+   },
+   {
+    "day": 2,
+    "modules": [
+     true,
+     true
+    ]
+   }
+  ]
+ },
+ "deferrer": {
+  "description": "Chooses 'Not now'; returns when nudged two days later, accepts and completes 3 modules.",
+  "decision": "defer",
+  "days": [
+   {
+    "day": 2,
+    "accept": true,
+    "modules": [
+     true,
+     true,
+     true
+    ],
+    "via_nudge": true
+   }
+  ]
+ },
+ "part_time": {
+  "description": "Accepts and completes one module every three days (busy part-time learner), finishing on day 15.",
+  "decision": "accept",
+  "days": [
+   {
+    "day": 0,
+    "modules": [
+     true
+    ]
+   },
+   {
+    "day": 3,
+    "modules": [
+     true
+    ]
+   },
+   {
+    "day": 6,
+    "modules": [
+     true
+    ]
+   },
+   {
+    "day": 9,
+    "modules": [
+     true
+    ]
+   },
+   {
+    "day": 12,
+    "modules": [
+     true
+    ]
+   },
+   {
+    "day": 15,
+    "modules": [
+     true
+    ]
+   }
+  ]
+ },
+ "dropout": {
+  "description": "Accepts and completes 1 module, then never returns (nudges are sent but not opened).",
+  "decision": "accept",
+  "days": [
+   {
+    "day": 0,
+    "modules": [
+     true
+    ]
+   }
+  ]
+ }
+}

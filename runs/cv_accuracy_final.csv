@@ -1,0 +1,27 @@
+cv_file,expected,proposed,correct,precision,recall,f1,missed,extra
+EXAMPLE_CV_SP01.pdf,2,2,2,1.0,1.0,1.0,,
+EXAMPLE_CV_SP02.docx,2,6,2,0.333,1.0,0.5,,customer relationship management; financial analysis & risk; marketing campaigns; requirements & systems analysis
+EXAMPLE_CV_SP03.pdf,2,2,2,1.0,1.0,1.0,,
+EXAMPLE_CV_SP04.pdf,2,2,2,1.0,1.0,1.0,,
+EXAMPLE_CV_SP05.docx,2,3,2,0.667,1.0,0.8,,chemical analysis & chromatography
+EXAMPLE_CV_SP06.pdf,2,4,2,0.5,1.0,0.667,,microbiology & molecular biology; policy analysis & implementation
+EXAMPLE_CV_SP07.pdf,2,2,2,1.0,1.0,1.0,,
+EXAMPLE_CV_SP08.docx,2,2,2,1.0,1.0,1.0,,
+EXAMPLE_CV_SP09.pdf,4,4,4,1.0,1.0,1.0,,
+EXAMPLE_CV_SP10.pdf,4,5,4,0.8,1.0,0.889,,policy analysis & implementation
+EXAMPLE_CV_SP11.docx,4,4,4,1.0,1.0,1.0,,
+EXAMPLE_CV_SP12.pdf,4,5,4,0.8,1.0,0.889,,market research
+EXAMPLE_CV_SP13.pdf,4,7,4,0.571,1.0,0.727,,environmental compliance & impact assessment; market research; policy analysis & implementation
+EXAMPLE_CV_SP14.docx,4,6,4,0.667,1.0,0.8,,market research; policy analysis & implementation
+EXAMPLE_CV_SP15.pdf,4,7,4,0.571,1.0,0.727,,data analysis & statistics; programming fundamentals; sample preparation & testing
+EXAMPLE_CV_SP16.pdf,4,4,4,1.0,1.0,1.0,,
+EXAMPLE_CV_SP17.docx,6,9,6,0.667,1.0,0.8,,auditing; data visualisation & dashboards; policy analysis & implementation
+EXAMPLE_CV_SP18.pdf,6,10,6,0.6,1.0,0.75,,budgeting & cost control; customer relationship management; financial analysis & risk; requirements & systems analysis
+EXAMPLE_CV_SP19.pdf,6,10,6,0.6,1.0,0.75,,customer relationship management; financial analysis & risk; requirements & systems analysis; supply chain & inventory
+EXAMPLE_CV_SP20.docx,6,6,6,1.0,1.0,1.0,,
+EXAMPLE_CV_SP21.pdf,6,7,6,0.857,1.0,0.923,,policy analysis & implementation
+EXAMPLE_CV_SP22.pdf,6,9,6,0.667,1.0,0.8,,budgeting & cost control; market research; policy analysis & implementation
+EXAMPLE_CV_SP23.docx,6,8,6,0.75,1.0,0.857,,policy analysis & implementation; programming fundamentals
+EXAMPLE_CV_SP24.pdf,6,6,6,1.0,1.0,1.0,,
+EXAMPLE_CV_SP26.pdf,10,11,10,0.909,1.0,0.952,,data analysis & statistics
+OVERALL,,,106,0.752,1.0,0.858,,

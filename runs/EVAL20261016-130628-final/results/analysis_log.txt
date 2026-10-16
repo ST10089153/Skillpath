@@ -1,0 +1,2 @@
+Profiles: 28 (24 core, 4 edge cases). Logged responses: 762
+App versions tested: 8c154e6
