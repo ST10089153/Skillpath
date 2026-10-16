@@ -6,21 +6,25 @@ SkillPath build (samples/example_study/runs/EVAL20261016-032710-EXAMPLE, build 9
 
 Left unchanged on purpose:
   - Phase 1 literature figures (search counts, corpus, codes): literature data, not app or CV data.
-  - Sections that depend on operational app-usage data (engagement, motivation, self-efficacy: 4.3 intent,
-    6.6, Objective 4): to be developed with app data collection.
+  - Questions that need real people (motivation, self-efficacy: 4.3 intent, 6.6).
+Adds 3.3.4 and 5.8 (operational data from simulated users, samples/example_study/app_data) and updates Objective 4.
   - Process claims the author must confirm (threshold approval date, supervisor review of sheets, iterations).
 Requires python-docx.
 """
 
+import glob
 import os
 import sys
 import zipfile
 
 import docx
+import pandas as pd
+from docx.shared import Cm
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RUN = os.path.join(ROOT, "samples", "example_study", "runs", "EVAL20261016-032710-EXAMPLE")
 OUT = os.path.join(ROOT, "docs", "exemplar", "REIT8419_Part3_SkillPath_EXEMPLAR_v2.docx")
+APP = sorted(glob.glob(os.path.join(ROOT, "samples", "example_study", "app_data", "APPSIM*")))[-1]
 
 P = {  # paragraph start -> new text
     "Exemplar: Phase 3 results were generated":
@@ -234,6 +238,9 @@ TABLES = {  # (table index, row, col) -> text
        (12, 4, 2): "1", (12, 4, 3): "SP26: recommended HTML & CSS (front-end)"},
     # Table 14 objectives
     (13, 3, 3): "Achieved: 9 of 9 thresholds met",
+    (13, 4, 1): "Operational measures computed from SkillPath's own event log for 392 simulated users; human engagement not measurable without users",
+    (13, 4, 2): "Tables 10 to 13a; Figure 8",
+    (13, 4, 3): "Partly achieved: system behaviour and logging evaluated; human engagement deferred",
     # Table 15 directive status
     **{(14, 1, 2): "Partly supported: universal coverage; appropriate within field, weaker for pivots",
        (14, 7, 2): "Partly supported: rule works; not motivation-aware",
@@ -248,6 +255,109 @@ def set_text(par, text):
             r.text = ""
     else:
         par.add_run(text)
+
+
+def insert_par_before(anchor, text, like):
+    p = anchor.insert_paragraph_before(text, style=like.style)
+    p.paragraph_format.alignment = like.paragraph_format.alignment
+    return p
+
+
+def insert_table_before(d, anchor, rows, like_table):
+    t = d.add_table(rows=len(rows), cols=len(rows[0]))
+    t.style = like_table.style
+    for i, r in enumerate(rows):
+        for j, v in enumerate(r):
+            t.rows[i].cells[j].text = str(v)
+            if i == 0:
+                for run in t.rows[i].cells[j].paragraphs[0].runs:
+                    run.bold = True
+    anchor._p.addprevious(t._tbl)
+    return t
+
+
+def app_numbers():
+    res = pd.read_excel(os.path.join(APP, "app_metrics.xlsx"), sheet_name="Measures by arm")
+    ev = pd.read_csv(os.path.join(APP, "events.csv"))
+    sims = pd.read_csv(os.path.join(APP, "simulated_users.csv"))
+    nud = ev[ev.event_type == "notification_sent"].merge(sims, on="user_id").groupby("persona").size()
+    per_user = (nud / sims.groupby("persona").size()).fillna(0)
+    return res, len(sims), len(ev), per_user
+
+
+def fmt(row):
+    if row["Measure"] == "Mean days to first milestone":
+        return f"{row['Result']:.2f} days"
+    return f"{row['Result'] * 100:.1f}% ({int(row['Numerator'])} / {int(row['Denominator'])})"
+
+
+def add_app_data_sections(d):
+    res, n_users, n_events, per_user = app_numbers()
+    paras = list(d.paragraphs)
+
+    def find(start, after=None):
+        """First paragraph starting with `start` that comes after `after` (skips the table of contents)."""
+        i0 = next(i for i, p in enumerate(paras) if p._p is after._p) + 1 if after is not None else 0
+        return next(p for p in paras[i0:] if p.text.startswith(start))
+    get = lambda g, m: res[(res.Group == g) & (res.Measure == m)].iloc[0]
+    allu = lambda m: get("All users", m)
+
+    body = find("The ethics application (Annexure Q)")
+    h3 = find("3.3.3 Ethical considerations", find("Outputs were captured automatically"))
+    anchor = find("4. Data Analysis Methods", body)
+    insert_par_before(anchor, "3.3.4 Collecting operational data from simulated users", h3)
+    insert_par_before(anchor, (
+        "The proposal planned to evaluate SkillPath partly through operational data generated as people use the "
+        "app. Because no real users took part, that data stream was produced by scripted simulated users. Each "
+        "synthetic profile was combined with each of seven behaviour personas grounded in the reviewed literature: "
+        "a steady completer and a struggler (staged progress and revision; Vygotsky, 1978; Bandura, 1997), a drifter "
+        "who returns when prompted (Fogg, 2003), an explorer who swaps to an alternative and a deferrer who chooses "
+        "'Not now' (autonomy; Deci and Ryan, 2000), a part-time learner (informal learning outside institutional "
+        "timetables; Du Plooy, Casteleijn and Franzsen, 2024) and an early dropout (Jordan, 2015). Each combination "
+        f"was run in both logic versions, giving {n_users} simulated users. A script drove SkillPath's own "
+        "programming interface day by day over a simulated 21 days, exactly as the app does, so every event was "
+        f"recorded by SkillPath itself in its event log ({n_events:,} events). Behaviour was scripted and identical "
+        "in both versions: simulated users never react to income, because programming such a reaction would "
+        "fabricate the effect the comparison is meant to detect. The event log was exported and analysed with the "
+        "operational measures defined in the proposal (Section 3.6)."), body)
+
+    body5 = find("All seven mismatches occurred")
+    cap = find("Table 13: Reasons for recommendations")
+    h2 = find("5.7 Mismatches and edge cases", find("5.6 Paired income-visibility comparison", body))
+    anchor = find("6. Interpretation of Findings in Context", body5)
+    measures = [("Assessment completion", "60%"), ("Pathway adoption", "50%"),
+                ("Re-engagement within 48 h after revision", "70%"), ("Multi-milestone completion", "40%"),
+                ("14-day retention", "-"), ("Swap rate", "-"), ("Defer rate", "-"), ("Nudges opened", "-"),
+                ("Mean days to first milestone", "-")]
+    rows = [["Measure", "Version A", "Version B", "Proposal threshold"]]
+    rows += [[m, fmt(get("Arm A", m)), fmt(get("Arm B", m)), t] for m, t in measures]
+    insert_par_before(anchor, "5.8 Operational data from simulated users", h2)
+    insert_par_before(anchor, (
+        f"Table 13a and Figure 8 present the operational measures for the {n_users} simulated users. Every user "
+        "completed the skills assessment, and every user who received a recommendation adopted a pathway, "
+        f"{allu('Swap rate')['Result'] * 100:.1f}% of them after swapping to an alternative and "
+        f"{allu('Defer rate')['Result'] * 100:.1f}% after first choosing 'Not now'. Every roadmap revision was "
+        f"followed by a return within 48 hours, {allu('Multi-milestone completion')['Result'] * 100:.1f}% of adopters "
+        f"reached two or more milestones, and {allu('14-day retention')['Result'] * 100:.1f}% of users were still "
+        "active after 14 days. The two versions produced identical values, as the design required."), body5)
+    insert_table_before(d, anchor, rows, d.tables[12])
+    insert_par_before(anchor, "Table 13a: Operational measures from simulated users, by logic version", cap)
+    pic = insert_par_before(anchor, "", body5)
+    pic.add_run().add_picture(os.path.join(APP, "fig_app_metrics.png"), width=Cm(15))
+    insert_par_before(anchor, "Figure 8: Operational measures against the proposal's thresholds (simulated users)", cap)
+    insert_par_before(anchor, (
+        "These values follow from the persona mix chosen by the researcher, so they do not show how graduates "
+        "engage. What they show is that SkillPath supports, records and exports every behaviour the proposal set "
+        "out to measure, and how its rules respond to each. The simulation also exposed a design fault before any "
+        "graduate met it. In the first run SkillPath nudged users every day, including users who had finished their "
+        "pathway and were told they were three modules from a milestone that did not exist; only 2.9% of 3,450 "
+        "nudges were opened. Two changes followed (design decision log, entries 53 and 55): nudges are sent only "
+        "while a pathway is open, and they stop after three consecutive unopened nudges. In the final run nudges "
+        f"fell to {int(allu('Nudges opened')['Denominator']):,} and the share opened rose to "
+        f"{allu('Nudges opened')['Result'] * 100:.1f}%. A dropout now receives {per_user.get('dropout', 0):.0f} "
+        f"nudges, while a part-time learner still receives {per_user.get('part_time', 0):.0f}, because a fixed "
+        "two-day rule cannot distinguish a regular rhythm from disengagement. That limitation of DD7 is discussed "
+        "in Section 6."), body5)
 
 
 def main():
@@ -268,6 +378,7 @@ def main():
                      "SkillPath met all 9 pre-set thresholds in controlled synthetic testing. Direction was appropriate "
                      "for 100% of within-field profiles but 41.7% of pivot profiles (70.8% overall vs 70%); income "
                      "visibility did not alter recommendations; unrecognised input was disclosed, not hidden.")
+    add_app_data_sections(d)
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     tmp = OUT + ".tmp"
     d.save(tmp)
