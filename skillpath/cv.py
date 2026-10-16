@@ -49,6 +49,29 @@ def extract_text(data: bytes, filename: str) -> str:
     raise ValueError("Upload a PDF, Word (.docx) or text file")
 
 
+# Common CV section headings (cf. the section taxonomy of ATS parsing corpora: contact, summary, skills,
+# experience, projects, education, certifications, awards). Headings name sections; they are not skills.
+HEADING_WORDS = {
+    "about", "achievements", "activities", "additional", "and", "awards", "career", "certifications",
+    "competencies", "contact", "core", "courses", "curriculum", "cv", "details", "education", "employment",
+    "experience", "history", "information", "interests", "key", "languages", "me", "objective", "of",
+    "other", "personal", "profile", "professional", "projects", "publications", "qualifications",
+    "references", "relevant", "resume", "skills", "summary", "technical", "training", "vitae", "volunteer",
+    "work", "&", "/",
+}
+
+
+def is_heading(segment: str) -> bool:
+    """Section headings ("EXPERIENCE AND PROJECTS", "Skills:") and all-caps banners are not evidence of skills."""
+    words = re.findall(r"[A-Za-z&/]+", segment)
+    if not words:
+        return True
+    if all(w.lower() in HEADING_WORDS for w in words):
+        return True
+    letters = [c for c in segment if c.isalpha()]
+    return len(words) >= 2 and len(letters) >= 6 and all(c.isupper() for c in letters)
+
+
 def segments(text: str) -> list[str]:
     """Split CV text into short phrases (lines, bullets, sentences, list items)."""
     out = []
@@ -61,7 +84,7 @@ def segments(text: str) -> list[str]:
             parts += re.split(r",\s*|\s+and\s+", line.split(":", 1)[-1])
         for p in parts:
             p = p.strip(" -*:|,")
-            if 2 <= len(p) and len(p.split()) <= 30 and re.search(r"[A-Za-z]{2}", p):
+            if 2 <= len(p) and len(p.split()) <= 30 and re.search(r"[A-Za-z]{2}", p) and not is_heading(p):
                 out.append(p)
     seen, uniq = set(), []
     for s in out:

@@ -25,8 +25,11 @@ AI coding assistant, on 2026-10-05, from a specification written by the research
   tasks, WEF cluster assignment, evidencing ESCO labels, CV keywords) and extracted WEF Future of Jobs 2025
   figures (`data/wef_skills_2025.csv`). These are design choices for the researcher to review and approve.
 
+- Wrote 8 clearly labelled DEMO CVs (`samples/demo_cvs/`, fictional people) and their expected-skill labels for
+  trying the app and checking the CV reader during development. They are not study data.
+
 ## What the AI assistant did not do
-- It did not create, fill in or edit synthetic profiles, CVs, acceptable recommendations, test output logs
+- It did not create, fill in or edit the study's synthetic profiles or study CVs, acceptable recommendations, test output logs
   or results. No skill, occupation or income figure was typed by hand: all come from the cited sources via the script.
 - It did not modify the researcher-provided scripts (`run_synthetic_tests.py`, `analyse_outputs.py`,
   `prepare_profiles.py`), their CSV formats, or the acceptance thresholds.

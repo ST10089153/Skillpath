@@ -10,7 +10,11 @@
   ],
   "esco_uri": "",
   "how_to_show": "Hold a work conversation or pass a recognised language test.",
-  "keywords": [],
+  "keywords": [
+   "bilingual",
+   "multilingual",
+   "fluent in"
+  ],
   "label": "Additional languages",
   "needed_by_occupations": [
    "Communication Coordinator",
@@ -1854,7 +1858,13 @@
   ],
   "esco_uri": "",
   "how_to_show": "Design and deliver a 15-minute training session with a feedback form.",
-  "keywords": [],
+  "keywords": [
+   "tutoring",
+   "tutor",
+   "mentoring",
+   "coaching",
+   "facilitation"
+  ],
   "label": "Training & mentoring others",
   "needed_by_occupations": [
    "Agricultural Scientist",

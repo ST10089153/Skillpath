@@ -99,3 +99,22 @@ def test_real_local_model_matches_by_meaning(skill_map):
     found = [d.skill for d in CVSkillExtractor(sm, {}, threshold=0.4).extract(
         "Converted documents from French into English for a publishing house")]
     assert found and found[0] == "translate texts"
+
+
+def test_section_headings_and_banners_are_not_evidence():
+    from skillpath.cv import is_heading
+    for h in ["EXPERIENCE AND PROJECTS", "Skills:", "Personal Summary", "REFERENCES", "DEMO CV - NOT STUDY DATA"]:
+        assert is_heading(h), h
+    for s in ["Wrote SQL queries for reports", "Python", "CCNA", "Reconciled bank statements"]:
+        assert not is_heading(s), s
+    assert "EXPERIENCE AND PROJECTS" not in segments("EXPERIENCE AND PROJECTS\nBuilt dashboards in Power BI")
+
+
+def test_demo_cvs_are_readable_in_every_format():
+    folder = os.path.join(ROOT, "samples", "demo_cvs")
+    if not os.path.isdir(folder):
+        pytest.skip("demo CVs not generated")
+    for fn in os.listdir(folder):
+        if fn.endswith((".pdf", ".docx", ".txt")) and fn.startswith("DEMO"):
+            text = extract_text(open(os.path.join(folder, fn), "rb").read(), fn)
+            assert "NOT STUDY DATA" in text and "EDUCATION" in text, fn

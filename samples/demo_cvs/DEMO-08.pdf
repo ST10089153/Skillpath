@@ -1,0 +1,62 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Length 1119 >>
+stream
+BT
+/F1 10 Tf
+13 TL
+56 790 Td
+(DEMO CV - FICTIONAL PERSON - NOT STUDY DATA) Tj T*
+() Tj T*
+(THANDO DEMO-NDLOVU) Tj T*
+(Johannesburg, Gauteng | demo@example.com | 000 000 0000 \(fictional\)) Tj T*
+() Tj T*
+(PERSONAL SUMMARY) Tj T*
+(Computer Science graduate with a year of junior data and development work.) Tj T*
+() Tj T*
+(EDUCATION) Tj T*
+(BSc Computer Science and Statistics \(NQF 7\), University of Cape Town, 2023) Tj T*
+() Tj T*
+(EXPERIENCE AND PROJECTS) Tj T*
+(Junior data developer, Fynbos Analytics \(fictional\), 2024 - present) Tj T*
+(- Wrote Python \(pandas\) scripts to clean and analyse sales data) Tj T*
+(- Wrote SQL queries against a PostgreSQL database for monthly reports) Tj T*
+(- Built Power BI dashboards used by the sales team) Tj T*
+(- Managed code in Git and GitHub with pull requests and code reviews) Tj T*
+(- Wrote unit tests and fixed bugs before each release) Tj T*
+() Tj T*
+(SKILLS) Tj T*
+(Python, pandas, SQL, PostgreSQL, Power BI, Git, unit testing, statistics) Tj T*
+() Tj T*
+(REFERENCES) Tj T*
+(Available on request.) Tj T*
+() Tj T*
+(DEMO CV - FICTIONAL PERSON - NOT STUDY DATA) Tj T*
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000212 00000 n 
+0000001383 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1509
+%%EOF

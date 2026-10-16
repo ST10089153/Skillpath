@@ -1,0 +1,61 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Length 1079 >>
+stream
+BT
+/F1 10 Tf
+13 TL
+56 790 Td
+(DEMO CV - FICTIONAL PERSON - NOT STUDY DATA) Tj T*
+() Tj T*
+(ZINHLE DEMO-MTHEMBU) Tj T*
+(Johannesburg, Gauteng | demo@example.com | 000 000 0000 \(fictional\)) Tj T*
+() Tj T*
+(PERSONAL SUMMARY) Tj T*
+(Environmental Science graduate with field and data experience from an internship.) Tj T*
+() Tj T*
+(EDUCATION) Tj T*
+(BSc Environmental Science \(NQF 7\), Rhodes University, 2024) Tj T*
+() Tj T*
+(EXPERIENCE AND PROJECTS) Tj T*
+(Environmental intern, Green Karoo Consulting \(fictional\), 2025) Tj T*
+(- Carried out field surveys of wetland vegetation and recorded data sheets) Tj T*
+(- Collected river water samples and tested pH, conductivity and E. coli for water quality) Tj T*
+(- Helped compile an environmental impact assessment \(EIA\) report under NEMA) Tj T*
+(- Analysed survey data with descriptive statistics in R and RStudio) Tj T*
+() Tj T*
+(SKILLS) Tj T*
+(Fieldwork, water quality testing, EIA, statistics, R) Tj T*
+() Tj T*
+(REFERENCES) Tj T*
+(Available on request.) Tj T*
+() Tj T*
+(DEMO CV - FICTIONAL PERSON - NOT STUDY DATA) Tj T*
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000212 00000 n 
+0000001343 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1469
+%%EOF
