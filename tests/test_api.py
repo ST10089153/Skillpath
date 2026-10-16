@@ -262,3 +262,26 @@ def test_deferred_user_is_nudged(client, clock):
     client.post(f"/users/{uid}/pathway/defer")
     clock.advance(2)
     assert client.get(f"/users/{uid}/nudge").json()["nudge"] is True
+
+
+def test_nudges_stop_after_three_unopened_and_resume_after_return(client, clock):
+    uid = new_user(client)
+    client.get(f"/users/{uid}/recommendation")
+    sent = 0
+    for _ in range(10):                     # ten inactive days
+        clock.advance(1)
+        sent += client.get(f"/users/{uid}/nudge").json()["nudge"]
+    assert sent == 3
+    client.post(f"/users/{uid}/events", json={"event_type": "session_start"})   # user returns
+    clock.advance(2)
+    assert client.get(f"/users/{uid}/nudge").json()["nudge"] is True
+
+
+def test_opening_a_nudge_resets_the_count(client, clock):
+    uid = new_user(client)
+    client.get(f"/users/{uid}/recommendation")
+    clock.advance(2)
+    assert client.get(f"/users/{uid}/nudge").json()["nudge"] is True
+    client.post(f"/users/{uid}/events", json={"event_type": "notification_opened"})
+    user = client.get(f"/users/{uid}").json()["user"]
+    assert user["nudges_unopened"] == 0

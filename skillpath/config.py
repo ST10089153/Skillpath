@@ -30,6 +30,10 @@ FAILS_BEFORE_REVISION = 2
 # DD7 Trigger timing: nudge when the user has been inactive this many days.
 INACTIVE_DAYS_NUDGE = 2
 
+# DD7 Trigger timing: stop nudging after this many consecutive unopened nudges, until the user returns
+# (opening a nudge or any activity resets the count). Avoids repeated unwelcome prompts (Fogg, 2003).
+MAX_UNOPENED_NUDGES = 3
+
 # DD3 Calibrate difficulty: difficulty scale (= analyse_outputs.MIN_DIFFICULTY).
 MIN_DIFFICULTY = 1
 MAX_DIFFICULTY = 5

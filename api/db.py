@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS users (
     competency_level TEXT,
     current_skills   TEXT,
     last_active_at   TEXT NOT NULL,
-    last_nudge_date  TEXT
+    last_nudge_date  TEXT,
+    nudges_unopened  INTEGER NOT NULL DEFAULT 0
 );
 CREATE TABLE IF NOT EXISTS pathways (
     user_id           TEXT PRIMARY KEY REFERENCES users(user_id),
@@ -49,4 +50,7 @@ def connect(path: str) -> sqlite3.Connection:
     conn = sqlite3.connect(path, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     conn.executescript(SCHEMA)
+    cols = {r[1] for r in conn.execute("PRAGMA table_info(users)")}
+    if "nudges_unopened" not in cols:  # databases created before the nudge cap (DECISIONS.md #55)
+        conn.execute("ALTER TABLE users ADD COLUMN nudges_unopened INTEGER NOT NULL DEFAULT 0")
     return conn

@@ -121,7 +121,7 @@ def create_app(db_path: Optional[str] = None, skill_map_path: Optional[str] = No
                      (user["user_id"], user["arm"], event_type, now_iso(), item_id or ""))
 
     def touch(conn, user_id: str):
-        conn.execute("UPDATE users SET last_active_at=? WHERE user_id=?", (now_iso(), user_id))
+        conn.execute("UPDATE users SET last_active_at=?, nudges_unopened=0 WHERE user_id=?", (now_iso(), user_id))
 
     def get_user(conn, user_id: str):
         user = conn.execute("SELECT * FROM users WHERE user_id=?", (user_id,)).fetchone()
@@ -355,12 +355,14 @@ def create_app(db_path: Optional[str] = None, skill_map_path: Optional[str] = No
         p = get_pathway(conn, user_id)
         view = progress_view(user_id, p)
         open_pathway = p is not None and assignment.has_open_pathway(p["status"], view["completed"])
-        due = assignment.nudge_due(days, user["last_nudge_date"] == today.isoformat(), open_pathway)
+        due = assignment.nudge_due(days, user["last_nudge_date"] == today.isoformat(), open_pathway,
+                                   user["nudges_unopened"])
         message = ""
         if due:
             passes = json.loads(p["state"])["passes"] if p["state"] else 0
             message = engine.nudge_message(passes)
-            conn.execute("UPDATE users SET last_nudge_date=? WHERE user_id=?", (today.isoformat(), user_id))
+            conn.execute("UPDATE users SET last_nudge_date=?, nudges_unopened=nudges_unopened+1 WHERE user_id=?",
+                         (today.isoformat(), user_id))
             log(conn, user, "notification_sent")
         return {"nudge": due, "days_inactive": days, "message": message}
 
@@ -369,7 +371,7 @@ def create_app(db_path: Optional[str] = None, skill_map_path: Optional[str] = No
         user = get_user(conn, user_id)
         if body.event_type not in db.CLIENT_EVENT_TYPES:
             raise HTTPException(400, f"event_type must be one of {sorted(db.CLIENT_EVENT_TYPES)}")
-        if body.event_type == "session_start":
+        if body.event_type in ("session_start", "notification_opened"):
             touch(conn, user_id)
         log(conn, user, body.event_type, body.item_id)
         return {"logged": body.event_type}
