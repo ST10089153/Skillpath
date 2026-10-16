@@ -1,0 +1,66 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Length 1383 >>
+stream
+BT
+/F1 10 Tf
+13 TL
+56 790 Td
+(EXAMPLE - NOT STUDY DATA - Synthetic test profile SP24. Fictional person.) Tj T*
+() Tj T*
+(CHANTEL EXAMPLE-SP24) Tj T*
+(Gauteng | example@example.com | 000 000 0000 \(fictional\)) Tj T*
+() Tj T*
+(PERSONAL SUMMARY) Tj T*
+(Diploma in Software Development graduate. Graduate with two years' work experience, looking to) Tj T*
+(grow into the next role.) Tj T*
+() Tj T*
+(EDUCATION) Tj T*
+(Diploma in Software Development \(NQF 7\), fictional university, 2023) Tj T*
+(National Senior Certificate) Tj T*
+() Tj T*
+(EXPERIENCE AND PROJECTS) Tj T*
+(Junior officer, Kopano Group \(fictional\), 2023 - present) Tj T*
+(- Developed interactive front-end features in JavaScript and React) Tj T*
+(- Built responsive web pages with HTML and CSS) Tj T*
+(- Designed wireframes and UI prototypes in Figma and tested them with users) Tj T*
+(- Updated and published web pages in WordPress) Tj T*
+(- Ran Facebook and Instagram social media campaigns and reported results from Google Analytics) Tj T*
+(- Managed code in Git and GitHub using branches and pull requests) Tj T*
+() Tj T*
+(SKILLS) Tj T*
+(JavaScript & TypeScript, HTML & CSS \(front-end\), UX & UI design, Content management systems,) Tj T*
+(Digital & social media marketing, Version control & DevOps tools) Tj T*
+() Tj T*
+(REFERENCES) Tj T*
+(Available on request.) Tj T*
+() Tj T*
+(EXAMPLE - NOT STUDY DATA) Tj T*
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000212 00000 n 
+0000001647 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1773
+%%EOF

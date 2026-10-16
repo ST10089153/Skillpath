@@ -139,6 +139,10 @@ class CVSkillExtractor:
                 texts.append(t)
                 owner.append(j)
         self._owner = np.array(owner)
+        self._exact_name = {}
+        for j, sk in enumerate(self.skills):
+            for term in [sk, *self.aliases[sk]]:
+                self._exact_name.setdefault(term, j)
         self._text_vecs = self.embed(texts)
 
     @classmethod
@@ -171,6 +175,13 @@ class CVSkillExtractor:
             short = np.array([len(g.split()) <= 2 for g in segs])
             keep[short] = False  # a one- or two-word phrase supports only its single closest skill
             keep[short, top[short, 0]] = True
+            # A phrase that exactly names a skill (or one of its aliases) is evidence for that skill only,
+            # not for neighbouring skills that merely sound similar.
+            for i, g in enumerate(segs):
+                owner = self._exact_name.get(normalise(g).strip(" .:"))
+                if owner is not None:
+                    keep[i] = False
+                    keep[i, owner] = True
             need = np.where(short, max(self.threshold, SHORT_PHRASE_THRESHOLD), self.threshold)[:, None]
             sim = np.where(keep & (sim >= need), sim, -1.0)
             best_seg = sim.argmax(axis=0)
