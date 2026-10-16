@@ -46,7 +46,8 @@ export default function ProgressScreen({ userId }: { userId: string }) {
                   key={b}
                   accessibilityLabel={`${b} ${got ? 'reached' : 'not reached yet'}`}
                   style={{ width: 96, height: 96, borderRadius: 48, marginRight: 12, marginBottom: 8, alignItems: 'center', justifyContent: 'center',
-                           backgroundColor: 'transparent', borderWidth: got ? 1.5 : 1, borderColor: got ? colors.primary : colors.hairline }}
+                           backgroundColor: got ? 'rgba(251,215,132,0.06)' : 'transparent', borderWidth: got ? 1.5 : 1, borderColor: got ? colors.primary : colors.hairline,
+                           ...(got ? ({ boxShadow: '0 0 24px rgba(251,215,132,0.30), inset 0 0 18px rgba(251,215,132,0.10)' } as object) : {}) }}
                 >
                   <Text style={{ fontSize: 24, fontFamily: fonts.display, color: got ? colors.primary : colors.muted }}>{b}</Text>
                   <Text style={{ fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase', fontFamily: fonts.regular, color: got ? colors.primary : colors.faint }}>{got ? 'Reached' : `${MODULES_PER_MILESTONE} modules`}</Text>

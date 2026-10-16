@@ -1,11 +1,17 @@
 // SkillPath UI kit. Editorial dark style after the free "MNTN" Figma Community template, keeping the navy/gold
 // palette of the researcher's Skillpath-ui design: flat deep-navy surfaces with hairline borders, serif display
 // headings (Playfair Display), small letter-spaced gold eyebrows led by a rule, outline controls, 2 px corners.
+// Depth: raised blocks with subtle navy gradients, layered soft shadows and a top highlight; gold-gradient primary
+// buttons. Motion: cards fade and rise in, pressables sink slightly, progress fills smoothly; all motion is
+// skipped when the device's reduce-motion setting is on.
 // Fonts are free Google Fonts bundled with the app (system font until loaded). Every text/background pair
 // meets WCAG AA (4.5:1 or better).
 import { Ionicons } from '@expo/vector-icons';
-import React, { ReactNode } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import {
+  AccessibilityInfo, ActivityIndicator, Animated, Easing, Platform, Pressable, ScrollView, StyleSheet, Text, View, ViewStyle,
+} from 'react-native';
 
 export const colors = {
   bg: '#0B1D26',
@@ -13,7 +19,7 @@ export const colors = {
   cardDeep: '#081820',
   text: '#FFFFFF',
   muted: '#A9B6BD',
-  faint: '#8C9AA2',
+  faint: '#9AA8AF',
   border: 'rgba(255,255,255,0.12)',
   hairline: 'rgba(255,255,255,0.22)',
   primary: '#FBD784',     // gold
@@ -30,6 +36,66 @@ export const colors = {
   dangerSolid: '#FF8A8A',
   dangerBg: 'rgba(255,138,138,0.10)',
 };
+
+// Gradients for raised surfaces (top-left lighter, as if lit from above).
+export const surfaces = {
+  card: ['#17343F', '#0E232C'] as const,
+  hero: ['#1B3A47', '#0B1D26'] as const,
+  gold: ['#FCE3A4', '#E9C46A'] as const,
+};
+
+const NATIVE_DRIVER = Platform.OS !== 'web';
+
+const depth = Platform.select({
+  web: { boxShadow: '0 24px 48px -18px rgba(0,0,0,0.65), 0 4px 10px rgba(0,0,0,0.30)' } as object,
+  default: { shadowColor: '#000', shadowOpacity: 0.45, shadowRadius: 18, shadowOffset: { width: 0, height: 12 }, elevation: 8 },
+});
+const goldGlow = Platform.select({
+  web: { boxShadow: '0 10px 28px -8px rgba(251,215,132,0.45)' } as object,
+  default: { shadowColor: '#FBD784', shadowOpacity: 0.35, shadowRadius: 14, shadowOffset: { width: 0, height: 6 }, elevation: 6 },
+});
+
+/** True when the user asked the OS to reduce motion. */
+export function useReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    AccessibilityInfo.isReduceMotionEnabled().then(setReduced).catch(() => undefined);
+    const sub = AccessibilityInfo.addEventListener?.('reduceMotionChanged', setReduced);
+    return () => sub?.remove?.();
+  }, []);
+  return reduced;
+}
+
+/** Fade-and-rise entrance (420 ms); instant when reduce-motion is on. */
+function useEntrance() {
+  const a = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    let done = false;
+    AccessibilityInfo.isReduceMotionEnabled()
+      .catch(() => false)
+      .then((reduced) => {
+        if (done) return;
+        if (reduced) a.setValue(1);
+        else Animated.timing(a, { toValue: 1, duration: 420, easing: Easing.out(Easing.cubic), useNativeDriver: NATIVE_DRIVER }).start();
+      });
+    return () => { done = true; };
+  }, [a]);
+  return { opacity: a, transform: [{ translateY: a.interpolate({ inputRange: [0, 1], outputRange: [14, 0] }) }] };
+}
+
+/** Pressable that sinks slightly while pressed. */
+export function PressableScale({ children, style, onPress, disabled, ...a11y }: {
+  children: ReactNode; style?: object; onPress: () => void; disabled?: boolean;
+  accessibilityRole?: 'button'; accessibilityLabel?: string; accessibilityHint?: string; accessibilityState?: object;
+}) {
+  const scale = useRef(new Animated.Value(1)).current;
+  const to = (v: number) => Animated.spring(scale, { toValue: v, speed: 40, bounciness: 0, useNativeDriver: NATIVE_DRIVER }).start();
+  return (
+    <Pressable {...a11y} disabled={disabled} onPress={onPress} onPressIn={() => to(0.97)} onPressOut={() => to(1)} style={style}>
+      <Animated.View style={{ transform: [{ scale }] }}>{children}</Animated.View>
+    </Pressable>
+  );
+}
 
 export const fonts = {
   display: 'PlayfairDisplay_600SemiBold',
@@ -78,20 +144,31 @@ export function Body({ children, muted, style }: { children: ReactNode; muted?: 
   return <Text style={[styles.body, muted && { color: colors.muted }, style]}>{children}</Text>;
 }
 
-export function Card({ children, style }: { children: ReactNode; style?: ViewStyle | ViewStyle[] | object }) {
-  return <View style={[styles.card, style]}>{children}</View>;
+export function Card({ children, style, animate = true }: { children: ReactNode; style?: ViewStyle | ViewStyle[] | object; animate?: boolean }) {
+  const entrance = useEntrance();
+  return (
+    <Animated.View style={[styles.cardShell, animate ? entrance : null]}>
+      <LinearGradient colors={surfaces.card} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[styles.cardInner, style]}>
+        {children}
+      </LinearGradient>
+    </Animated.View>
+  );
 }
 
 /** Page-opening block: eyebrow, large serif headline and standfirst; no filled box. */
 export function Hero({ eyebrow, title, children }: {
   icon?: keyof typeof Ionicons.glyphMap; eyebrow?: string; title: string; children?: ReactNode;
 }) {
+  const entrance = useEntrance();
   return (
-    <View style={styles.hero}>
-      {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
-      <Text style={styles.heroTitle} accessibilityRole="header">{title}</Text>
-      {children}
-    </View>
+    <Animated.View style={[styles.heroShell, entrance]}>
+      <LinearGradient colors={surfaces.hero} start={{ x: 1, y: 0 }} end={{ x: 0, y: 1 }} style={styles.hero}>
+        <View style={styles.heroGlow} pointerEvents="none" />
+        {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
+        <Text style={styles.heroTitle} accessibilityRole="header">{title}</Text>
+        {children}
+      </LinearGradient>
+    </Animated.View>
   );
 }
 
@@ -109,19 +186,28 @@ export function Button({ label, onPress, variant = 'primary', disabled, hint, ic
   const v = { primary: styles.btnPrimary, secondary: styles.btnSecondary, tonal: styles.btnTonal, danger: styles.btnDanger }[variant];
   const fg = variant === 'primary' ? colors.primaryText : variant === 'secondary' ? colors.primary
     : variant === 'danger' ? colors.danger : colors.text;
+  const inner = (
+    <>
+      {icon ? <Ionicons name={icon} size={16} color={fg} style={{ marginRight: 10 }} /> : null}
+      <Text style={[styles.btnText, { color: fg }]}>{label}</Text>
+    </>
+  );
   return (
-    <Pressable
+    <PressableScale
       accessibilityRole="button"
       accessibilityLabel={label}
       accessibilityHint={hint}
       accessibilityState={{ disabled: !!disabled }}
       disabled={disabled}
       onPress={onPress}
-      style={({ pressed }) => [styles.btn, v, (disabled || pressed) && { opacity: disabled ? 0.45 : 0.8 }]}
+      style={[{ marginVertical: 6, borderRadius: 4 }, variant === 'primary' && !disabled ? goldGlow : null, disabled ? { opacity: 0.45 } : null]}
     >
-      {icon ? <Ionicons name={icon} size={16} color={fg} style={{ marginRight: 10 }} /> : null}
-      <Text style={[styles.btnText, { color: fg }]}>{label}</Text>
-    </Pressable>
+      {variant === 'primary' ? (
+        <LinearGradient colors={surfaces.gold} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.btn}>{inner}</LinearGradient>
+      ) : (
+        <View style={[styles.btn, v]}>{inner}</View>
+      )}
+    </PressableScale>
   );
 }
 
@@ -138,9 +224,18 @@ export function Checkbox({ label, checked, onChange }: { label: string; checked:
 
 export function ProgressBar({ value, total }: { value: number; total: number }) {
   const pct = total ? Math.round((value / total) * 100) : 0;
+  const reduced = useReducedMotion();
+  const w = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    if (reduced) w.setValue(pct);
+    else Animated.timing(w, { toValue: pct, duration: 700, easing: Easing.out(Easing.cubic), useNativeDriver: false }).start();
+  }, [pct, reduced, w]);
+  const width = w.interpolate({ inputRange: [0, 100], outputRange: ['0%', '100%'] });
   return (
     <View accessibilityRole="progressbar" accessibilityValue={{ min: 0, max: total, now: value }} style={styles.progressTrack}>
-      <View style={[styles.progressFill, { width: `${pct}%` }]} />
+      <Animated.View style={[styles.progressFill, { width }]}>
+        <LinearGradient colors={surfaces.gold} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{ flex: 1 }} />
+      </Animated.View>
     </View>
   );
 }
@@ -190,12 +285,24 @@ export const styles = StyleSheet.create({
   sectionLabel: { fontSize: 12, fontFamily: fonts.semibold, color: colors.primary, textTransform: 'uppercase', letterSpacing: 3, marginTop: 8, marginBottom: 8 },
   body: { fontSize: 16, lineHeight: 26, color: colors.text, marginBottom: 8, fontFamily: fonts.regular },
   small: { fontSize: 13, lineHeight: 19, color: colors.faint, fontFamily: fonts.regular },
-  card: { backgroundColor: colors.card, borderRadius: 2, padding: 20, marginBottom: 16, borderWidth: 1, borderColor: colors.border },
-  hero: { paddingTop: 12, paddingBottom: 22, marginBottom: 18, borderBottomWidth: 1, borderBottomColor: colors.border },
+  cardShell: { marginBottom: 18, borderRadius: 4, ...depth },
+  cardInner: { backgroundColor: colors.card, borderRadius: 4, padding: 20, borderWidth: 1, borderColor: colors.border,
+               borderTopColor: 'rgba(255,255,255,0.16)' },
+  // Standalone raised block for pressables and lists that do not use <Card>.
+  card: { backgroundColor: colors.card, borderRadius: 4, padding: 20, marginBottom: 16, borderWidth: 1, borderColor: colors.border,
+          borderTopColor: 'rgba(255,255,255,0.16)', ...depth,
+          ...(Platform.OS === 'web' ? ({ backgroundImage: 'linear-gradient(135deg, #17343F 0%, #0E232C 100%)' } as object) : {}) },
+  heroShell: { marginBottom: 22, borderRadius: 4, ...depth },
+  hero: { borderRadius: 4, padding: 22, paddingTop: 24, overflow: 'hidden', borderWidth: 1, borderColor: colors.border,
+          borderTopColor: 'rgba(255,255,255,0.18)' },
+  // Soft gold light in the top-right corner of the hero.
+  heroGlow: { position: 'absolute', top: -90, right: -70, width: 220, height: 220, borderRadius: 110,
+              backgroundColor: 'rgba(251,215,132,0.10)',
+              ...(Platform.OS === 'web' ? ({ filter: 'blur(30px)' } as object) : {}) },
   heroEyebrow: { color: colors.primary, fontSize: 12, fontFamily: fonts.semibold, textTransform: 'uppercase', letterSpacing: 3 },
   heroTitle: { color: colors.text, fontSize: 38, lineHeight: 46, fontFamily: fonts.display, marginBottom: 10 },
   bigNumber: { fontSize: 56, lineHeight: 60, fontFamily: fonts.display, color: 'rgba(255,255,255,0.14)', fontVariant: ['lining-nums'], marginTop: -6, marginBottom: 4 },
-  btn: { minHeight: 52, borderRadius: 2, paddingHorizontal: 22, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginVertical: 6 },
+  btn: { minHeight: 52, borderRadius: 4, paddingHorizontal: 22, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' },
   btnPrimary: { backgroundColor: colors.primary },
   btnSecondary: { backgroundColor: 'transparent', borderWidth: 1, borderColor: colors.primary },
   btnTonal: { backgroundColor: 'transparent', borderWidth: 1, borderColor: colors.hairline },
@@ -213,6 +320,6 @@ export const styles = StyleSheet.create({
   chipOn: { backgroundColor: colors.primary, borderColor: colors.primary },
   banner: { backgroundColor: colors.card, borderLeftWidth: 2, borderLeftColor: colors.primary, borderRadius: 0, padding: 14, marginBottom: 12 },
   pill: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderRadius: 2, paddingHorizontal: 10, paddingVertical: 5, marginRight: 6, marginBottom: 6, alignSelf: 'flex-start' },
-  progressTrack: { height: 3, backgroundColor: colors.hairline, overflow: 'hidden', marginVertical: 12 },
-  progressFill: { height: '100%', backgroundColor: colors.primary },
+  progressTrack: { height: 4, borderRadius: 2, backgroundColor: colors.hairline, overflow: 'hidden', marginVertical: 12 },
+  progressFill: { height: '100%', borderRadius: 2, overflow: 'hidden' },
 });

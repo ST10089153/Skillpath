@@ -1,20 +1,22 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { api, Progress } from '../api';
-import { Body, Button, Card, Hero, Loading, Pill, ProgressBar, Screen, SectionLabel, colors, fonts, styles } from '../ui';
+import { Body, Button, Card, Hero, Loading, Pill, PressableScale, ProgressBar, Screen, SectionLabel, colors, fonts, styles } from '../ui';
 
 type Go = 'next' | 'pathway' | 'progress' | 'settings';
 
 function Action({ icon, label, onPress }: { icon: keyof typeof Ionicons.glyphMap; label: string; onPress: () => void }) {
   return (
-    <Pressable accessibilityRole="button" accessibilityLabel={label} onPress={onPress}
-               style={({ pressed }) => [styles.card, { flexBasis: '47%', flexGrow: 1, marginRight: 8, alignItems: 'flex-start', opacity: pressed ? 0.85 : 1 }]}>
+    <PressableScale accessibilityRole="button" accessibilityLabel={label} onPress={onPress}
+                    style={{ flexBasis: '47%', flexGrow: 1, marginRight: 8 }}>
+      <Card style={{ alignItems: 'flex-start' }}>
       <Ionicons name={icon} size={22} color={colors.primary} style={{ marginBottom: 14 }} />
       <Text style={{ fontSize: 15, fontFamily: fonts.semibold, color: colors.text }}>{label}</Text>
       <Ionicons name="arrow-forward" size={16} color={colors.faint} style={{ marginTop: 8 }} />
-    </Pressable>
+      </Card>
+    </PressableScale>
   );
 }
 
