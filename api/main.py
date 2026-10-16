@@ -20,7 +20,7 @@ import threading
 
 from fastapi import Depends, FastAPI, File, Header, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import PlainTextResponse, Response
+from fastapi.responses import HTMLResponse, PlainTextResponse, Response
 from pydantic import BaseModel
 
 from skillpath import assignment, engine
@@ -163,6 +163,13 @@ def create_app(db_path: Optional[str] = None, skill_map_path: Optional[str] = No
                 "next_milestone_message": engine.nudge_message(done) if done < len(pathway) else ""}
 
     # -----------------------------------------------------------------------
+    @app.get("/", response_class=HTMLResponse, include_in_schema=False)
+    def root():
+        return ("<!doctype html><title>SkillPath API</title><body style='font-family:sans-serif;max-width:560px;"
+                "margin:40px auto;line-height:1.5'><h1>SkillPath API is running</h1><p>This is the engine behind "
+                "the app, not the app itself.</p><p><b>Open the app at <a href='http://localhost:8081'>"
+                "http://localhost:8081</a></b></p><p>API documentation: <a href='/docs'>/docs</a></p></body>")
+
     @app.get("/health")
     def health():
         return {"ok": True, "skill_map": os.path.basename(skill_map_path)}

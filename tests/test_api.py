@@ -235,3 +235,8 @@ def test_admin_export_all_zip(client):
     assert {"users.csv", "pathways.csv", "events.csv", "README.txt"} <= set(z.namelist())
     users = z.read("users.csv").decode()
     assert uid in users and "email" not in users.splitlines()[0]
+
+
+def test_root_points_to_the_app(client):
+    r = client.get("/")
+    assert r.status_code == 200 and "localhost:8081" in r.text
