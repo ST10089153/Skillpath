@@ -1,0 +1,271 @@
+skill,occupation,esco_essential_labels,esco_optional_labels
+Additional languages,Communication Coordinator,,speak different languages
+Additional languages,General Biologist,,communicate in English in a competent way; speak different languages
+Additional languages,Marketing Practitioner,,speak different languages
+Additional languages,Translator,speak different languages,
+Agricultural & livestock advisory,Agricultural Scientist,advise on soil and water protection; livestock farming systems; provide advice to farmers; provide livestock advice and guidance; research livestock production,apply precision farming
+Agricultural & livestock advisory,Water Quality Analyst,,advise on soil and water protection
+Auditing,External Auditor,arrange audit; conduct financial audits; develop audit plan; prepare financial auditing reports,internal auditing
+Auditing,Financial Accountant,,conduct financial audits; prepare financial auditing reports
+Auditing,ICT Systems Analyst,,audit techniques
+Auditing,Tax Professional,,conduct financial audits; prepare financial auditing reports
+Backup & disaster recovery,ICT Security Specialist,system backup best practice,lead disaster recovery exercises; perform backups
+Backup & disaster recovery,Systems Administrator,implement ICT recovery system; perform backups,ICT recovery techniques
+Bookkeeping & journal entries,External Auditor,accounting; accounting entries; accounting techniques; check accounting records,identify accounting errors; maintain financial records; maintain records of financial transactions
+Bookkeeping & journal entries,Financial Accountant,accounting entries; accounting techniques; bookkeeping regulations; check accounting records; identify accounting errors; prepare trial accounting balances,handle financial transactions
+Bookkeeping & journal entries,Marketing Practitioner,,accounting
+Bookkeeping & journal entries,Tax Professional,,accounting entries
+Budgeting & cost control,Communication Coordinator,,cost management
+Budgeting & cost control,External Auditor,,evaluate budgets
+Budgeting & cost control,Financial Accountant,,calculate production costs; evaluate budgets; exert expenditure control; keep track of expenses; manage budgets; perform cost accounting activities; support development of annual budget
+Budgeting & cost control,Marketing Practitioner,update budget,
+Budgeting & cost control,Supply Chain Practitioner,budget for financial needs,
+Business analysis & process improvement,Agricultural Scientist,advise on efficiency improvements; make improvements to work activities,
+Business analysis & process improvement,Communication Coordinator,,perform business analysis
+Business analysis & process improvement,ICT Systems Analyst,analyse business processes,
+Business analysis & process improvement,Management Consultant,advise on efficiency improvements; analyse business processes; analyse business requirements; business analysis; business processes; perform business analysis,business process modelling
+Business analysis & process improvement,Policy Analyst,,business analysis; business processes
+Business analysis & process improvement,Tax Professional,,advise on efficiency improvements
+Chemical analysis & chromatography,Chemist,analyse chemical substances; analytical chemistry; apply liquid chromatography; test chemical samples; use chemical analysis equipment; use chromatography software,
+Chemical analysis & chromatography,Chemistry Technician,analyse chemical substances; test chemical samples; use chemical analysis equipment,apply liquid chromatography; gas chromatography; high-performance liquid chromatography; mass spectrometry; use chromatography software
+Chemical analysis & chromatography,Water Quality Analyst,test chemical samples,
+Commercial & corporate law,External Auditor,corporate law,commercial law; financial jurisdiction; follow the statutory obligations
+Commercial & corporate law,Financial Accountant,commercial law; follow the statutory obligations,
+Commercial & corporate law,Management Consultant,,business law; corporate law
+Commercial & corporate law,Marketing Practitioner,follow the statutory obligations,commercial law
+Commercial & corporate law,Policy Analyst,,corporate law
+Commercial & corporate law,Tax Professional,,commercial law
+Consulting & advisory,Agricultural Scientist,,consultation methods
+Consulting & advisory,Chemist,,provide technical expertise
+Consulting & advisory,Environmental Scientist,use consulting techniques,
+Consulting & advisory,External Auditor,,advise on financial matters; use consulting techniques
+Consulting & advisory,Financial Accountant,,advise on financial matters
+Consulting & advisory,General Biologist,,provide technical expertise
+Consulting & advisory,ICT Systems Analyst,,provide ICT consulting advice
+Consulting & advisory,Management Consultant,advise on financial matters; consultation methods,
+Consulting & advisory,Tax Professional,,advise on financial matters; use consulting techniques
+Consulting & advisory,Translator,,use consulting techniques
+Content management systems,Librarian,manage digital libraries,digitise documents; manage digital archives; use software for data preservation
+Content management systems,Marketing Practitioner,,manage website
+Content management systems,Technical Writer,,use content management system software
+Customer relationship management,Chemist,,customer relationship management
+Customer relationship management,Communication Coordinator,,build business relationships; identify customer's needs
+Customer relationship management,ICT Security Specialist,,build business relationships
+Customer relationship management,Librarian,perform customer management,
+Customer relationship management,Management Consultant,build business relationships,
+Customer relationship management,Marketing Practitioner,build business relationships; customer relationship management,contact customers
+Cybersecurity fundamentals,ICT Security Specialist,ICT network security risks; cyber attack counter-measures; identify ICT system weaknesses,ICT encryption; cyber security; information security strategy; web application security threats
+Cybersecurity fundamentals,ICT Systems Analyst,identify ICT system weaknesses; perform security vulnerability assessments,
+Cybersecurity fundamentals,Systems Administrator,manage system security,information security strategy
+Cybersecurity fundamentals,Web Developer,,web application security threats
+Data analysis & statistics,Chemistry Technician,process data,analyse scientific data
+Data analysis & statistics,Data Scientist,execute analytical mathematical calculations; interpret current data; statistics,
+Data analysis & statistics,Environmental Scientist,analyse environmental data,
+Data analysis & statistics,Financial Accountant,statistics,
+Data analysis & statistics,ICT Systems Analyst,apply statistical analysis techniques,conduct quantitative research; execute analytical mathematical calculations
+Data analysis & statistics,Management Consultant,conduct quantitative research,
+Data analysis & statistics,Marketing Practitioner,,statistics; tabulate survey results
+Data analysis & statistics,Water Quality Analyst,interpret scientific data to assess water quality,analyse environmental data; analyse experimental laboratory data
+Data cleaning & data quality,Data Scientist,implement data quality processes; normalise data; perform data cleansing,data quality assessment; define data quality criteria
+Data visualisation & dashboards,Data Scientist,deliver visual presentation of data; visual presentation techniques,business intelligence
+Data visualisation & dashboards,Environmental Scientist,prepare visual data,possess visual literacy
+Data visualisation & dashboards,External Auditor,,develop financial statistics reports
+Data visualisation & dashboards,General Biologist,,prepare visual data
+Data visualisation & dashboards,Management Consultant,,business intelligence
+Data visualisation & dashboards,Marketing Practitioner,,prepare visual data
+Data visualisation & dashboards,Technical Writer,visual presentation techniques,
+Digital & social media marketing,Communication Coordinator,,content marketing strategy; social media management; use analytics for commercial purposes
+Digital & social media marketing,Human Resource Advisor,,apply social media marketing
+Digital & social media marketing,Librarian,,apply social media marketing
+Digital & social media marketing,Marketing Practitioner,,apply social media marketing; execute email marketing; social media management
+Environmental compliance & impact assessment,Agricultural Scientist,environmental policy; report on environmental issues,ensure compliance with environmental legislation
+Environmental compliance & impact assessment,Environmental Scientist,carry out environmental audits; conduct environmental site assessments; ensure compliance with environmental legislation; environmental legislation; environmental policy; pollution legislation; pollution prevention,
+Environmental compliance & impact assessment,General Biologist,,assess environmental impact; pollution legislation; pollution prevention; report on environmental issues
+Environmental compliance & impact assessment,Policy Analyst,,pollution legislation; pollution prevention
+Environmental compliance & impact assessment,Water Quality Analyst,,ensure compliance with environmental legislation; environmental legislation; pollution prevention; report on environmental issues
+Field research & data collection,Environmental Scientist,conduct environmental surveys,
+Field research & data collection,General Biologist,collect biological data; conduct research on fauna; conduct research on flora; gather experimental data,conduct ecological research; perform field research
+Financial analysis & risk,Chemistry Technician,,perform risk analysis
+Financial analysis & risk,External Auditor,analyse financial risk; financial analysis,analyse financial performance of a company
+Financial analysis & risk,Financial Accountant,analyse financial performance of a company,advise on risk management; financial forecasting; perform risk analysis
+Financial analysis & risk,Management Consultant,analyse financial performance of a company,advise on risk management
+Financial analysis & risk,Policy Analyst,,analyse market financial trends
+Financial statements & reporting,External Auditor,interpret financial statements,financial statements
+Financial statements & reporting,Financial Accountant,explain accounting records; financial statements; interpret financial statements; perform balance sheet operations; prepare financial statements,
+Financial statements & reporting,Management Consultant,interpret financial statements,financial statements
+Financial statements & reporting,Tax Professional,interpret financial statements; prepare financial statements,
+Fraud detection,External Auditor,,fraud detection; trace financial transactions
+Fraud detection,Financial Accountant,fraud detection,
+Fraud detection,Tax Professional,,fraud detection
+HTML & CSS (front-end),Software Developer,,World Wide Web Consortium standards
+HTML & CSS (front-end),Technical Writer,,CSS; LESS; Sass; style sheet languages; use markup languages
+HTML & CSS (front-end),Web Developer,World Wide Web Consortium standards; implement front-end website design; style sheet languages; use markup languages,CSS; LESS; Sass
+Identity & access management,ICT Security Specialist,maintain ICT identity management; mobile device management,
+IFRS & accounting standards,External Auditor,,ensure compliance with accounting conventions; ensure compliance with disclosure criteria of accounting information; international financial reporting standards; national generally accepted accounting principles
+IFRS & accounting standards,Financial Accountant,ensure compliance with accounting conventions,international financial reporting standards; national generally accepted accounting principles
+IFRS & accounting standards,Tax Professional,,international financial reporting standards; national generally accepted accounting principles
+Information & library services,Librarian,analyse library users' queries; assess informational needs; classify library materials; collection management; provide library information,develop classification systems
+IT support & troubleshooting,ICT Security Specialist,perform ICT troubleshooting; solve ICT system problems,
+IT support & troubleshooting,ICT Systems Analyst,solve ICT system problems,
+IT support & troubleshooting,Systems Administrator,solve ICT system problems; support ICT system users,
+IT support & troubleshooting,Technical Writer,,ICT help platforms; provide online help
+"Java, C# or C++",ICT Systems Analyst,,ASP.NET; C#; C++; Java (computer programming); Microsoft Visual C++; Visual Studio .NET
+"Java, C# or C++",Software Developer,,ASP.NET; C#; C++; Java (computer programming); Microsoft Visual C++; Visual Studio .NET
+"Java, C# or C++",Web Developer,,ASP.NET; C#; C++; Java (computer programming); Microsoft Visual C++; Visual Studio .NET
+JavaScript & TypeScript,ICT Systems Analyst,,AJAX; JavaScript; TypeScript
+JavaScript & TypeScript,Software Developer,,AJAX; JavaScript; TypeScript
+JavaScript & TypeScript,Web Developer,web programming,AJAX; JavaScript; TypeScript
+Lab equipment calibration,Chemist,calibrate laboratory equipment,
+Lab equipment calibration,Chemistry Technician,maintain laboratory equipment,operate scientific measuring equipment
+Lab equipment calibration,Water Quality Analyst,,calibrate laboratory equipment; maintain test equipment
+Laboratory techniques & safety,Chemist,apply safety procedures in laboratory; laboratory techniques; use personal protection equipment,
+Laboratory techniques & safety,Chemistry Technician,apply safety procedures in laboratory; handle chemicals; health and safety regulations; laboratory techniques; perform laboratory tests,work safely with chemicals
+Laboratory techniques & safety,Environmental Scientist,,handle chemicals
+Laboratory techniques & safety,General Biologist,laboratory techniques,perform laboratory tests
+Laboratory techniques & safety,Water Quality Analyst,laboratory techniques; perform laboratory tests; use personal protection equipment,
+Labour law & HR compliance,Human Resource Advisor,employment law; labour legislation; negotiate employment agreements,human resource management; human resources department processes
+Labour law & HR compliance,Management Consultant,,human resource management
+Machine learning & AI,Data Scientist,build recommender systems; data mining,perform data mining
+Machine learning & AI,ICT Systems Analyst,,ML (computer programming); data mining
+Machine learning & AI,Software Developer,,ML (computer programming); utilise machine learning
+Machine learning & AI,Web Developer,,ML (computer programming)
+Market research,Agricultural Scientist,perform market research,
+Market research,Communication Coordinator,market research,
+Market research,Marketing Practitioner,market research,design questionnaires; perform market research; revise questionnaires
+Market research,Policy Analyst,,market analysis; perform market research
+Marketing campaigns,Communication Coordinator,,coordinate advertising campaigns; develop promotional tools; implement marketing strategies; plan marketing campaign
+Marketing campaigns,Marketing Practitioner,assist in the practical actions for developing marketing campaigns; marketing management,collaborate in the development of marketing strategies
+Marketing campaigns,Policy Analyst,,develop promotional tools
+Microbiology & molecular biology,Chemist,,biological chemistry
+Microbiology & molecular biology,Environmental Scientist,,biology
+Microbiology & molecular biology,General Biologist,biology; microbiology-bacteriology; molecular biology; virology,analyse cell cultures; biological chemistry
+Microbiology & molecular biology,Water Quality Analyst,,microbiology-bacteriology
+Microsoft Office & spreadsheets,Chemist,use a computer,use IT tools
+Microsoft Office & spreadsheets,Chemistry Technician,,use microsoft office
+Microsoft Office & spreadsheets,Environmental Scientist,,have computer literacy
+Microsoft Office & spreadsheets,Marketing Practitioner,perform office routine activities,
+Microsoft Office & spreadsheets,Supply Chain Practitioner,office software; perform office routine activities; use office systems,
+Microsoft Office & spreadsheets,Translator,office software,
+Networks & IT infrastructure,ICT Security Specialist,Internet of Things,ICT infrastructure
+Networks & IT infrastructure,ICT Systems Analyst,ICT infrastructure,hardware architectures; hardware platforms
+Networks & IT infrastructure,Software Developer,,Internet of Things; integrate system components
+Networks & IT infrastructure,Systems Administrator,ICT infrastructure; hardware components; integrate system components,ICT system integration
+Online research & information sourcing,General Biologist,,carry out internet research
+Online research & information sourcing,Librarian,carry out internet research,
+Online research & information sourcing,Marketing Practitioner,perform business research,
+Online research & information sourcing,Supply Chain Practitioner,perform business research,
+Online research & information sourcing,Technical Writer,gather technical information; manage information sources,
+Online research & information sourcing,Translator,consult information sources,
+Payroll,Financial Accountant,,manage payroll reports
+Payroll,Human Resource Advisor,manage payroll,
+Payroll,Tax Professional,,manage payroll reports
+Policy analysis & implementation,General Biologist,,advise on legislative acts
+Policy analysis & implementation,Policy Analyst,advise on legislative acts; government policy implementation; manage government policy implementation,analyse economic trends; carry out strategic research; develop organisational policies
+Presentation & public speaking,Communication Coordinator,conduct public presentations; prepare presentation material; speak in public,give live presentation
+Presentation & public speaking,External Auditor,present reports,
+Presentation & public speaking,General Biologist,,perform lectures
+Presentation & public speaking,Marketing Practitioner,prepare presentation material,conduct public presentations
+Presentation & public speaking,Policy Analyst,,conduct public presentations; present reports
+Programming fundamentals,ICT Systems Analyst,,computer programming; object-oriented modelling
+Programming fundamentals,Software Developer,computer programming; use software design patterns; use software libraries,object-oriented modelling; use concurrent programming; use functional programming; use object-oriented programming
+Programming fundamentals,Systems Administrator,software components libraries,
+Programming fundamentals,Web Developer,computer programming; use software design patterns; use software libraries,object-oriented modelling; use concurrent programming; use functional programming; use object-oriented programming
+Project management,Agricultural Scientist,project management; project management principles,
+Project management,Policy Analyst,,perform project management; project management principles
+Project management,Software Developer,manage engineering project; project management,
+Project management,Technical Writer,,manage content development projects
+Project management,Translator,,perform project management
+Proofreading & editing,Marketing Practitioner,revise drafts made by managers,
+Proofreading & editing,Translator,apply grammar and spelling rules; grammar; proofread text; spelling,
+Public relations & media,Communication Coordinator,advise on public relations; develop communication strategies; develop public relations strategies; draft press releases; establish relationship with the media; organise press conferences; perform public relations,
+Public relations & media,Marketing Practitioner,,draft press releases; public relations
+Public relations & media,Policy Analyst,,establish relationship with the media
+Python programming,Data Scientist,develop data processing applications,
+Python programming,ICT Systems Analyst,,Python (computer programming)
+Python programming,Software Developer,,Python (computer programming)
+Python programming,Web Developer,,Python (computer programming)
+"R, SAS or MATLAB",ICT Systems Analyst,,MATLAB; R; SAS language
+"R, SAS or MATLAB",Software Developer,,MATLAB; R; SAS language
+"R, SAS or MATLAB",Web Developer,,MATLAB; R; SAS language
+Recruitment & interviewing,Communication Coordinator,perform interviews,
+Recruitment & interviewing,Human Resource Advisor,document interviews; interview people; profile people; recruit employees,
+Recruitment & interviewing,Management Consultant,,interview people
+Requirements & systems analysis,ICT Systems Analyst,analyse ICT system; analyse software specifications; define technical requirements; design information system; identify customer requirements; interact with users to gather requirements; systems development life-cycle,unified modelling language
+Requirements & systems analysis,Software Developer,analyse software specifications; create flowchart diagram; define technical requirements; identify customer requirements; interpret technical requirements,
+Requirements & systems analysis,Systems Administrator,ICT system user requirements,interact with users to gather requirements; systems development life-cycle
+Requirements & systems analysis,Web Developer,analyse software specifications; create flowchart diagram,
+Sample preparation & testing,Chemist,document analysis results; manage chemical testing procedures; prepare chemical samples,collect samples for analysis
+Sample preparation & testing,Chemistry Technician,manage chemical testing procedures; perform chemical experiments; prepare chemical samples,document analysis results
+Sample preparation & testing,Environmental Scientist,collect samples for analysis,manage chemical testing procedures
+Sample preparation & testing,General Biologist,,collect samples for analysis
+Sample preparation & testing,Water Quality Analyst,prepare chemical samples,collect samples for analysis; manage chemical testing procedures; test samples for pollutants
+Scientific research & writing,Agricultural Scientist,perform scientific research,
+Scientific research & writing,Chemist,apply scientific methods; scientific research methodology,develop scientific research protocols; write scientific papers
+Scientific research & writing,Chemistry Technician,,develop scientific research protocols; write scientific papers
+Scientific research & writing,Environmental Scientist,scientific research methodology,
+Scientific research & writing,General Biologist,apply scientific methods; perform scientific research; scientific research methodology,develop scientific research protocols; write research proposals; write scientific papers
+Scientific research & writing,Librarian,conduct scholarly research; scientific research methodology,
+Scientific research & writing,Policy Analyst,,scientific research methodology
+Scientific research & writing,Software Developer,perform scientific research,
+Scientific research & writing,Translator,,conduct scholarly research; scientific research methodology; write research proposals; write scientific papers
+Scientific research & writing,Water Quality Analyst,,develop scientific research protocols
+Scripting & automation,ICT Security Specialist,,use scripting programming
+Scripting & automation,Software Developer,,use automatic programming
+Scripting & automation,Systems Administrator,ICT system programming,
+Scripting & automation,Web Developer,,use automatic programming
+Security compliance & audits,ICT Security Specialist,manage IT security compliances,ICT security legislation; ICT security standards; execute ICT audits
+Security compliance & audits,Librarian,information governance compliance,
+Security compliance & audits,Software Developer,,ICT security legislation
+Security compliance & audits,Web Developer,,ICT security legislation
+Software testing & debugging,ICT Security Specialist,,execute software tests
+Software testing & debugging,ICT Systems Analyst,levels of software testing; manage system testing,
+Software testing & debugging,Software Developer,ICT debugging tools; debug software,software anomalies
+Software testing & debugging,Systems Administrator,manage system testing,execute integration testing
+Software testing & debugging,Web Developer,ICT debugging tools; debug software,software anomalies
+SQL & databases,Data Scientist,data models; design database scheme; online analytical processing; query languages,create data models; manage ICT data architecture; manage data
+SQL & databases,ICT Security Specialist,database development tools; maintain database security,manage database
+SQL & databases,ICT Systems Analyst,create data models; online analytical processing,query languages
+Stakeholder management & negotiation,Communication Coordinator,,develop professional network
+Stakeholder management & negotiation,Human Resource Advisor,develop professional network,
+Stakeholder management & negotiation,Librarian,negotiate library contracts,
+Stakeholder management & negotiation,Management Consultant,liaise with managers,
+Stakeholder management & negotiation,Policy Analyst,liaise with local authorities; maintain relationships with government agencies,develop professional network; establish collaborative relations
+Stakeholder management & negotiation,Supply Chain Practitioner,,maintain relationships with stakeholders
+Strategic planning,Communication Coordinator,analyse external factors of companies; strategic planning,analyse internal factors of companies
+Strategic planning,External Auditor,,make strategic business decisions
+Strategic planning,ICT Systems Analyst,analyse the context of an organisation,
+Strategic planning,Management Consultant,analyse business objectives; analyse business plans; analyse external factors of companies; analyse internal factors of companies; analyse the context of an organisation; make strategic business decisions; strategic planning,business strategy concepts
+Strategic planning,Policy Analyst,,business strategy concepts; strategic planning
+Strategic planning,Tax Professional,,make strategic business decisions
+Supply chain & inventory,Financial Accountant,,manage inventory
+Supply chain & inventory,Supply Chain Practitioner,supply chain principles,analyse supply chain strategies; carry out inventory control accuracy; coordinate purchasing activities; inventory management rules; maintain relationship with suppliers; prepare purchasing reportings; purchase supplies
+Systems administration,ICT Security Specialist,,manage ICT virtualisation machines
+Systems administration,ICT Systems Analyst,monitor system performance,
+Systems administration,Systems Administrator,administer ICT system; maintain ICT system; manage changes in ICT system; monitor system performance,adjust ICT system capacity
+Tax & VAT,External Auditor,inspect tax returns,advise on tax planning; tax legislation
+Tax & VAT,Financial Accountant,calculate tax; prepare tax returns forms; tax legislation,
+Tax & VAT,Tax Professional,advise on tax planning; calculate tax; inspect tax returns; inspect taxation documents; prepare tax returns forms; tax legislation; value-added tax law,
+Team leadership,Agricultural Scientist,,evaluate employees work; lead a team
+Team leadership,General Biologist,,coordinate operational activities
+Team leadership,Librarian,,manage human resources
+Technical documentation,ICT Security Specialist,interpret technical texts,
+Technical documentation,Software Developer,provide technical documentation,
+Technical documentation,Systems Administrator,interpret technical texts; provide technical documentation,
+Technical documentation,Technical Writer,ICT software specifications; develop documentation in accordance with legal requirements; documentation types; interpret technical texts; provide technical documentation; structure information,
+Technical documentation,Web Developer,interpret technical texts; provide technical documentation,
+Training & mentoring others,Agricultural Scientist,,train employees
+Training & mentoring others,General Biologist,,create training materials; deliver online training
+Training & mentoring others,Human Resource Advisor,,coach employees; evaluate training; mentor individual employees; organise training; train employees
+Training & mentoring others,ICT Security Specialist,,train employees
+Training & mentoring others,Systems Administrator,,provide ICT system training
+Training & mentoring others,Translator,,coach employees
+Translation & localisation,Technical Writer,,manage localisation
+Translation & localisation,Translator,review translation works; translate different types of texts; translate texts,postediting; use computer-aided translation; use translation memory software
+UX & UI design,Software Developer,,design user interface
+UX & UI design,Systems Administrator,,ICT accessibility standards
+UX & UI design,Technical Writer,,application usability; design graphics; translate requirement concepts into visual design
+UX & UI design,Web Developer,translate requirement concepts into visual design,design user interface
+Version control & DevOps tools,Software Developer,integrated development environment software; tools for software configuration management,Ansible; Apache Maven; Jenkins (tools for software configuration management); Puppet (tools for software configuration management); Salt (tools for software configuration management)
+Version control & DevOps tools,Web Developer,integrated development environment software; tools for software configuration management,Ansible; Apache Maven; Jenkins (tools for software configuration management); Puppet (tools for software configuration management); Salt (tools for software configuration management)
+Water quality testing,General Biologist,,monitor water quality
+Water quality testing,Water Quality Analyst,measure water quality parameters; perform water chemistry analysis; perform water testing procedures; water chemistry analysis,manage water quality testing; monitor water quality

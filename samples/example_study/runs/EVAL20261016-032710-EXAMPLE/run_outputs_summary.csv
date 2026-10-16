@@ -1,0 +1,29 @@
+profile_id,recommended_skill,category,wef_skill,wef_global_rank,alternatives,fallback,module_difficulties
+SP01,Budgeting & cost control,Finance & accounting,Resource management and operations,19,online research & information sourcing;data analysis & statistics;stakeholder management & negotiation,N,1;1;2;2;3;3
+SP02,Budgeting & cost control,Finance & accounting,Resource management and operations,19,online research & information sourcing;data analysis & statistics;stakeholder management & negotiation,N,1;1;2;2;3;3
+SP03,Microsoft Office & spreadsheets,Digital workplace,Technological literacy,3,budgeting & cost control;additional languages;stakeholder management & negotiation,N,1;1;2;2;3;3
+SP04,Stakeholder management & negotiation,People & leadership,Leadership and social influence,7,budgeting & cost control;online research & information sourcing;supply chain & inventory,N,1;1;2;2;3;3
+SP05,Microsoft Office & spreadsheets,Digital workplace,Technological literacy,3,scientific research & writing;chemical analysis & chromatography;lab equipment calibration,N,1;1;2;2;3;3
+SP06,Laboratory techniques & safety,Science & laboratory,Dependability and attention to detail,24,sample preparation & testing;scientific research & writing;budgeting & cost control,N,1;1;2;2;3;3
+SP07,Cybersecurity fundamentals,Networks & cybersecurity,Networks and cybersecurity,2,software testing & debugging;systems administration;backup & disaster recovery,N,1;1;2;2;3;3
+SP08,Online research & information sourcing,Digital workplace,Curiosity and lifelong learning,6,technical documentation;ux & ui design;security compliance & audits,N,1;1;2;2;3;3
+SP09,Auditing,Finance & accounting,Quality control,20,commercial & corporate law;consulting & advisory;financial statements & reporting,N,2;2;3;3;4;4
+SP10,Laboratory techniques & safety,Science & laboratory,Dependability and attention to detail,24,sample preparation & testing;scientific research & writing;data cleaning & data quality,N,2;2;3;3;4;4
+SP11,Stakeholder management & negotiation,People & leadership,Leadership and social influence,7,digital & social media marketing;payroll;consulting & advisory,N,2;2;3;3;4;4
+SP12,Scientific research & writing,Science & laboratory,Curiosity and lifelong learning,6,additional languages;content management systems;customer relationship management,N,2;2;3;3;4;4
+SP13,Laboratory techniques & safety,Science & laboratory,Dependability and attention to detail,24,sample preparation & testing;scientific research & writing;chemical analysis & chromatography,N,2;2;3;3;4;4
+SP14,Consulting & advisory,Business & operations,Leadership and social influence,7,environmental compliance & impact assessment;laboratory techniques & safety;microbiology & molecular biology,N,2;2;3;3;4;4
+SP15,Machine learning & AI,Data & AI,AI and big data,1,data analysis & statistics;data cleaning & data quality;data visualisation & dashboards,N,2;2;3;3;4;4
+SP16,Data analysis & statistics,Data & AI,Analytical thinking,9,consulting & advisory;data cleaning & data quality;machine learning & ai,N,2;2;3;3;4;4
+SP17,Recruitment & interviewing,People & leadership,Talent management,8,stakeholder management & negotiation;strategic planning;commercial & corporate law,N,3;3;4;4;5;5
+SP18,Customer relationship management,Business & operations,Service orientation and customer service,15,online research & information sourcing;stakeholder management & negotiation;additional languages,N,3;3;4;4;5;5
+SP19,Marketing campaigns,Marketing & communication,Marketing and media,18,business analysis & process improvement;strategic planning;additional languages,N,3;3;4;4;5;5
+SP20,Project management,Business & operations,Resource management and operations,19,data visualisation & dashboards;microsoft office & spreadsheets;consulting & advisory,N,3;3;4;4;5;5
+SP21,Chemical analysis & chromatography,Science & laboratory,Technological literacy,3,lab equipment calibration;environmental compliance & impact assessment;microsoft office & spreadsheets,N,3;3;4;4;5;5
+SP22,Environmental compliance & impact assessment,Science & laboratory,Environmental stewardship,10,consulting & advisory;laboratory techniques & safety;microbiology & molecular biology,N,3;3;4;4;5;5
+SP23,Data cleaning & data quality,Data & AI,AI and big data,1,"data visualisation & dashboards;cybersecurity fundamentals;java, c# or c++",N,3;3;4;4;5;5
+SP24,Technical documentation,Marketing & communication,"Reading, writing and mathematics",25,"project management;java, c# or c++;machine learning & ai",N,3;3;4;4;5;5
+SP25,,,,,,Y,
+SP26,HTML & CSS (front-end),Software & web,Design and user experience,14,technical documentation;data analysis & statistics;environmental compliance & impact assessment,N,2;2;3;3;4;4
+SP27,,,,,,Y,
+SP28,,,,,,Y,

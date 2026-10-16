@@ -1,0 +1,101 @@
+{
+ "run_id": "EVAL20261016-032710-EXAMPLE",
+ "complete": true,
+ "started": "2026-10-16T03:27:10",
+ "finished": "2026-10-16T03:27:18",
+ "git_commit": "96fa987",
+ "git_commit_full": "96fa987889f2f5663308a399f0d0f756ebc6fb0b",
+ "app_version": "96fa987",
+ "uncommitted_changes": false,
+ "label": "EXAMPLE",
+ "python": "3.13.7",
+ "platform": "Windows-11-10.0.26200-SP0",
+ "packages": {
+  "pandas": "3.0.6",
+  "numpy": "2.5.3",
+  "matplotlib": "3.11.2",
+  "openpyxl": "3.1.5"
+ },
+ "engine_constants": {
+  "K": 3,
+  "MODULES": 6,
+  "MODULES_PER_MILESTONE": 3,
+  "FAILS_BEFORE_REVISION": 2,
+  "INACTIVE_DAYS_NUDGE": 2,
+  "START_LEVELS": {
+   "limited": 1,
+   "foundational": 2,
+   "moderate": 3
+  },
+  "MIN_DIFFICULTY": 1,
+  "MAX_DIFFICULTY": 5
+ },
+ "steps": [
+  {
+   "command": [
+    "python.exe",
+    "prepare_profiles.py",
+    "profiles.csv",
+    "skill_map.csv",
+    "--fill-acceptable"
+   ],
+   "exit_code": 0,
+   "stdout": "skill_map: 24 occupations, 68 distinct skills\nprofiles: 24 core, 4 edge cases\nFilled acceptable sets for 24 profiles -> profiles_ready.csv (review them, then record the date they were fixed)\n\nREADY: specification sheet passes all checks.\n"
+  },
+  {
+   "command": [
+    "python.exe",
+    "run_synthetic_tests.py",
+    "profiles_ready.csv",
+    "skill_map.csv",
+    "--app-version",
+    "96fa987",
+    "--engine",
+    "skillpath",
+    "--out",
+    "test_output_log.csv"
+   ],
+   "exit_code": 0,
+   "stdout": "Engine: skillpath\nRUN20261016032713: 28 profiles x 2 versions -> 762 logged responses in test_output_log.csv\n"
+  },
+  {
+   "command": [
+    "python.exe",
+    "analyse_outputs.py",
+    "profiles_ready.csv",
+    "test_output_log.csv"
+   ],
+   "exit_code": 0,
+   "stdout": "Profiles: 28 (24 core, 4 edge cases). Logged responses: 762\nApp versions tested: 96fa987\n\n Criterion                                   Metric  Numerator  Denominator   Result                                                          Note  Threshold Met?\n  Utility               U1 Recommendation coverage         24           24 1.000000                                                                      1.0  Yes\n  Utility         U2 Expected-recommendation match         17           24 0.708333          Acceptable sets defined in spec sheet before testing        0.7  Yes\n  Quality         Q1 Adaptive revision correctness         25           25 1.000000        Revision only after 2nd failure, with lower difficulty        1.0  Yes\n  Quality          Q2 Output consistency on repeat         56           56 1.000000                                                 Both versions        1.0  Yes\n  Quality              Q3 Explanation completeness         50           50 1.000000                                                 Both versions        1.0  Yes\n  Quality                  Q4 Edge-case robustness          8            8 1.000000 No error and a valid recommendation or clear fallback message        0.9  Yes\n  Quality                Q5 Nudge rule correctness         25           25 1.000000                                 First nudge on inactive day 2        1.0  Yes\n Efficacy               E1 Multi-milestone staging         25           25 1.000000      Two or more milestones across the steady-progress script        0.9  Yes\n Efficacy E2 Graduated difficulty (ZPD) sequencing         25           25 1.000000                          Each step rises by at most one level        0.9  Yes \n\n                                  Comparison  Result  n\nPrimary recommendation identical in A and B     1.0 24\nMean overlap of alternative recommendations     1.0 24\n            A: income information displayed     1.0 24\nA: displayed income labelled as an estimate     1.0 24\n B: income information leaked (should be 0)     0.0 24\n\nOutputs written to ./results/\n"
+  }
+ ],
+ "sha256": {
+  "PART3_RESULTS.md": "27c21b36fd5ad82bb890bd6f5a73784fece949e84ba077f9ac3c90af096cf506",
+  "README_RUN.txt": "3f3ac6c40d7938f17850d4292b22bc05a40b18da01772b95d3f60a1485d3598e",
+  "profiles_ready.csv": "d6c40cb913c020efc7229a1021c4fe8d683e7d39c9529bec079052ca8b24e1a1",
+  "run_outputs_summary.csv": "77aed926b4f5eb0cbb8d997c36647f492f1ced4e571d8a87778c3c9546c91e6e",
+  "test_output_log.csv": "02a6af471ce02eb07fb3a3233d0285cbaadd135b109c0e8c057469a6d95be716",
+  "code/analyse_outputs.py": "38dccf17f880ced5169a6e41f0a8b4d97dc65b39dfe93288ba8f215c5e8908b9",
+  "code/prepare_profiles.py": "9c46864b66bfcf07ecf0b778c53473e5627c765caed1cfcc134d4aa4d037dbd9",
+  "code/requirements.txt": "fa06492850cdc014fbc55bd7767b86d9eaf1be7a7a78f4c5ab1ddc7d0c63675f",
+  "code/run_synthetic_tests.py": "e1468b020b6ebe1888b52fa6cb5d25b529d34d3f1b785b099daf2264d4b55ce8",
+  "code/skillpath_adapter.py": "8058bd067edba99fead5d174cdda4126e01c2dcf881118a746b1b5610a786f9a",
+  "code/skillpath/__init__.py": "fb505dd0fbae8fc3f9379a50248dca4c4e368c69037af7449ade54b524bd9e81",
+  "code/skillpath/assignment.py": "57a134cdca146bdc1882df90cb1a32926e3f7e9c62fd55d076959b1e19753b18",
+  "code/skillpath/config.py": "5a7d79f8f7e2b04b395c1a8eeb20141776355c266a72cb4948b3bc0fd4f1baca",
+  "code/skillpath/cv.py": "0258b5fb90df463507ce9ae90c4e5a9884fff64842c463a7b3f57af0a3398b00",
+  "code/skillpath/engine.py": "447269ecc5724970279710148313252019585d89776dd053b8538c98eed4ac8a",
+  "inputs/esco_occupation_skills.json": "8e9a536e4c08815fc533ef0e02b605660b348e00b6427b929d67eddcfe2d864a",
+  "inputs/profiles.csv": "b21ef0f512bd3613f8b03104186ed92ff24a3363fd0a3ae3ff915703cb1103c8",
+  "inputs/skill_descriptions.json": "79f67082e5926ff2e8ec702714aa5a1f737c450cc8d8704003a260e00a0cac04",
+  "inputs/skill_map.csv": "4ac33c6740ef44daf4954f0a6904648dade0f7ba0e6ce44f2e86f2eedc61dedb",
+  "inputs/skill_map_build.json": "7d633d0d372e865505da75920ae09e0595a4d738489282a7ff33b20e03405b5c",
+  "inputs/skill_occupation_evidence.csv": "6c68862d96f675f7103044c1f4e5d532561cc94ce5fae99316ab79045f7dd8d3",
+  "inputs/skill_taxonomy.csv": "9c5eeac3099e185e66b213f661877244a62f3ced34c88a1829263f869e053b1c",
+  "inputs/wef_skills_2025.csv": "7ebb1f74866a106d58b4dbec337581aa6396d840dc45174ec98f688e6effeced",
+  "results/analysis_log.txt": "a872e095a0c2cf1313426bb0bf733321a1ef8ed0c5032e474088e3a8b0ac8054",
+  "results/fig_criteria.png": "a8d49bb2033808ff4f4e45dc7d14b24339bf387e825a4946cf3a3d3698ad3a84",
+  "results/fig_match.png": "5e2f9034bcb1cc38ca3aa9c1cdf4ee2d75b6efa750ac391fe4e5a50c8cb4da47",
+  "results/results.xlsx": "56ffecb54d67a3b69a52d013826553f350f41a197d3e7fd391b788a5e7c18614"
+ }
+}

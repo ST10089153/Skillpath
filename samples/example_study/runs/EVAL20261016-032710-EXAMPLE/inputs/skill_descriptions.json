@@ -1,0 +1,2001 @@
+{
+ "additional languages": {
+  "category": "Marketing & communication",
+  "demand_evidence": "WEF skill 'Multi-lingualism': ranked 22 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Communicate in more than one language.",
+  "esco_aliases": [
+   "speak different languages",
+   "communicate in English in a competent way"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Hold a work conversation or pass a recognised language test.",
+  "keywords": [
+   "bilingual",
+   "multilingual",
+   "fluent in"
+  ],
+  "label": "Additional languages",
+  "needed_by_occupations": [
+   "Communication Coordinator",
+   "General Biologist",
+   "Marketing Practitioner",
+   "Translator"
+  ],
+  "wef_global_rank": 22,
+  "wef_skill": "Multi-lingualism"
+ },
+ "agricultural & livestock advisory": {
+  "category": "Science & laboratory",
+  "demand_evidence": "WEF skill 'Environmental stewardship': ranked 10 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Advise on crops, soil, water and livestock practices.",
+  "esco_aliases": [
+   "provide advice to farmers",
+   "livestock farming systems",
+   "apply precision farming",
+   "research livestock production",
+   "provide livestock advice and guidance",
+   "advise on soil and water protection"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Prepare advice for a farm case on soil, water or livestock.",
+  "keywords": [],
+  "label": "Agricultural & livestock advisory",
+  "needed_by_occupations": [
+   "Agricultural Scientist",
+   "Water Quality Analyst"
+  ],
+  "wef_global_rank": 10,
+  "wef_skill": "Environmental stewardship"
+ },
+ "auditing": {
+  "category": "Finance & accounting",
+  "demand_evidence": "WEF skill 'Quality control': ranked 20 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Plan and perform audits and report findings.",
+  "esco_aliases": [
+   "conduct financial audits",
+   "internal auditing",
+   "develop audit plan",
+   "prepare financial auditing reports",
+   "arrange audit",
+   "audit techniques"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Write an audit plan and a findings report for a sample set of records.",
+  "keywords": [
+   "auditing",
+   "internal audit",
+   "external audit"
+  ],
+  "label": "Auditing",
+  "needed_by_occupations": [
+   "External Auditor",
+   "Financial Accountant",
+   "ICT Systems Analyst",
+   "Tax Professional"
+  ],
+  "wef_global_rank": 20,
+  "wef_skill": "Quality control"
+ },
+ "backup & disaster recovery": {
+  "category": "Networks & cybersecurity",
+  "demand_evidence": "WEF skill 'Networks and cybersecurity': ranked 2 of 26 skills on the rise globally, 2025-2030; 74% expect its use to increase by 2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Protect data with backups and recovery plans.",
+  "esco_aliases": [
+   "perform backups",
+   "system backup best practice",
+   "implement ICT recovery system",
+   "ICT recovery techniques",
+   "lead disaster recovery exercises"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Write and test a backup-and-restore procedure.",
+  "keywords": [],
+  "label": "Backup & disaster recovery",
+  "needed_by_occupations": [
+   "ICT Security Specialist",
+   "Systems Administrator"
+  ],
+  "wef_global_rank": 2,
+  "wef_skill": "Networks and cybersecurity"
+ },
+ "bookkeeping & journal entries": {
+  "category": "Finance & accounting",
+  "demand_evidence": "WEF skill 'Reading, writing and mathematics': ranked 25 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Record transactions accurately and reconcile accounts.",
+  "esco_aliases": [
+   "accounting entries",
+   "bookkeeping regulations",
+   "maintain records of financial transactions",
+   "maintain financial records",
+   "handle financial transactions",
+   "check accounting records",
+   "identify accounting errors",
+   "prepare trial accounting balances",
+   "accounting techniques",
+   "accounting"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Record a month of sample transactions and produce a reconciled trial balance; or a bookkeeping certificate (e.g. ICB).",
+  "keywords": [
+   "bookkeeping",
+   "journal entries",
+   "reconciliations",
+   "pastel",
+   "sage",
+   "xero"
+  ],
+  "label": "Bookkeeping & journal entries",
+  "needed_by_occupations": [
+   "External Auditor",
+   "Financial Accountant",
+   "Marketing Practitioner",
+   "Tax Professional"
+  ],
+  "wef_global_rank": 25,
+  "wef_skill": "Reading, writing and mathematics"
+ },
+ "budgeting & cost control": {
+  "category": "Finance & accounting",
+  "demand_evidence": "WEF skill 'Resource management and operations': ranked 19 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Build budgets and track spending against them.",
+  "esco_aliases": [
+   "manage budgets",
+   "evaluate budgets",
+   "update budget",
+   "budget for financial needs",
+   "support development of annual budget",
+   "exert expenditure control",
+   "perform cost accounting activities",
+   "keep track of expenses",
+   "cost management",
+   "calculate production costs"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Build a budget in Excel and report variances for one month.",
+  "keywords": [
+   "budgeting",
+   "budgets",
+   "cost control"
+  ],
+  "label": "Budgeting & cost control",
+  "needed_by_occupations": [
+   "Communication Coordinator",
+   "External Auditor",
+   "Financial Accountant",
+   "Marketing Practitioner",
+   "Supply Chain Practitioner"
+  ],
+  "wef_global_rank": 19,
+  "wef_skill": "Resource management and operations"
+ },
+ "business analysis & process improvement": {
+  "category": "Business & operations",
+  "demand_evidence": "WEF skill 'Systems thinking': ranked 11 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Analyse how work is done and recommend improvements.",
+  "esco_aliases": [
+   "business analysis",
+   "perform business analysis",
+   "analyse business processes",
+   "analyse business requirements",
+   "business process modelling",
+   "advise on efficiency improvements",
+   "make improvements to work activities",
+   "business processes"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Map a business process and propose measurable improvements.",
+  "keywords": [],
+  "label": "Business analysis & process improvement",
+  "needed_by_occupations": [
+   "Agricultural Scientist",
+   "Communication Coordinator",
+   "ICT Systems Analyst",
+   "Management Consultant",
+   "Policy Analyst",
+   "Tax Professional"
+  ],
+  "wef_global_rank": 11,
+  "wef_skill": "Systems thinking"
+ },
+ "chemical analysis & chromatography": {
+  "category": "Science & laboratory",
+  "demand_evidence": "WEF skill 'Technological literacy': ranked 3 of 26 skills on the rise globally, 2025-2030; 82% expect its use to increase by 2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Analyse substances with instruments such as chromatography and spectrometry.",
+  "esco_aliases": [
+   "analyse chemical substances",
+   "apply liquid chromatography",
+   "gas chromatography",
+   "high-performance liquid chromatography",
+   "mass spectrometry",
+   "use chemical analysis equipment",
+   "test chemical samples",
+   "use chromatography software",
+   "analytical chemistry"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Run and interpret a chromatography analysis of a sample.",
+  "keywords": [
+   "hplc",
+   "gc-ms",
+   "chromatography",
+   "spectroscopy",
+   "titration"
+  ],
+  "label": "Chemical analysis & chromatography",
+  "needed_by_occupations": [
+   "Chemist",
+   "Chemistry Technician",
+   "Water Quality Analyst"
+  ],
+  "wef_global_rank": 3,
+  "wef_skill": "Technological literacy"
+ },
+ "commercial & corporate law": {
+  "category": "Law & policy",
+  "demand_evidence": "WEF skill 'Analytical thinking': ranked 9 of 26 skills on the rise globally, 2025-2030; 66% of South African employers rate it a core skill in 2025.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Apply commercial and company law to business situations.",
+  "esco_aliases": [
+   "commercial law",
+   "corporate law",
+   "business law",
+   "follow the statutory obligations",
+   "financial jurisdiction"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Answer case questions on contract and company law.",
+  "keywords": [],
+  "label": "Commercial & corporate law",
+  "needed_by_occupations": [
+   "External Auditor",
+   "Financial Accountant",
+   "Management Consultant",
+   "Marketing Practitioner",
+   "Policy Analyst",
+   "Tax Professional"
+  ],
+  "wef_global_rank": 9,
+  "wef_skill": "Analytical thinking"
+ },
+ "consulting & advisory": {
+  "category": "Business & operations",
+  "demand_evidence": "WEF skill 'Leadership and social influence': ranked 7 of 26 skills on the rise globally, 2025-2030; 61% of South African employers rate it a core skill in 2025.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Advise clients using structured consulting methods.",
+  "esco_aliases": [
+   "use consulting techniques",
+   "consultation methods",
+   "provide technical expertise",
+   "advise on financial matters",
+   "provide ICT consulting advice"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Deliver a short advisory report with recommendations for a client case.",
+  "keywords": [],
+  "label": "Consulting & advisory",
+  "needed_by_occupations": [
+   "Agricultural Scientist",
+   "Chemist",
+   "Environmental Scientist",
+   "External Auditor",
+   "Financial Accountant",
+   "General Biologist",
+   "ICT Systems Analyst",
+   "Management Consultant",
+   "Tax Professional",
+   "Translator"
+  ],
+  "wef_global_rank": 7,
+  "wef_skill": "Leadership and social influence"
+ },
+ "content management systems": {
+  "category": "Digital workplace",
+  "demand_evidence": "WEF skill 'Technological literacy': ranked 3 of 26 skills on the rise globally, 2025-2030; 82% expect its use to increase by 2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Publish and manage content in a CMS or digital repository.",
+  "esco_aliases": [
+   "use content management system software",
+   "manage website",
+   "manage digital libraries",
+   "manage digital archives",
+   "digitise documents",
+   "use software for data preservation"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Create and organise pages or records in a CMS (e.g. WordPress) or digital library.",
+  "keywords": [
+   "wordpress",
+   "drupal",
+   "content management system"
+  ],
+  "label": "Content management systems",
+  "needed_by_occupations": [
+   "Librarian",
+   "Marketing Practitioner",
+   "Technical Writer"
+  ],
+  "wef_global_rank": 3,
+  "wef_skill": "Technological literacy"
+ },
+ "customer relationship management": {
+  "category": "Business & operations",
+  "demand_evidence": "WEF skill 'Service orientation and customer service': ranked 15 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Build and manage customer relationships and needs.",
+  "esco_aliases": [
+   "customer relationship management",
+   "perform customer management",
+   "contact customers",
+   "identify customer's needs",
+   "build business relationships"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Handle a set of customer scenarios and record them in a CRM.",
+  "keywords": [
+   "crm",
+   "salesforce",
+   "hubspot",
+   "customer service"
+  ],
+  "label": "Customer relationship management",
+  "needed_by_occupations": [
+   "Chemist",
+   "Communication Coordinator",
+   "ICT Security Specialist",
+   "Librarian",
+   "Management Consultant",
+   "Marketing Practitioner"
+  ],
+  "wef_global_rank": 15,
+  "wef_skill": "Service orientation and customer service"
+ },
+ "cybersecurity fundamentals": {
+  "category": "Networks & cybersecurity",
+  "demand_evidence": "WEF skill 'Networks and cybersecurity': ranked 2 of 26 skills on the rise globally, 2025-2030; 74% expect its use to increase by 2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Identify threats and apply controls to protect systems and data.",
+  "esco_aliases": [
+   "cyber security",
+   "cyber attack counter-measures",
+   "ICT network security risks",
+   "web application security threats",
+   "perform security vulnerability assessments",
+   "identify ICT system weaknesses",
+   "manage system security",
+   "information security strategy",
+   "ICT encryption"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Complete a vulnerability checklist on a test system; or an entry-level security certificate.",
+  "keywords": [
+   "cybersecurity",
+   "cyber security",
+   "information security"
+  ],
+  "label": "Cybersecurity fundamentals",
+  "needed_by_occupations": [
+   "ICT Security Specialist",
+   "ICT Systems Analyst",
+   "Systems Administrator",
+   "Web Developer"
+  ],
+  "wef_global_rank": 2,
+  "wef_skill": "Networks and cybersecurity"
+ },
+ "data analysis & statistics": {
+  "category": "Data & AI",
+  "demand_evidence": "WEF skill 'Analytical thinking': ranked 9 of 26 skills on the rise globally, 2025-2030; 66% of South African employers rate it a core skill in 2025.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Summarise and interpret data with descriptive and basic inferential statistics.",
+  "esco_aliases": [
+   "statistics",
+   "apply statistical analysis techniques",
+   "interpret current data",
+   "process data",
+   "conduct quantitative research",
+   "execute analytical mathematical calculations",
+   "tabulate survey results",
+   "analyse scientific data",
+   "analyse experimental laboratory data",
+   "analyse environmental data",
+   "interpret scientific data to assess water quality"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Analyse a small dataset and report averages, trends and a simple test, with a written interpretation.",
+  "keywords": [
+   "statistics",
+   "statistical analysis",
+   "spss",
+   "stata"
+  ],
+  "label": "Data analysis & statistics",
+  "needed_by_occupations": [
+   "Chemistry Technician",
+   "Data Scientist",
+   "Environmental Scientist",
+   "Financial Accountant",
+   "ICT Systems Analyst",
+   "Management Consultant",
+   "Marketing Practitioner",
+   "Water Quality Analyst"
+  ],
+  "wef_global_rank": 9,
+  "wef_skill": "Analytical thinking"
+ },
+ "data cleaning & data quality": {
+  "category": "Data & AI",
+  "demand_evidence": "WEF skill 'AI and big data': ranked 1 of 26 skills on the rise globally, 2025-2030; 55% of South African employers rate it a core skill in 2025; 82% expect its use to increase by 2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Find and fix errors, duplicates and gaps so a dataset is reliable.",
+  "esco_aliases": [
+   "perform data cleansing",
+   "implement data quality processes",
+   "data quality assessment",
+   "define data quality criteria",
+   "normalise data"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Clean a messy spreadsheet or CSV and document every correction made.",
+  "keywords": [
+   "data cleaning",
+   "data cleansing",
+   "data quality"
+  ],
+  "label": "Data cleaning & data quality",
+  "needed_by_occupations": [
+   "Data Scientist"
+  ],
+  "wef_global_rank": 1,
+  "wef_skill": "AI and big data"
+ },
+ "data visualisation & dashboards": {
+  "category": "Data & AI",
+  "demand_evidence": "WEF skill 'AI and big data': ranked 1 of 26 skills on the rise globally, 2025-2030; 55% of South African employers rate it a core skill in 2025; 82% expect its use to increase by 2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Present data as clear charts and dashboards (e.g. Excel charts, Power BI).",
+  "esco_aliases": [
+   "deliver visual presentation of data",
+   "visual presentation techniques",
+   "prepare visual data",
+   "business intelligence",
+   "develop financial statistics reports",
+   "possess visual literacy"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Build a one-page dashboard that answers a stated question.",
+  "keywords": [
+   "power bi",
+   "tableau",
+   "dashboards",
+   "data visualisation",
+   "data visualization"
+  ],
+  "label": "Data visualisation & dashboards",
+  "needed_by_occupations": [
+   "Data Scientist",
+   "Environmental Scientist",
+   "External Auditor",
+   "General Biologist",
+   "Management Consultant",
+   "Marketing Practitioner",
+   "Technical Writer"
+  ],
+  "wef_global_rank": 1,
+  "wef_skill": "AI and big data"
+ },
+ "digital & social media marketing": {
+  "category": "Marketing & communication",
+  "demand_evidence": "WEF skill 'Marketing and media': ranked 18 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Plan and run social media, email and content marketing.",
+  "esco_aliases": [
+   "social media management",
+   "apply social media marketing",
+   "execute email marketing",
+   "content marketing strategy",
+   "use analytics for commercial purposes"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Run a small social or email campaign and report its results.",
+  "keywords": [
+   "social media",
+   "digital marketing",
+   "seo",
+   "google ads",
+   "google analytics",
+   "email marketing"
+  ],
+  "label": "Digital & social media marketing",
+  "needed_by_occupations": [
+   "Communication Coordinator",
+   "Human Resource Advisor",
+   "Librarian",
+   "Marketing Practitioner"
+  ],
+  "wef_global_rank": 18,
+  "wef_skill": "Marketing and media"
+ },
+ "environmental compliance & impact assessment": {
+  "category": "Science & laboratory",
+  "demand_evidence": "WEF skill 'Environmental stewardship': ranked 10 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Assess environmental impacts and apply environmental law.",
+  "esco_aliases": [
+   "environmental legislation",
+   "ensure compliance with environmental legislation",
+   "carry out environmental audits",
+   "conduct environmental site assessments",
+   "assess environmental impact",
+   "pollution legislation",
+   "environmental policy",
+   "pollution prevention",
+   "report on environmental issues"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Write a short environmental impact checklist for a site against legislation.",
+  "keywords": [
+   "environmental impact assessment",
+   "eia",
+   "nema"
+  ],
+  "label": "Environmental compliance & impact assessment",
+  "needed_by_occupations": [
+   "Agricultural Scientist",
+   "Environmental Scientist",
+   "General Biologist",
+   "Policy Analyst",
+   "Water Quality Analyst"
+  ],
+  "wef_global_rank": 10,
+  "wef_skill": "Environmental stewardship"
+ },
+ "field research & data collection": {
+  "category": "Science & laboratory",
+  "demand_evidence": "WEF skill 'Curiosity and lifelong learning': ranked 6 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Collect reliable data and samples in the field.",
+  "esco_aliases": [
+   "collect biological data",
+   "perform field research",
+   "conduct environmental surveys",
+   "gather experimental data",
+   "conduct research on fauna",
+   "conduct research on flora",
+   "conduct ecological research"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Plan and carry out a field survey with a data sheet.",
+  "keywords": [
+   "fieldwork",
+   "field work",
+   "field surveys"
+  ],
+  "label": "Field research & data collection",
+  "needed_by_occupations": [
+   "Environmental Scientist",
+   "General Biologist"
+  ],
+  "wef_global_rank": 6,
+  "wef_skill": "Curiosity and lifelong learning"
+ },
+ "financial analysis & risk": {
+  "category": "Finance & accounting",
+  "demand_evidence": "WEF skill 'Analytical thinking': ranked 9 of 26 skills on the rise globally, 2025-2030; 66% of South African employers rate it a core skill in 2025.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Analyse financial performance and risk.",
+  "esco_aliases": [
+   "financial analysis",
+   "analyse financial performance of a company",
+   "analyse financial risk",
+   "financial forecasting",
+   "perform risk analysis",
+   "advise on risk management",
+   "analyse market financial trends"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Analyse a company's results with ratios and identify the main risks.",
+  "keywords": [],
+  "label": "Financial analysis & risk",
+  "needed_by_occupations": [
+   "Chemistry Technician",
+   "External Auditor",
+   "Financial Accountant",
+   "Management Consultant",
+   "Policy Analyst"
+  ],
+  "wef_global_rank": 9,
+  "wef_skill": "Analytical thinking"
+ },
+ "financial statements & reporting": {
+  "category": "Finance & accounting",
+  "demand_evidence": "WEF skill 'Analytical thinking': ranked 9 of 26 skills on the rise globally, 2025-2030; 66% of South African employers rate it a core skill in 2025.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Prepare and interpret income statements, balance sheets and cash-flow statements.",
+  "esco_aliases": [
+   "prepare financial statements",
+   "financial statements",
+   "interpret financial statements",
+   "perform balance sheet operations",
+   "explain accounting records"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Prepare a set of financial statements from a trial balance and explain three ratios.",
+  "keywords": [
+   "financial statements",
+   "financial reporting"
+  ],
+  "label": "Financial statements & reporting",
+  "needed_by_occupations": [
+   "External Auditor",
+   "Financial Accountant",
+   "Management Consultant",
+   "Tax Professional"
+  ],
+  "wef_global_rank": 9,
+  "wef_skill": "Analytical thinking"
+ },
+ "fraud detection": {
+  "category": "Finance & accounting",
+  "demand_evidence": "WEF skill 'Analytical thinking': ranked 9 of 26 skills on the rise globally, 2025-2030; 66% of South African employers rate it a core skill in 2025.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Spot and investigate irregular transactions.",
+  "esco_aliases": [
+   "fraud detection",
+   "trace financial transactions"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Identify the irregular items in a sample ledger and explain why.",
+  "keywords": [],
+  "label": "Fraud detection",
+  "needed_by_occupations": [
+   "External Auditor",
+   "Financial Accountant",
+   "Tax Professional"
+  ],
+  "wef_global_rank": 9,
+  "wef_skill": "Analytical thinking"
+ },
+ "html & css (front-end)": {
+  "category": "Software & web",
+  "demand_evidence": "WEF skill 'Design and user experience': ranked 14 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Build accessible, standards-compliant web pages.",
+  "esco_aliases": [
+   "use markup languages",
+   "style sheet languages",
+   "CSS",
+   "Sass",
+   "LESS",
+   "implement front-end website design",
+   "World Wide Web Consortium standards"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Build a responsive web page that passes W3C validation.",
+  "keywords": [
+   "html",
+   "css",
+   "html5",
+   "css3"
+  ],
+  "label": "HTML & CSS (front-end)",
+  "needed_by_occupations": [
+   "Software Developer",
+   "Technical Writer",
+   "Web Developer"
+  ],
+  "wef_global_rank": 14,
+  "wef_skill": "Design and user experience"
+ },
+ "identity & access management": {
+  "category": "Networks & cybersecurity",
+  "demand_evidence": "WEF skill 'Networks and cybersecurity': ranked 2 of 26 skills on the rise globally, 2025-2030; 74% expect its use to increase by 2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Control who can access which systems and devices.",
+  "esco_aliases": [
+   "maintain ICT identity management",
+   "mobile device management"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Configure user roles and permissions for a test system.",
+  "keywords": [],
+  "label": "Identity & access management",
+  "needed_by_occupations": [
+   "ICT Security Specialist"
+  ],
+  "wef_global_rank": 2,
+  "wef_skill": "Networks and cybersecurity"
+ },
+ "ifrs & accounting standards": {
+  "category": "Finance & accounting",
+  "demand_evidence": "WEF skill 'Quality control': ranked 20 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Apply IFRS, GAAP and accounting conventions correctly.",
+  "esco_aliases": [
+   "international financial reporting standards",
+   "national generally accepted accounting principles",
+   "ensure compliance with accounting conventions",
+   "ensure compliance with disclosure criteria of accounting information"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Correct the treatment of five transactions under IFRS.",
+  "keywords": [
+   "ifrs",
+   "gaap"
+  ],
+  "label": "IFRS & accounting standards",
+  "needed_by_occupations": [
+   "External Auditor",
+   "Financial Accountant",
+   "Tax Professional"
+  ],
+  "wef_global_rank": 20,
+  "wef_skill": "Quality control"
+ },
+ "information & library services": {
+  "category": "Law & policy",
+  "demand_evidence": "WEF skill 'Service orientation and customer service': ranked 15 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Help users find and use information resources.",
+  "esco_aliases": [
+   "provide library information",
+   "analyse library users' queries",
+   "assess informational needs",
+   "classify library materials",
+   "collection management",
+   "develop classification systems"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Answer a set of reference queries and catalogue items.",
+  "keywords": [],
+  "label": "Information & library services",
+  "needed_by_occupations": [
+   "Librarian"
+  ],
+  "wef_global_rank": 15,
+  "wef_skill": "Service orientation and customer service"
+ },
+ "it support & troubleshooting": {
+  "category": "Networks & cybersecurity",
+  "demand_evidence": "WEF skill 'Service orientation and customer service': ranked 15 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Diagnose and resolve user and system problems.",
+  "esco_aliases": [
+   "support ICT system users",
+   "perform ICT troubleshooting",
+   "solve ICT system problems",
+   "ICT help platforms",
+   "provide online help"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Resolve a set of support tickets and document each fix.",
+  "keywords": [
+   "it support",
+   "help desk",
+   "helpdesk",
+   "technical support"
+  ],
+  "label": "IT support & troubleshooting",
+  "needed_by_occupations": [
+   "ICT Security Specialist",
+   "ICT Systems Analyst",
+   "Systems Administrator",
+   "Technical Writer"
+  ],
+  "wef_global_rank": 15,
+  "wef_skill": "Service orientation and customer service"
+ },
+ "java, c# or c++": {
+  "category": "Software & web",
+  "demand_evidence": "WEF skill 'Programming': ranked 17 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Develop applications in a compiled, object-oriented language.",
+  "esco_aliases": [
+   "Java (computer programming)",
+   "C#",
+   "C++",
+   "ASP.NET",
+   "Visual Studio .NET",
+   "Microsoft Visual C++"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Build a small console or desktop app in Java, C# or C++.",
+  "keywords": [
+   "java",
+   "c#",
+   "c++",
+   ".net"
+  ],
+  "label": "Java, C# or C++",
+  "needed_by_occupations": [
+   "ICT Systems Analyst",
+   "Software Developer",
+   "Web Developer"
+  ],
+  "wef_global_rank": 17,
+  "wef_skill": "Programming"
+ },
+ "javascript & typescript": {
+  "category": "Software & web",
+  "demand_evidence": "WEF skill 'Programming': ranked 17 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Build interactive web functionality in JavaScript or TypeScript.",
+  "esco_aliases": [
+   "JavaScript",
+   "TypeScript",
+   "AJAX",
+   "web programming"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Build a small interactive web page or app in JavaScript.",
+  "keywords": [
+   "javascript",
+   "typescript",
+   "node.js",
+   "react"
+  ],
+  "label": "JavaScript & TypeScript",
+  "needed_by_occupations": [
+   "ICT Systems Analyst",
+   "Software Developer",
+   "Web Developer"
+  ],
+  "wef_global_rank": 17,
+  "wef_skill": "Programming"
+ },
+ "lab equipment calibration": {
+  "category": "Science & laboratory",
+  "demand_evidence": "WEF skill 'Quality control': ranked 20 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Calibrate and maintain scientific equipment.",
+  "esco_aliases": [
+   "calibrate laboratory equipment",
+   "maintain laboratory equipment",
+   "maintain test equipment",
+   "operate scientific measuring equipment"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Calibrate an instrument and record the calibration.",
+  "keywords": [],
+  "label": "Lab equipment calibration",
+  "needed_by_occupations": [
+   "Chemist",
+   "Chemistry Technician",
+   "Water Quality Analyst"
+  ],
+  "wef_global_rank": 20,
+  "wef_skill": "Quality control"
+ },
+ "laboratory techniques & safety": {
+  "category": "Science & laboratory",
+  "demand_evidence": "WEF skill 'Dependability and attention to detail': ranked 24 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Work safely and accurately in a laboratory.",
+  "esco_aliases": [
+   "laboratory techniques",
+   "apply safety procedures in laboratory",
+   "work safely with chemicals",
+   "handle chemicals",
+   "use personal protection equipment",
+   "health and safety regulations",
+   "perform laboratory tests"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Complete a supervised lab procedure following safety protocols; or a lab safety certificate.",
+  "keywords": [
+   "laboratory",
+   "lab work",
+   "good laboratory practice"
+  ],
+  "label": "Laboratory techniques & safety",
+  "needed_by_occupations": [
+   "Chemist",
+   "Chemistry Technician",
+   "Environmental Scientist",
+   "General Biologist",
+   "Water Quality Analyst"
+  ],
+  "wef_global_rank": 24,
+  "wef_skill": "Dependability and attention to detail"
+ },
+ "labour law & hr compliance": {
+  "category": "People & leadership",
+  "demand_evidence": "WEF skill 'Talent management': ranked 8 of 26 skills on the rise globally, 2025-2030; 53% of South African employers rate it a core skill in 2025.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Apply labour law and HR policy correctly.",
+  "esco_aliases": [
+   "labour legislation",
+   "employment law",
+   "negotiate employment agreements",
+   "human resource management",
+   "human resources department processes"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Answer case questions on the Labour Relations Act and Basic Conditions of Employment Act.",
+  "keywords": [
+   "labour relations act",
+   "basic conditions of employment act",
+   "labour law",
+   "employment equity"
+  ],
+  "label": "Labour law & HR compliance",
+  "needed_by_occupations": [
+   "Human Resource Advisor",
+   "Management Consultant"
+  ],
+  "wef_global_rank": 8,
+  "wef_skill": "Talent management"
+ },
+ "machine learning & ai": {
+  "category": "Data & AI",
+  "demand_evidence": "WEF skill 'AI and big data': ranked 1 of 26 skills on the rise globally, 2025-2030; 55% of South African employers rate it a core skill in 2025; 82% expect its use to increase by 2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Build and evaluate simple predictive or recommender models.",
+  "esco_aliases": [
+   "build recommender systems",
+   "utilise machine learning",
+   "data mining",
+   "perform data mining",
+   "ML (computer programming)"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Train and evaluate a basic model (e.g. classification) in a notebook and explain its accuracy.",
+  "keywords": [
+   "machine learning",
+   "scikit-learn",
+   "tensorflow",
+   "pytorch",
+   "artificial intelligence"
+  ],
+  "label": "Machine learning & AI",
+  "needed_by_occupations": [
+   "Data Scientist",
+   "ICT Systems Analyst",
+   "Software Developer",
+   "Web Developer"
+  ],
+  "wef_global_rank": 1,
+  "wef_skill": "AI and big data"
+ },
+ "market research": {
+  "category": "Marketing & communication",
+  "demand_evidence": "WEF skill 'Analytical thinking': ranked 9 of 26 skills on the rise globally, 2025-2030; 66% of South African employers rate it a core skill in 2025.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Research customers and markets to inform decisions.",
+  "esco_aliases": [
+   "market research",
+   "perform market research",
+   "market analysis",
+   "design questionnaires",
+   "revise questionnaires"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Design a short survey, collect responses and report findings.",
+  "keywords": [
+   "market research",
+   "surveys"
+  ],
+  "label": "Market research",
+  "needed_by_occupations": [
+   "Agricultural Scientist",
+   "Communication Coordinator",
+   "Marketing Practitioner",
+   "Policy Analyst"
+  ],
+  "wef_global_rank": 9,
+  "wef_skill": "Analytical thinking"
+ },
+ "marketing campaigns": {
+  "category": "Marketing & communication",
+  "demand_evidence": "WEF skill 'Marketing and media': ranked 18 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Plan and coordinate marketing campaigns.",
+  "esco_aliases": [
+   "plan marketing campaign",
+   "implement marketing strategies",
+   "coordinate advertising campaigns",
+   "marketing management",
+   "assist in the practical actions for developing marketing campaigns",
+   "collaborate in the development of marketing strategies",
+   "develop promotional tools"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Write a campaign plan with audience, message, channels and budget.",
+  "keywords": [],
+  "label": "Marketing campaigns",
+  "needed_by_occupations": [
+   "Communication Coordinator",
+   "Marketing Practitioner",
+   "Policy Analyst"
+  ],
+  "wef_global_rank": 18,
+  "wef_skill": "Marketing and media"
+ },
+ "microbiology & molecular biology": {
+  "category": "Science & laboratory",
+  "demand_evidence": "WEF skill 'Technological literacy': ranked 3 of 26 skills on the rise globally, 2025-2030; 82% expect its use to increase by 2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Work with microorganisms, cells and molecular methods.",
+  "esco_aliases": [
+   "microbiology-bacteriology",
+   "molecular biology",
+   "virology",
+   "analyse cell cultures",
+   "biology",
+   "biological chemistry"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Perform a culture or molecular technique and report results.",
+  "keywords": [
+   "microbiology",
+   "pcr",
+   "molecular biology",
+   "cell culture"
+  ],
+  "label": "Microbiology & molecular biology",
+  "needed_by_occupations": [
+   "Chemist",
+   "Environmental Scientist",
+   "General Biologist",
+   "Water Quality Analyst"
+  ],
+  "wef_global_rank": 3,
+  "wef_skill": "Technological literacy"
+ },
+ "microsoft office & spreadsheets": {
+  "category": "Digital workplace",
+  "demand_evidence": "WEF skill 'Technological literacy': ranked 3 of 26 skills on the rise globally, 2025-2030; 82% expect its use to increase by 2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Use Word, Excel and other office tools productively, including formulas and tables.",
+  "esco_aliases": [
+   "office software",
+   "use microsoft office",
+   "use office systems",
+   "perform office routine activities",
+   "use a computer",
+   "have computer literacy",
+   "use IT tools"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Pass a practical Excel task (formulas, lookups, pivot table) or a Microsoft Office Specialist exam.",
+  "keywords": [
+   "excel",
+   "microsoft excel",
+   "ms excel",
+   "microsoft office",
+   "ms office",
+   "word",
+   "powerpoint",
+   "google sheets"
+  ],
+  "label": "Microsoft Office & spreadsheets",
+  "needed_by_occupations": [
+   "Chemist",
+   "Chemistry Technician",
+   "Environmental Scientist",
+   "Marketing Practitioner",
+   "Supply Chain Practitioner",
+   "Translator"
+  ],
+  "wef_global_rank": 3,
+  "wef_skill": "Technological literacy"
+ },
+ "networks & it infrastructure": {
+  "category": "Networks & cybersecurity",
+  "demand_evidence": "WEF skill 'Networks and cybersecurity': ranked 2 of 26 skills on the rise globally, 2025-2030; 74% expect its use to increase by 2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Understand and integrate hardware, networks and connected devices.",
+  "esco_aliases": [
+   "ICT infrastructure",
+   "hardware components",
+   "ICT system integration",
+   "integrate system components",
+   "Internet of Things",
+   "hardware architectures",
+   "hardware platforms"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Diagram and configure a small network.",
+  "keywords": [
+   "networking",
+   "ccna",
+   "network configuration"
+  ],
+  "label": "Networks & IT infrastructure",
+  "needed_by_occupations": [
+   "ICT Security Specialist",
+   "ICT Systems Analyst",
+   "Software Developer",
+   "Systems Administrator"
+  ],
+  "wef_global_rank": 2,
+  "wef_skill": "Networks and cybersecurity"
+ },
+ "online research & information sourcing": {
+  "category": "Digital workplace",
+  "demand_evidence": "WEF skill 'Curiosity and lifelong learning': ranked 6 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Find, evaluate and cite reliable information online.",
+  "esco_aliases": [
+   "carry out internet research",
+   "consult information sources",
+   "manage information sources",
+   "gather technical information",
+   "perform business research"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Produce a short sourced brief on a topic, citing at least five credible sources.",
+  "keywords": [],
+  "label": "Online research & information sourcing",
+  "needed_by_occupations": [
+   "General Biologist",
+   "Librarian",
+   "Marketing Practitioner",
+   "Supply Chain Practitioner",
+   "Technical Writer",
+   "Translator"
+  ],
+  "wef_global_rank": 6,
+  "wef_skill": "Curiosity and lifelong learning"
+ },
+ "payroll": {
+  "category": "Finance & accounting",
+  "demand_evidence": "WEF skill 'Resource management and operations': ranked 19 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Process salaries, deductions and payroll reports.",
+  "esco_aliases": [
+   "manage payroll",
+   "manage payroll reports"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Run a sample payroll with PAYE and UIF deductions.",
+  "keywords": [
+   "payroll",
+   "paye"
+  ],
+  "label": "Payroll",
+  "needed_by_occupations": [
+   "Financial Accountant",
+   "Human Resource Advisor",
+   "Tax Professional"
+  ],
+  "wef_global_rank": 19,
+  "wef_skill": "Resource management and operations"
+ },
+ "policy analysis & implementation": {
+  "category": "Law & policy",
+  "demand_evidence": "WEF skill 'Systems thinking': ranked 11 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Analyse and implement government or organisational policy.",
+  "esco_aliases": [
+   "government policy implementation",
+   "manage government policy implementation",
+   "advise on legislative acts",
+   "develop organisational policies",
+   "analyse economic trends",
+   "carry out strategic research"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Write a policy brief with options and a recommendation.",
+  "keywords": [],
+  "label": "Policy analysis & implementation",
+  "needed_by_occupations": [
+   "General Biologist",
+   "Policy Analyst"
+  ],
+  "wef_global_rank": 11,
+  "wef_skill": "Systems thinking"
+ },
+ "presentation & public speaking": {
+  "category": "Marketing & communication",
+  "demand_evidence": "WEF skill 'Leadership and social influence': ranked 7 of 26 skills on the rise globally, 2025-2030; 61% of South African employers rate it a core skill in 2025.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Present information clearly to an audience.",
+  "esco_aliases": [
+   "conduct public presentations",
+   "speak in public",
+   "give live presentation",
+   "prepare presentation material",
+   "present reports",
+   "perform lectures"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Deliver a 5-minute recorded presentation with slides.",
+  "keywords": [
+   "public speaking",
+   "presentations"
+  ],
+  "label": "Presentation & public speaking",
+  "needed_by_occupations": [
+   "Communication Coordinator",
+   "External Auditor",
+   "General Biologist",
+   "Marketing Practitioner",
+   "Policy Analyst"
+  ],
+  "wef_global_rank": 7,
+  "wef_skill": "Leadership and social influence"
+ },
+ "programming fundamentals": {
+  "category": "Software & web",
+  "demand_evidence": "WEF skill 'Programming': ranked 17 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Write structured, object-oriented code using libraries and design patterns.",
+  "esco_aliases": [
+   "computer programming",
+   "use object-oriented programming",
+   "object-oriented modelling",
+   "use software design patterns",
+   "use software libraries",
+   "software components libraries",
+   "use functional programming",
+   "use concurrent programming"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Build a small working program with tests, shared on GitHub.",
+  "keywords": [
+   "object-oriented programming",
+   "oop"
+  ],
+  "label": "Programming fundamentals",
+  "needed_by_occupations": [
+   "ICT Systems Analyst",
+   "Software Developer",
+   "Systems Administrator",
+   "Web Developer"
+  ],
+  "wef_global_rank": 17,
+  "wef_skill": "Programming"
+ },
+ "project management": {
+  "category": "Business & operations",
+  "demand_evidence": "WEF skill 'Resource management and operations': ranked 19 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Plan, schedule and track projects to deliver on time and budget.",
+  "esco_aliases": [
+   "project management",
+   "project management principles",
+   "perform project management",
+   "manage engineering project",
+   "manage content development projects"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Produce a project plan (scope, schedule, risks) and track it; or a project-management certificate.",
+  "keywords": [
+   "project management",
+   "prince2",
+   "pmp",
+   "agile",
+   "scrum"
+  ],
+  "label": "Project management",
+  "needed_by_occupations": [
+   "Agricultural Scientist",
+   "Policy Analyst",
+   "Software Developer",
+   "Technical Writer",
+   "Translator"
+  ],
+  "wef_global_rank": 19,
+  "wef_skill": "Resource management and operations"
+ },
+ "proofreading & editing": {
+  "category": "Marketing & communication",
+  "demand_evidence": "WEF skill 'Dependability and attention to detail': ranked 24 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Edit text for grammar, spelling, clarity and style.",
+  "esco_aliases": [
+   "proofread text",
+   "apply grammar and spelling rules",
+   "grammar",
+   "spelling",
+   "revise drafts made by managers"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Edit a 1,000-word document with tracked changes.",
+  "keywords": [
+   "proofreading",
+   "editing",
+   "copy editing"
+  ],
+  "label": "Proofreading & editing",
+  "needed_by_occupations": [
+   "Marketing Practitioner",
+   "Translator"
+  ],
+  "wef_global_rank": 24,
+  "wef_skill": "Dependability and attention to detail"
+ },
+ "public relations & media": {
+  "category": "Marketing & communication",
+  "demand_evidence": "WEF skill 'Leadership and social influence': ranked 7 of 26 skills on the rise globally, 2025-2030; 61% of South African employers rate it a core skill in 2025.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Manage an organisation's public image and media relations.",
+  "esco_aliases": [
+   "perform public relations",
+   "public relations",
+   "develop public relations strategies",
+   "draft press releases",
+   "establish relationship with the media",
+   "organise press conferences",
+   "advise on public relations",
+   "develop communication strategies"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Write a press release and a media contact plan.",
+  "keywords": [
+   "public relations",
+   "press releases"
+  ],
+  "label": "Public relations & media",
+  "needed_by_occupations": [
+   "Communication Coordinator",
+   "Marketing Practitioner",
+   "Policy Analyst"
+  ],
+  "wef_global_rank": 7,
+  "wef_skill": "Leadership and social influence"
+ },
+ "python programming": {
+  "category": "Data & AI",
+  "demand_evidence": "WEF skill 'Programming': ranked 17 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Write Python scripts to automate tasks and analyse data.",
+  "esco_aliases": [
+   "Python (computer programming)",
+   "develop data processing applications"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Complete a Python script that reads a file, processes it and produces a result; or a recognised Python certificate.",
+  "keywords": [
+   "python",
+   "pandas",
+   "numpy"
+  ],
+  "label": "Python programming",
+  "needed_by_occupations": [
+   "Data Scientist",
+   "ICT Systems Analyst",
+   "Software Developer",
+   "Web Developer"
+  ],
+  "wef_global_rank": 17,
+  "wef_skill": "Programming"
+ },
+ "r, sas or matlab": {
+  "category": "Data & AI",
+  "demand_evidence": "WEF skill 'Programming': ranked 17 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Use a statistical programming language for analysis.",
+  "esco_aliases": [
+   "R",
+   "SAS language",
+   "MATLAB"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Reproduce a statistical analysis in R, SAS or MATLAB with commented code.",
+  "keywords": [
+   "rstudio",
+   "sas",
+   "matlab"
+  ],
+  "label": "R, SAS or MATLAB",
+  "needed_by_occupations": [
+   "ICT Systems Analyst",
+   "Software Developer",
+   "Web Developer"
+  ],
+  "wef_global_rank": 17,
+  "wef_skill": "Programming"
+ },
+ "recruitment & interviewing": {
+  "category": "People & leadership",
+  "demand_evidence": "WEF skill 'Talent management': ranked 8 of 26 skills on the rise globally, 2025-2030; 53% of South African employers rate it a core skill in 2025.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Attract, interview and select candidates.",
+  "esco_aliases": [
+   "recruit employees",
+   "interview people",
+   "document interviews",
+   "perform interviews",
+   "profile people"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Run a structured mock interview with a scoring guide.",
+  "keywords": [
+   "recruitment",
+   "interviewing",
+   "talent acquisition"
+  ],
+  "label": "Recruitment & interviewing",
+  "needed_by_occupations": [
+   "Communication Coordinator",
+   "Human Resource Advisor",
+   "Management Consultant"
+  ],
+  "wef_global_rank": 8,
+  "wef_skill": "Talent management"
+ },
+ "requirements & systems analysis": {
+  "category": "Software & web",
+  "demand_evidence": "WEF skill 'Systems thinking': ranked 11 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Gather requirements and model systems with flowcharts and UML.",
+  "esco_aliases": [
+   "analyse software specifications",
+   "define technical requirements",
+   "identify customer requirements",
+   "interact with users to gather requirements",
+   "unified modelling language",
+   "create flowchart diagram",
+   "systems development life-cycle",
+   "analyse ICT system",
+   "design information system",
+   "interpret technical requirements",
+   "ICT system user requirements"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Write a requirements specification with a UML or flowchart model for a small system.",
+  "keywords": [
+   "uml",
+   "requirements gathering",
+   "systems analysis"
+  ],
+  "label": "Requirements & systems analysis",
+  "needed_by_occupations": [
+   "ICT Systems Analyst",
+   "Software Developer",
+   "Systems Administrator",
+   "Web Developer"
+  ],
+  "wef_global_rank": 11,
+  "wef_skill": "Systems thinking"
+ },
+ "sample preparation & testing": {
+  "category": "Science & laboratory",
+  "demand_evidence": "WEF skill 'Quality control': ranked 20 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Prepare samples and run standard tests correctly.",
+  "esco_aliases": [
+   "prepare chemical samples",
+   "perform chemical experiments",
+   "collect samples for analysis",
+   "test samples for pollutants",
+   "manage chemical testing procedures",
+   "document analysis results"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Prepare and test samples to a written method and record results.",
+  "keywords": [],
+  "label": "Sample preparation & testing",
+  "needed_by_occupations": [
+   "Chemist",
+   "Chemistry Technician",
+   "Environmental Scientist",
+   "General Biologist",
+   "Water Quality Analyst"
+  ],
+  "wef_global_rank": 20,
+  "wef_skill": "Quality control"
+ },
+ "scientific research & writing": {
+  "category": "Science & laboratory",
+  "demand_evidence": "WEF skill 'Curiosity and lifelong learning': ranked 6 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Design studies and write up scientific results.",
+  "esco_aliases": [
+   "perform scientific research",
+   "scientific research methodology",
+   "apply scientific methods",
+   "write scientific papers",
+   "develop scientific research protocols",
+   "write research proposals",
+   "conduct scholarly research"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Write a research protocol or short scientific report.",
+  "keywords": [],
+  "label": "Scientific research & writing",
+  "needed_by_occupations": [
+   "Agricultural Scientist",
+   "Chemist",
+   "Chemistry Technician",
+   "Environmental Scientist",
+   "General Biologist",
+   "Librarian",
+   "Policy Analyst",
+   "Software Developer",
+   "Translator",
+   "Water Quality Analyst"
+  ],
+  "wef_global_rank": 6,
+  "wef_skill": "Curiosity and lifelong learning"
+ },
+ "scripting & automation": {
+  "category": "Networks & cybersecurity",
+  "demand_evidence": "WEF skill 'Technological literacy': ranked 3 of 26 skills on the rise globally, 2025-2030; 82% expect its use to increase by 2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Automate routine IT tasks with scripts.",
+  "esco_aliases": [
+   "use scripting programming",
+   "ICT system programming",
+   "use automatic programming"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Write a script that automates a repetitive task.",
+  "keywords": [],
+  "label": "Scripting & automation",
+  "needed_by_occupations": [
+   "ICT Security Specialist",
+   "Software Developer",
+   "Systems Administrator",
+   "Web Developer"
+  ],
+  "wef_global_rank": 3,
+  "wef_skill": "Technological literacy"
+ },
+ "security compliance & audits": {
+  "category": "Networks & cybersecurity",
+  "demand_evidence": "WEF skill 'Networks and cybersecurity': ranked 2 of 26 skills on the rise globally, 2025-2030; 74% expect its use to increase by 2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Apply security standards, laws and audits (e.g. POPIA, ISO 27001).",
+  "esco_aliases": [
+   "manage IT security compliances",
+   "ICT security standards",
+   "ICT security legislation",
+   "execute ICT audits",
+   "information governance compliance"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Map an organisation's controls to a security standard and list the gaps.",
+  "keywords": [
+   "iso 27001",
+   "popia"
+  ],
+  "label": "Security compliance & audits",
+  "needed_by_occupations": [
+   "ICT Security Specialist",
+   "Librarian",
+   "Software Developer",
+   "Web Developer"
+  ],
+  "wef_global_rank": 2,
+  "wef_skill": "Networks and cybersecurity"
+ },
+ "software testing & debugging": {
+  "category": "Software & web",
+  "demand_evidence": "WEF skill 'Quality control': ranked 20 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Find, reproduce and fix software defects; write tests.",
+  "esco_aliases": [
+   "debug software",
+   "ICT debugging tools",
+   "execute software tests",
+   "levels of software testing",
+   "manage system testing",
+   "execute integration testing",
+   "software anomalies"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Write unit tests for a function and fix a seeded bug.",
+  "keywords": [
+   "unit testing",
+   "unit tests",
+   "debugging",
+   "software testing"
+  ],
+  "label": "Software testing & debugging",
+  "needed_by_occupations": [
+   "ICT Security Specialist",
+   "ICT Systems Analyst",
+   "Software Developer",
+   "Systems Administrator",
+   "Web Developer"
+  ],
+  "wef_global_rank": 20,
+  "wef_skill": "Quality control"
+ },
+ "sql & databases": {
+  "category": "Data & AI",
+  "demand_evidence": "WEF skill 'AI and big data': ranked 1 of 26 skills on the rise globally, 2025-2030; 55% of South African employers rate it a core skill in 2025; 82% expect its use to increase by 2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Query, design and maintain relational databases with SQL.",
+  "esco_aliases": [
+   "query languages",
+   "design database scheme",
+   "database development tools",
+   "manage database",
+   "maintain database security",
+   "create data models",
+   "data models",
+   "online analytical processing",
+   "manage data",
+   "manage ICT data architecture"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Write SQL queries (filter, join, group) that answer five business questions on a sample database.",
+  "keywords": [
+   "sql",
+   "mysql",
+   "postgresql",
+   "sql server",
+   "oracle database",
+   "database design"
+  ],
+  "label": "SQL & databases",
+  "needed_by_occupations": [
+   "Data Scientist",
+   "ICT Security Specialist",
+   "ICT Systems Analyst"
+  ],
+  "wef_global_rank": 1,
+  "wef_skill": "AI and big data"
+ },
+ "stakeholder management & negotiation": {
+  "category": "People & leadership",
+  "demand_evidence": "WEF skill 'Leadership and social influence': ranked 7 of 26 skills on the rise globally, 2025-2030; 61% of South African employers rate it a core skill in 2025.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Build working relationships and negotiate agreements.",
+  "esco_aliases": [
+   "maintain relationships with stakeholders",
+   "liaise with managers",
+   "maintain relationships with government agencies",
+   "liaise with local authorities",
+   "negotiate library contracts",
+   "establish collaborative relations",
+   "develop professional network"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Prepare a stakeholder map and role-play a negotiation.",
+  "keywords": [],
+  "label": "Stakeholder management & negotiation",
+  "needed_by_occupations": [
+   "Communication Coordinator",
+   "Human Resource Advisor",
+   "Librarian",
+   "Management Consultant",
+   "Policy Analyst",
+   "Supply Chain Practitioner"
+  ],
+  "wef_global_rank": 7,
+  "wef_skill": "Leadership and social influence"
+ },
+ "strategic planning": {
+  "category": "Business & operations",
+  "demand_evidence": "WEF skill 'Analytical thinking': ranked 9 of 26 skills on the rise globally, 2025-2030; 66% of South African employers rate it a core skill in 2025.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Set objectives and plan how to reach them.",
+  "esco_aliases": [
+   "strategic planning",
+   "business strategy concepts",
+   "make strategic business decisions",
+   "analyse business objectives",
+   "analyse business plans",
+   "analyse the context of an organisation",
+   "analyse internal factors of companies",
+   "analyse external factors of companies"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Write a one-page strategy with objectives, actions and measures.",
+  "keywords": [],
+  "label": "Strategic planning",
+  "needed_by_occupations": [
+   "Communication Coordinator",
+   "External Auditor",
+   "ICT Systems Analyst",
+   "Management Consultant",
+   "Policy Analyst",
+   "Tax Professional"
+  ],
+  "wef_global_rank": 9,
+  "wef_skill": "Analytical thinking"
+ },
+ "supply chain & inventory": {
+  "category": "Business & operations",
+  "demand_evidence": "WEF skill 'Resource management and operations': ranked 19 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Manage purchasing, suppliers and stock.",
+  "esco_aliases": [
+   "supply chain principles",
+   "analyse supply chain strategies",
+   "manage inventory",
+   "carry out inventory control accuracy",
+   "inventory management rules",
+   "coordinate purchasing activities",
+   "purchase supplies",
+   "maintain relationship with suppliers",
+   "prepare purchasing reportings"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Produce a reorder plan and inventory report for a sample stock list.",
+  "keywords": [
+   "supply chain",
+   "inventory",
+   "procurement",
+   "purchasing",
+   "sap"
+  ],
+  "label": "Supply chain & inventory",
+  "needed_by_occupations": [
+   "Financial Accountant",
+   "Supply Chain Practitioner"
+  ],
+  "wef_global_rank": 19,
+  "wef_skill": "Resource management and operations"
+ },
+ "systems administration": {
+  "category": "Networks & cybersecurity",
+  "demand_evidence": "WEF skill 'Technological literacy': ranked 3 of 26 skills on the rise globally, 2025-2030; 82% expect its use to increase by 2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Install, configure, monitor and maintain IT systems.",
+  "esco_aliases": [
+   "administer ICT system",
+   "maintain ICT system",
+   "monitor system performance",
+   "manage changes in ICT system",
+   "manage ICT virtualisation machines",
+   "adjust ICT system capacity"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Set up and monitor a server or virtual machine with user accounts.",
+  "keywords": [
+   "system administration",
+   "linux",
+   "windows server",
+   "active directory"
+  ],
+  "label": "Systems administration",
+  "needed_by_occupations": [
+   "ICT Security Specialist",
+   "ICT Systems Analyst",
+   "Systems Administrator"
+  ],
+  "wef_global_rank": 3,
+  "wef_skill": "Technological literacy"
+ },
+ "tax & vat": {
+  "category": "Finance & accounting",
+  "demand_evidence": "WEF skill 'Reading, writing and mathematics': ranked 25 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Calculate tax and VAT and complete returns.",
+  "esco_aliases": [
+   "calculate tax",
+   "prepare tax returns forms",
+   "tax legislation",
+   "value-added tax law",
+   "inspect tax returns",
+   "advise on tax planning",
+   "inspect taxation documents"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Complete a sample income-tax and VAT return correctly.",
+  "keywords": [
+   "vat",
+   "tax returns",
+   "income tax",
+   "sars efiling"
+  ],
+  "label": "Tax & VAT",
+  "needed_by_occupations": [
+   "External Auditor",
+   "Financial Accountant",
+   "Tax Professional"
+  ],
+  "wef_global_rank": 25,
+  "wef_skill": "Reading, writing and mathematics"
+ },
+ "team leadership": {
+  "category": "People & leadership",
+  "demand_evidence": "WEF skill 'Leadership and social influence': ranked 7 of 26 skills on the rise globally, 2025-2030; 61% of South African employers rate it a core skill in 2025.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Lead a team, delegate and give feedback.",
+  "esco_aliases": [
+   "lead a team",
+   "evaluate employees work",
+   "manage human resources",
+   "coordinate operational activities"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Lead a team task and reflect on outcomes with team feedback.",
+  "keywords": [],
+  "label": "Team leadership",
+  "needed_by_occupations": [
+   "Agricultural Scientist",
+   "General Biologist",
+   "Librarian"
+  ],
+  "wef_global_rank": 7,
+  "wef_skill": "Leadership and social influence"
+ },
+ "technical documentation": {
+  "category": "Marketing & communication",
+  "demand_evidence": "WEF skill 'Reading, writing and mathematics': ranked 25 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Write manuals, guides and technical documentation.",
+  "esco_aliases": [
+   "provide technical documentation",
+   "develop documentation in accordance with legal requirements",
+   "documentation types",
+   "structure information",
+   "interpret technical texts",
+   "ICT software specifications"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Write a user guide for a software tool or procedure.",
+  "keywords": [],
+  "label": "Technical documentation",
+  "needed_by_occupations": [
+   "ICT Security Specialist",
+   "Software Developer",
+   "Systems Administrator",
+   "Technical Writer",
+   "Web Developer"
+  ],
+  "wef_global_rank": 25,
+  "wef_skill": "Reading, writing and mathematics"
+ },
+ "training & mentoring others": {
+  "category": "People & leadership",
+  "demand_evidence": "WEF skill 'Teaching and mentoring': ranked 16 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Teach, coach and develop other people.",
+  "esco_aliases": [
+   "train employees",
+   "coach employees",
+   "mentor individual employees",
+   "organise training",
+   "create training materials",
+   "deliver online training",
+   "evaluate training",
+   "provide ICT system training"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Design and deliver a 15-minute training session with a feedback form.",
+  "keywords": [
+   "tutoring",
+   "tutor",
+   "mentoring",
+   "coaching",
+   "facilitation"
+  ],
+  "label": "Training & mentoring others",
+  "needed_by_occupations": [
+   "Agricultural Scientist",
+   "General Biologist",
+   "Human Resource Advisor",
+   "ICT Security Specialist",
+   "Systems Administrator",
+   "Translator"
+  ],
+  "wef_global_rank": 16,
+  "wef_skill": "Teaching and mentoring"
+ },
+ "translation & localisation": {
+  "category": "Marketing & communication",
+  "demand_evidence": "WEF skill 'Multi-lingualism': ranked 22 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Translate and adapt texts accurately between languages.",
+  "esco_aliases": [
+   "translate texts",
+   "translate different types of texts",
+   "manage localisation",
+   "use computer-aided translation",
+   "use translation memory software",
+   "postediting",
+   "review translation works"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Translate a 500-word text, reviewed against quality standards.",
+  "keywords": [
+   "translation",
+   "translating",
+   "localisation",
+   "localization",
+   "trados"
+  ],
+  "label": "Translation & localisation",
+  "needed_by_occupations": [
+   "Technical Writer",
+   "Translator"
+  ],
+  "wef_global_rank": 22,
+  "wef_skill": "Multi-lingualism"
+ },
+ "ux & ui design": {
+  "category": "Software & web",
+  "demand_evidence": "WEF skill 'Design and user experience': ranked 14 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Design user interfaces that are easy to use.",
+  "esco_aliases": [
+   "design user interface",
+   "translate requirement concepts into visual design",
+   "application usability",
+   "design graphics",
+   "ICT accessibility standards"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Produce a wireframe or prototype and test it with three users.",
+  "keywords": [
+   "figma",
+   "ux design",
+   "ui design",
+   "wireframes",
+   "user experience"
+  ],
+  "label": "UX & UI design",
+  "needed_by_occupations": [
+   "Software Developer",
+   "Systems Administrator",
+   "Technical Writer",
+   "Web Developer"
+  ],
+  "wef_global_rank": 14,
+  "wef_skill": "Design and user experience"
+ },
+ "version control & devops tools": {
+  "category": "Software & web",
+  "demand_evidence": "WEF skill 'Technological literacy': ranked 3 of 26 skills on the rise globally, 2025-2030; 82% expect its use to increase by 2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Use Git and build or deployment tools to manage code changes.",
+  "esco_aliases": [
+   "tools for software configuration management",
+   "Jenkins (tools for software configuration management)",
+   "Ansible",
+   "Puppet (tools for software configuration management)",
+   "Salt (tools for software configuration management)",
+   "Apache Maven",
+   "integrated development environment software"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Manage a project in Git with branches and a pull request; set up a simple automated build.",
+  "keywords": [
+   "git",
+   "github",
+   "gitlab",
+   "jenkins",
+   "ci/cd",
+   "docker"
+  ],
+  "label": "Version control & DevOps tools",
+  "needed_by_occupations": [
+   "Software Developer",
+   "Web Developer"
+  ],
+  "wef_global_rank": 3,
+  "wef_skill": "Technological literacy"
+ },
+ "water quality testing": {
+  "category": "Science & laboratory",
+  "demand_evidence": "WEF skill 'Environmental stewardship': ranked 10 of 26 skills on the rise globally, 2025-2030.",
+  "demand_source": "World Economic Forum (2025) Future of Jobs Report 2025, Fig. 3.4 p. 37; South Africa profile p. 196",
+  "description": "Measure and interpret water quality.",
+  "esco_aliases": [
+   "measure water quality parameters",
+   "perform water testing procedures",
+   "water chemistry analysis",
+   "perform water chemistry analysis",
+   "monitor water quality",
+   "manage water quality testing"
+  ],
+  "esco_uri": "",
+  "how_to_show": "Test water samples for key parameters and interpret against standards.",
+  "keywords": [
+   "water quality",
+   "water testing"
+  ],
+  "label": "Water quality testing",
+  "needed_by_occupations": [
+   "General Biologist",
+   "Water Quality Analyst"
+  ],
+  "wef_global_rank": 10,
+  "wef_skill": "Environmental stewardship"
+ }
+}
