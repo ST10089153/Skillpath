@@ -1,34 +1,38 @@
-// SkillPath UI kit. Visual language from the researcher's Figma dashboard (Skillpath-ui): deep navy gradient
-// surfaces, gold primary actions, steel-blue and olive tags, 6 px corners, Lexend type (free, Google Fonts;
-// designed for reading fluency). Every text/background pair meets WCAG AA (4.5:1 or better).
+// SkillPath UI kit. Editorial dark style after the free "MNTN" Figma Community template, keeping the navy/gold
+// palette of the researcher's Skillpath-ui design: flat deep-navy surfaces with hairline borders, serif display
+// headings (Playfair Display), small letter-spaced gold eyebrows led by a rule, outline controls, 2 px corners.
+// Fonts are free Google Fonts bundled with the app (system font until loaded). Every text/background pair
+// meets WCAG AA (4.5:1 or better).
 import { Ionicons } from '@expo/vector-icons';
 import React, { ReactNode } from 'react';
-import { ActivityIndicator, Platform, Pressable, ScrollView, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View, ViewStyle } from 'react-native';
 
 export const colors = {
-  bg: '#071A3D',
-  card: '#0D3769',
-  cardDeep: '#001F41',
+  bg: '#0B1D26',
+  card: '#10262F',
+  cardDeep: '#081820',
   text: '#FFFFFF',
-  muted: '#AEB9E1',
-  faint: '#9AA7D3',
-  border: 'rgba(174,185,225,0.22)',
-  primary: '#EBC952',     // gold
-  primaryDark: '#FED43D',
-  primaryText: '#0B1739',
-  accent: '#2C5587',      // steel-blue container
+  muted: '#A9B6BD',
+  faint: '#8C9AA2',
+  border: 'rgba(255,255,255,0.12)',
+  hairline: 'rgba(255,255,255,0.22)',
+  primary: '#FBD784',     // gold
+  primaryDark: '#E9C46A',
+  primaryText: '#0B1D26',
+  accent: '#13303B',      // quiet raised surface
   onAccent: '#FFFFFF',
   olive: '#6E6E46',
-  success: '#72B951',
-  successBg: 'rgba(114,185,81,0.18)',
-  warnBg: '#6E6E46',
-  warnText: '#FFFFFF',
+  success: '#9CCB8A',
+  successBg: 'rgba(156,203,138,0.10)',
+  warnBg: 'rgba(251,215,132,0.10)',
+  warnText: '#FBD784',
   danger: '#FF8A8A',
-  dangerSolid: '#B42318',
-  dangerBg: 'rgba(249,110,110,0.16)',
+  dangerSolid: '#FF8A8A',
+  dangerBg: 'rgba(255,138,138,0.10)',
 };
 
 export const fonts = {
+  display: 'PlayfairDisplay_600SemiBold',
   regular: 'Lexend_400Regular',
   semibold: 'Lexend_600SemiBold',
   bold: 'Lexend_700Bold',
@@ -39,14 +43,6 @@ export const DISCLAIMER =
 
 export const TAB_BAR_HEIGHT = 68;
 
-const shadow = Platform.select({
-  web: { boxShadow: '0 10px 30px rgba(0,8,30,0.45)' } as object,
-  default: { shadowColor: '#000814', shadowOpacity: 0.45, shadowRadius: 16, shadowOffset: { width: 0, height: 8 }, elevation: 6 },
-});
-// Navy gradient of the design's cards (web); native falls back to the solid card colour.
-const gradient = (from: string, to: string) =>
-  Platform.select({ web: { backgroundImage: `linear-gradient(160deg, ${from} 0%, ${to} 100%)` } as object, default: {} });
-
 export function Screen({ children }: { children: ReactNode }) {
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.screenContent} keyboardShouldPersistTaps="handled">
@@ -55,17 +51,27 @@ export function Screen({ children }: { children: ReactNode }) {
   );
 }
 
+/** Small gold, letter-spaced label led by a short rule ("—— A HIKING GUIDE"). */
+export function Eyebrow({ children }: { children: ReactNode }) {
+  return (
+    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+      <View style={{ width: 28, height: 1.5, backgroundColor: colors.primary, marginRight: 10 }} />
+      <Text style={styles.eyebrow}>{children}</Text>
+    </View>
+  );
+}
+
 export function Title({ children, sub }: { children: ReactNode; sub?: string }) {
   return (
-    <View style={{ marginTop: 6, marginBottom: 14 }}>
+    <View style={{ marginTop: 10, marginBottom: 18 }}>
       <Text style={styles.title} accessibilityRole="header">{children}</Text>
-      {sub ? <Text style={[styles.body, { color: colors.muted, marginBottom: 0 }]}>{sub}</Text> : null}
+      {sub ? <Text style={[styles.body, { color: colors.muted, marginBottom: 0, marginTop: 6 }]}>{sub}</Text> : null}
     </View>
   );
 }
 
 export function SectionLabel({ children }: { children: ReactNode }) {
-  return <Text style={styles.sectionLabel}>{children}</Text>;
+  return <View style={{ marginTop: 8 }}><Eyebrow>{children}</Eyebrow></View>;
 }
 
 export function Body({ children, muted, style }: { children: ReactNode; muted?: boolean; style?: object }) {
@@ -76,19 +82,22 @@ export function Card({ children, style }: { children: ReactNode; style?: ViewSty
   return <View style={[styles.card, style]}>{children}</View>;
 }
 
-export function Hero({ icon, eyebrow, title, children }: {
+/** Page-opening block: eyebrow, large serif headline and standfirst; no filled box. */
+export function Hero({ eyebrow, title, children }: {
   icon?: keyof typeof Ionicons.glyphMap; eyebrow?: string; title: string; children?: ReactNode;
 }) {
   return (
     <View style={styles.hero}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 6 }}>
-        {icon ? <Ionicons name={icon} size={20} color={colors.primary} style={{ marginRight: 8 }} /> : null}
-        {eyebrow ? <Text style={styles.heroEyebrow}>{eyebrow}</Text> : null}
-      </View>
+      {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
       <Text style={styles.heroTitle} accessibilityRole="header">{title}</Text>
       {children}
     </View>
   );
+}
+
+/** Large faded index number ("01") used beside numbered steps. */
+export function BigNumber({ n }: { n: number }) {
+  return <Text style={styles.bigNumber} accessibilityElementsHidden importantForAccessibility="no">{String(n).padStart(2, '0')}</Text>;
 }
 
 type Variant = 'primary' | 'secondary' | 'tonal' | 'danger';
@@ -98,7 +107,8 @@ export function Button({ label, onPress, variant = 'primary', disabled, hint, ic
   icon?: keyof typeof Ionicons.glyphMap;
 }) {
   const v = { primary: styles.btnPrimary, secondary: styles.btnSecondary, tonal: styles.btnTonal, danger: styles.btnDanger }[variant];
-  const fg = variant === 'secondary' ? colors.primary : variant === 'tonal' ? colors.onAccent : variant === 'danger' ? '#FFFFFF' : colors.primaryText;
+  const fg = variant === 'primary' ? colors.primaryText : variant === 'secondary' ? colors.primary
+    : variant === 'danger' ? colors.danger : colors.text;
   return (
     <Pressable
       accessibilityRole="button"
@@ -107,9 +117,9 @@ export function Button({ label, onPress, variant = 'primary', disabled, hint, ic
       accessibilityState={{ disabled: !!disabled }}
       disabled={disabled}
       onPress={onPress}
-      style={({ pressed }) => [styles.btn, v, (disabled || pressed) && { opacity: disabled ? 0.45 : 0.85 }]}
+      style={({ pressed }) => [styles.btn, v, (disabled || pressed) && { opacity: disabled ? 0.45 : 0.8 }]}
     >
-      {icon ? <Ionicons name={icon} size={18} color={fg} style={{ marginRight: 8 }} /> : null}
+      {icon ? <Ionicons name={icon} size={16} color={fg} style={{ marginRight: 10 }} /> : null}
       <Text style={[styles.btnText, { color: fg }]}>{label}</Text>
     </Pressable>
   );
@@ -136,12 +146,12 @@ export function ProgressBar({ value, total }: { value: number; total: number }) 
 }
 
 export function Pill({ label, tone = 'accent', icon }: { label: string; tone?: 'accent' | 'success' | 'warn'; icon?: keyof typeof Ionicons.glyphMap }) {
-  const bg = tone === 'success' ? colors.successBg : tone === 'warn' ? colors.warnBg : colors.accent;
-  const fg = tone === 'success' ? colors.success : tone === 'warn' ? colors.warnText : colors.onAccent;
+  const fg = tone === 'success' ? colors.primary : tone === 'warn' ? colors.warnText : colors.text;
+  const border = tone === 'accent' ? colors.hairline : colors.primary;
   return (
-    <View style={[styles.pill, { backgroundColor: bg }]}>
-      {icon ? <Ionicons name={icon} size={14} color={fg} style={{ marginRight: 4 }} /> : null}
-      <Text style={{ color: fg, fontSize: 13, fontFamily: fonts.semibold }}>{label}</Text>
+    <View style={[styles.pill, { borderColor: border }]}>
+      {icon ? <Ionicons name={icon} size={13} color={fg} style={{ marginRight: 6 }} /> : null}
+      <Text style={{ color: fg, fontSize: 13, fontFamily: fonts.regular }}>{label}</Text>
     </View>
   );
 }
@@ -153,7 +163,7 @@ export function Loading() {
 export function ErrorText({ error }: { error: string }) {
   if (!error) return null;
   return (
-    <View style={[styles.banner, { backgroundColor: colors.dangerBg }]} accessibilityLiveRegion="polite">
+    <View style={[styles.banner, { borderLeftColor: colors.danger }]} accessibilityLiveRegion="polite">
       <Text style={{ color: colors.danger, fontSize: 15, fontFamily: fonts.regular }}>{error}</Text>
     </View>
   );
@@ -165,44 +175,44 @@ export function Difficulty({ level }: { level: number }) {
       {[1, 2, 3, 4, 5].map((i) => (
         <View key={i} style={[styles.dot, i <= level && styles.dotOn]} />
       ))}
-      <Text style={[styles.small, { marginLeft: 6 }]}>Level {level}/5</Text>
+      <Text style={[styles.small, { marginLeft: 8 }]}>Level {level}/5</Text>
     </View>
   );
 }
 
 export const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg },
-  screenContent: { padding: 16, paddingBottom: TAB_BAR_HEIGHT + 32 },
+  screenContent: { padding: 20, paddingBottom: TAB_BAR_HEIGHT + 32 },
   inner: { width: '100%', maxWidth: 560, alignSelf: 'center' },
-  title: { fontSize: 28, fontFamily: fonts.bold, color: colors.text, letterSpacing: -0.4 },
-  h2: { fontSize: 18, fontFamily: fonts.semibold, color: colors.text, marginBottom: 6 },
-  sectionLabel: { fontSize: 13, fontFamily: fonts.semibold, color: colors.muted, textTransform: 'uppercase', letterSpacing: 0.8, marginTop: 8, marginBottom: 8 },
-  body: { fontSize: 16, lineHeight: 24, color: colors.text, marginBottom: 8, fontFamily: fonts.regular },
-  small: { fontSize: 13, color: colors.faint, fontFamily: fonts.regular },
-  card: { backgroundColor: colors.card, borderRadius: 6, padding: 18, marginBottom: 14, borderWidth: 1, borderColor: colors.border,
-          ...gradient(colors.card, colors.cardDeep), ...shadow },
-  hero: { backgroundColor: '#1A2561', borderRadius: 6, padding: 22, marginBottom: 16, borderLeftWidth: 4, borderLeftColor: colors.primary,
-          ...gradient('#2C5587', '#1A2561'), ...shadow },
-  heroEyebrow: { color: colors.primary, fontSize: 13, fontFamily: fonts.semibold, textTransform: 'uppercase', letterSpacing: 0.8 },
-  heroTitle: { color: '#FFFFFF', fontSize: 26, fontFamily: fonts.bold, letterSpacing: -0.3, marginBottom: 6 },
-  btn: { minHeight: 52, borderRadius: 6, paddingHorizontal: 20, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginVertical: 6 },
+  title: { fontSize: 34, lineHeight: 42, fontFamily: fonts.display, color: colors.text },
+  h2: { fontSize: 21, lineHeight: 28, fontFamily: fonts.display, color: colors.text, marginBottom: 6 },
+  eyebrow: { fontSize: 12, fontFamily: fonts.semibold, color: colors.primary, textTransform: 'uppercase', letterSpacing: 3 },
+  sectionLabel: { fontSize: 12, fontFamily: fonts.semibold, color: colors.primary, textTransform: 'uppercase', letterSpacing: 3, marginTop: 8, marginBottom: 8 },
+  body: { fontSize: 16, lineHeight: 26, color: colors.text, marginBottom: 8, fontFamily: fonts.regular },
+  small: { fontSize: 13, lineHeight: 19, color: colors.faint, fontFamily: fonts.regular },
+  card: { backgroundColor: colors.card, borderRadius: 2, padding: 20, marginBottom: 16, borderWidth: 1, borderColor: colors.border },
+  hero: { paddingTop: 12, paddingBottom: 22, marginBottom: 18, borderBottomWidth: 1, borderBottomColor: colors.border },
+  heroEyebrow: { color: colors.primary, fontSize: 12, fontFamily: fonts.semibold, textTransform: 'uppercase', letterSpacing: 3 },
+  heroTitle: { color: colors.text, fontSize: 38, lineHeight: 46, fontFamily: fonts.display, marginBottom: 10 },
+  bigNumber: { fontSize: 56, lineHeight: 60, fontFamily: fonts.display, color: 'rgba(255,255,255,0.14)', fontVariant: ['lining-nums'], marginTop: -6, marginBottom: 4 },
+  btn: { minHeight: 52, borderRadius: 2, paddingHorizontal: 22, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginVertical: 6 },
   btnPrimary: { backgroundColor: colors.primary },
-  btnSecondary: { backgroundColor: 'transparent', borderWidth: 1.5, borderColor: colors.primary },
-  btnTonal: { backgroundColor: colors.accent },
-  btnDanger: { backgroundColor: colors.dangerSolid },
-  btnText: { fontSize: 16, fontFamily: fonts.semibold },
+  btnSecondary: { backgroundColor: 'transparent', borderWidth: 1, borderColor: colors.primary },
+  btnTonal: { backgroundColor: 'transparent', borderWidth: 1, borderColor: colors.hairline },
+  btnDanger: { backgroundColor: 'transparent', borderWidth: 1, borderColor: colors.danger },
+  btnText: { fontSize: 13, fontFamily: fonts.semibold, textTransform: 'uppercase', letterSpacing: 1.2 },
   checkRow: { flexDirection: 'row', alignItems: 'center', minHeight: 52, paddingVertical: 8 },
-  checkBox: { width: 28, height: 28, borderRadius: 4, borderWidth: 2, borderColor: colors.primary, marginRight: 12, alignItems: 'center', justifyContent: 'center' },
+  checkBox: { width: 26, height: 26, borderRadius: 2, borderWidth: 1.5, borderColor: colors.primary, marginRight: 12, alignItems: 'center', justifyContent: 'center' },
   checkBoxOn: { backgroundColor: colors.primary },
   error: { color: colors.danger, fontSize: 15, marginVertical: 8, fontFamily: fonts.regular },
-  dot: { width: 12, height: 12, borderRadius: 6, borderWidth: 1.5, borderColor: colors.primary, marginRight: 4 },
+  dot: { width: 10, height: 10, borderRadius: 5, borderWidth: 1, borderColor: colors.primary, marginRight: 5 },
   dotOn: { backgroundColor: colors.primary },
-  input: { minHeight: 52, borderWidth: 1, borderColor: '#8A8F9D', borderRadius: 4, paddingHorizontal: 16, fontSize: 16,
-           backgroundColor: 'rgba(11,23,57,0.55)', color: colors.text, fontFamily: fonts.regular },
-  chip: { borderWidth: 1, borderColor: colors.border, backgroundColor: colors.accent, borderRadius: 4, paddingHorizontal: 14, minHeight: 40, justifyContent: 'center', marginRight: 8, marginBottom: 8 },
+  input: { minHeight: 52, borderWidth: 0, borderBottomWidth: 1, borderColor: colors.hairline, borderRadius: 0, paddingHorizontal: 4, fontSize: 16,
+           backgroundColor: 'transparent', color: colors.text, fontFamily: fonts.regular },
+  chip: { borderWidth: 1, borderColor: colors.hairline, backgroundColor: 'transparent', borderRadius: 2, paddingHorizontal: 14, minHeight: 40, justifyContent: 'center', marginRight: 8, marginBottom: 8 },
   chipOn: { backgroundColor: colors.primary, borderColor: colors.primary },
-  banner: { backgroundColor: colors.warnBg, borderRadius: 6, padding: 14, marginBottom: 12 },
-  pill: { flexDirection: 'row', alignItems: 'center', borderRadius: 4, paddingHorizontal: 10, paddingVertical: 5, marginRight: 6, marginBottom: 6, alignSelf: 'flex-start' },
-  progressTrack: { height: 10, backgroundColor: 'rgba(174,185,225,0.18)', borderRadius: 5, overflow: 'hidden', marginVertical: 10 },
-  progressFill: { height: '100%', backgroundColor: colors.success, borderRadius: 5 },
+  banner: { backgroundColor: colors.card, borderLeftWidth: 2, borderLeftColor: colors.primary, borderRadius: 0, padding: 14, marginBottom: 12 },
+  pill: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderRadius: 2, paddingHorizontal: 10, paddingVertical: 5, marginRight: 6, marginBottom: 6, alignSelf: 'flex-start' },
+  progressTrack: { height: 3, backgroundColor: colors.hairline, overflow: 'hidden', marginVertical: 12 },
+  progressFill: { height: '100%', backgroundColor: colors.primary },
 });

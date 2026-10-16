@@ -64,7 +64,7 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
         {info && info.occupations.length > 0 && (
           <Body muted>Asked for by: {info.occupations.join(', ')}</Body>
         )}
-        {info?.how_to_show ? <Body><Text style={{ fontWeight: '700' }}>How you will show it: </Text>{info.how_to_show}</Body> : null}
+        {info?.how_to_show ? <Body><Text style={{ fontFamily: 'Lexend_600SemiBold' }}>How you will show it: </Text>{info.how_to_show}</Body> : null}
         {info?.demand_evidence ? <Body muted>Why it is in demand: {info.demand_evidence}</Body> : null}
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
           <Pill icon="layers-outline" label="6 short steps" />

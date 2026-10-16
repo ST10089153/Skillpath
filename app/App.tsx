@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Lexend_400Regular, Lexend_600SemiBold, Lexend_700Bold, useFonts } from '@expo-google-fonts/lexend';
+import { PlayfairDisplay_600SemiBold } from '@expo-google-fonts/playfair-display';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useRef, useState } from 'react';
@@ -18,7 +19,7 @@ import { Body, Loading, TAB_BAR_HEIGHT, colors, fonts, styles as ui } from './sr
 const USER_KEY = 'skillpath.user_id';
 type Tab = 'home' | 'next' | 'pathway' | 'progress' | 'settings';
 type IconName = keyof typeof Ionicons.glyphMap;
-// Bottom navigation: five destinations, icon + label, active destination in gold.
+// Bottom navigation: five destinations, outline icons; the active one is gold with a rule above it.
 const TABS: { key: Tab; label: string; icon: IconName; iconOn: IconName }[] = [
   { key: 'home', label: 'Home', icon: 'home-outline', iconOn: 'home' },
   { key: 'next', label: 'Next skill', icon: 'compass-outline', iconOn: 'compass' },
@@ -28,7 +29,7 @@ const TABS: { key: Tab; label: string; icon: IconName; iconOn: IconName }[] = [
 ];
 
 export default function App() {
-  useFonts({ Lexend_400Regular, Lexend_600SemiBold, Lexend_700Bold }); // system font until loaded; never blocks
+  useFonts({ Lexend_400Regular, Lexend_600SemiBold, Lexend_700Bold, PlayfairDisplay_600SemiBold }); // system font until loaded; never blocks
   const [ready, setReady] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [editingProfile, setEditingProfile] = useState(false);
@@ -111,12 +112,12 @@ export default function App() {
       <View style={s.header}>
         <Pressable accessibilityRole="button" accessibilityLabel="SkillPath home" disabled={!signedIn}
                    onPress={() => go('home')} style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View style={s.logo}><Ionicons name="trail-sign" size={18} color={colors.primaryText} /></View>
+          <View style={s.logo}><Ionicons name="trail-sign-outline" size={18} color={colors.primary} /></View>
           <Text style={s.brand}>SkillPath</Text>
         </Pressable>
         {signedIn && tab !== 'home' && !editingProfile ? (
           <Pressable accessibilityRole="button" accessibilityLabel="Go to home" onPress={() => go('home')} style={s.headerBtn}>
-            <Ionicons name="home-outline" size={22} color={colors.primary} />
+            <Ionicons name="home-outline" size={20} color={colors.primary} />
           </Pressable>
         ) : null}
       </View>
@@ -143,7 +144,7 @@ export default function App() {
               <Pressable key={t.key} accessibilityRole="tab" accessibilityState={{ selected: on }} accessibilityLabel={t.label}
                          onPress={() => go(t.key)} style={s.tab}>
                 <View style={[s.tabIcon, on && s.tabIconOn]}>
-                  <Ionicons name={on ? t.iconOn : t.icon} size={22} color={on ? colors.primaryText : colors.faint} />
+                  <Ionicons name={t.icon} size={22} color={on ? colors.primary : colors.faint} />
                 </View>
                 <Text style={[s.tabText, on && { color: colors.primary, fontFamily: fonts.semibold }]}>{t.label}</Text>
               </Pressable>
@@ -161,13 +162,13 @@ const s = StyleSheet.create({
           ...(Platform.OS === 'web' ? { height: '100vh' as unknown as number, overflow: 'hidden' as const } : {}) },
   header: { paddingHorizontal: 16, paddingVertical: 12, backgroundColor: colors.cardDeep, borderBottomWidth: 1, borderColor: colors.border,
             flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  logo: { width: 30, height: 30, borderRadius: 6, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', marginRight: 10 },
-  brand: { fontSize: 19, fontFamily: fonts.bold, color: colors.text, letterSpacing: -0.3 },
-  headerBtn: { width: 44, height: 44, borderRadius: 6, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.accent },
+  logo: { width: 30, height: 30, borderRadius: 2, borderWidth: 1, borderColor: colors.primary, alignItems: 'center', justifyContent: 'center', marginRight: 12 },
+  brand: { fontSize: 22, fontFamily: fonts.display, color: colors.text },
+  headerBtn: { width: 44, height: 44, borderRadius: 2, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: colors.hairline },
   tabs: { flexDirection: 'row', height: TAB_BAR_HEIGHT + (Platform.OS === 'ios' ? 18 : 0), paddingBottom: Platform.OS === 'ios' ? 18 : 0,
           backgroundColor: colors.cardDeep, borderTopWidth: 1, borderColor: colors.border },
   tab: { flex: 1, alignItems: 'center', justifyContent: 'center', minHeight: 56 },
-  tabIcon: { width: 56, height: 30, borderRadius: 6, alignItems: 'center', justifyContent: 'center', marginBottom: 2 },
-  tabIconOn: { backgroundColor: colors.primary },
-  tabText: { fontSize: 12, color: colors.faint, fontFamily: fonts.regular },
+  tabIcon: { width: 40, height: 30, borderTopWidth: 2, borderTopColor: 'transparent', paddingTop: 4, alignItems: 'center', justifyContent: 'center', marginBottom: 2 },
+  tabIconOn: { borderTopColor: colors.primary },
+  tabText: { fontSize: 11, color: colors.faint, fontFamily: fonts.regular, letterSpacing: 0.5 },
 });

@@ -34,7 +34,7 @@ def main():
 
         page.get_by_text("Start with your CV").wait_for(timeout=30000)
         with page.expect_file_chooser() as fc:
-            page.get_by_role("button", name="Upload CV (PDF, Word or text)").click()
+            page.get_by_role("button", name="Upload your CV").click()
         fc.value.set_files(CV)
         page.get_by_text("Untick any that are not right").wait_for(timeout=90000)
         page.wait_for_timeout(500)

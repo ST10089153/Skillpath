@@ -56,7 +56,7 @@ export default function Settings({ userId, onDeleted, onEditProfile }: {
           <Button label="Delete my data" icon="trash-outline" variant="danger" onPress={() => setConfirming(true)} />
         ) : (
           <>
-            <Body style={{ fontWeight: '700' }}>Are you sure? This cannot be undone.</Body>
+            <Body style={{ fontFamily: 'Lexend_600SemiBold' }}>Are you sure? This cannot be undone.</Body>
             <Button label="Yes, delete everything" variant="danger" onPress={del} />
             <Button label="Cancel" variant="secondary" onPress={() => setConfirming(false)} />
           </>

@@ -99,7 +99,7 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
         <Pressable accessibilityRole="button" accessibilityLabel="Back" onPress={onCancel}
                    style={{ flexDirection: 'row', alignItems: 'center', minHeight: 44, alignSelf: 'flex-start' }}>
           <Ionicons name="chevron-back" size={22} color={colors.primary} />
-          <Text style={{ color: colors.primary, fontSize: 16, fontWeight: '700' }}>Back</Text>
+          <Text style={{ color: colors.primary, fontSize: 16, fontFamily: 'Lexend_600SemiBold' }}>Back</Text>
         </Pressable>
       ) : null}
       <Title sub="Upload your CV or choose the skills you already have.">Your skills</Title>
@@ -110,8 +110,9 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
         </View>
         <Body>SkillPath's built-in AI reads your CV and suggests the skills it finds. Your CV is processed by
           SkillPath's own server, is never sent to outside AI services, and is not saved.</Body>
-        <Button label={cvBusy ? 'Reading your CV… (first time takes ~20 s)' : 'Upload CV (PDF, Word or text)'}
+        <Button label={cvBusy ? 'Reading your CV…' : 'Upload your CV'} hint="PDF, Word or text file"
                 variant="primary" icon="cloud-upload-outline" disabled={cvBusy} onPress={uploadCv} />
+        <Text style={[styles.small, { marginBottom: 8 }]}>{cvBusy ? 'The first time takes about 20 seconds.' : 'PDF, Word or text file.'}</Text>
         {cvNote !== '' && <Body muted>{cvNote}</Body>}
         {detected && detected.length > 0 && (
           <View>
@@ -122,7 +123,7 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
                          style={{ flexDirection: 'row', backgroundColor: colors.cardDeep, borderRadius: 6, padding: 12, marginBottom: 8, minHeight: 48 }}>
                 <Ionicons name={selected.includes(d.skill) ? 'checkbox' : 'square-outline'} size={24} color={colors.primary} style={{ marginRight: 10 }} />
                 <View style={{ flex: 1 }}>
-                  <Text style={{ fontSize: 16, fontWeight: '700', color: colors.text }}>{label(d.skill)}</Text>
+                  <Text style={{ fontSize: 16, fontFamily: 'Lexend_600SemiBold', color: colors.text }}>{label(d.skill)}</Text>
                   <Text style={[styles.small, { color: colors.success, fontWeight: '600' }]}>
                     {d.method === 'exact' ? 'Named in your CV' : `${Math.round(d.score * 100)}% match`}
                   </Text>

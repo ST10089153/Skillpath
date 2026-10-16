@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Linking, Text, View } from 'react-native';
 
 import { api, moduleContent, ModuleLibrary, Progress, SkillInfo } from '../api';
-import { Body, Button, Card, Difficulty, ErrorText, Loading, Screen, Title, colors, styles } from '../ui';
+import { BigNumber, Body, Button, Card, Difficulty, ErrorText, Loading, Screen, Title, colors, styles } from '../ui';
 
 export default function Pathway({ userId, onGoToNextSkill }: { userId: string; onGoToNextSkill: () => void }) {
   const [prog, setProg] = useState<Progress | null>(null);
@@ -58,13 +58,14 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
         const difficulty = current && prog.current_module ? prog.current_module.difficulty : m.difficulty;
         const minutes = current && prog.current_module ? prog.current_module.minutes : m.minutes;
         return (
-          <Card key={m.module_id} style={current ? { borderColor: colors.primary, borderWidth: 2 } : m.done ? { backgroundColor: colors.successBg } : undefined}>
+          <Card key={m.module_id} style={current ? { borderColor: colors.primary } : m.done ? { opacity: 0.75 } : undefined}>
+            <BigNumber n={i + 1} />
             <Text style={styles.small}>Module {i + 1} · about {minutes} min {m.done ? '· ✓ Done' : ''}</Text>
             <Text style={[styles.h2, { marginTop: 4 }]}>{c.title}</Text>
             <Difficulty level={difficulty} />
             {(current || m.done) && <Body style={{ marginTop: 8 }}>{c.description}</Body>}
             {i === 0 && (current || m.done) && info?.description ? (
-              <View style={{ backgroundColor: colors.accent, borderRadius: 8, padding: 12, marginBottom: 8 }}>
+              <View style={{ borderLeftWidth: 2, borderLeftColor: colors.primary, paddingLeft: 14, paddingVertical: 4, marginVertical: 8 }}>
                 <Text style={styles.small}>What it means</Text>
                 <Body style={{ marginBottom: 0 }}>{info.description}</Body>
               </View>
@@ -82,7 +83,7 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
           </Card>
         );
       })}
-      {prog.completed && <Card style={{ backgroundColor: colors.successBg }}><Body>You've finished this pathway. Well done!</Body></Card>}
+      {prog.completed && <Card style={{ borderColor: colors.primary }}><Body>You've finished this pathway. Well done!</Body></Card>}
     </Screen>
   );
 }

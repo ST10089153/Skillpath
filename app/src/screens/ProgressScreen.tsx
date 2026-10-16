@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 
 import { api, Progress } from '../api';
-import { Body, Card, ErrorText, Loading, ProgressBar, Screen, SectionLabel, Title, colors, styles } from '../ui';
+import { Body, Card, ErrorText, Loading, ProgressBar, Screen, SectionLabel, Title, colors, fonts, styles } from '../ui';
 
 const MODULES_PER_MILESTONE = 3; // mirrors skillpath/config.py (display only)
 
@@ -46,10 +46,10 @@ export default function ProgressScreen({ userId }: { userId: string }) {
                   key={b}
                   accessibilityLabel={`${b} ${got ? 'reached' : 'not reached yet'}`}
                   style={{ width: 96, height: 96, borderRadius: 48, marginRight: 12, marginBottom: 8, alignItems: 'center', justifyContent: 'center',
-                           backgroundColor: got ? colors.success : colors.card, borderWidth: 2, borderColor: got ? colors.success : colors.border }}
+                           backgroundColor: 'transparent', borderWidth: got ? 1.5 : 1, borderColor: got ? colors.primary : colors.hairline }}
                 >
-                  <Text style={{ fontSize: 22, fontWeight: '800', color: got ? colors.primaryText : colors.muted }}>{b}</Text>
-                  <Text style={{ fontSize: 13, color: got ? colors.primaryText : colors.muted }}>{got ? 'Reached' : `${MODULES_PER_MILESTONE} modules`}</Text>
+                  <Text style={{ fontSize: 24, fontFamily: fonts.display, color: got ? colors.primary : colors.muted }}>{b}</Text>
+                  <Text style={{ fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase', fontFamily: fonts.regular, color: got ? colors.primary : colors.faint }}>{got ? 'Reached' : `${MODULES_PER_MILESTONE} modules`}</Text>
                 </View>
               );
             })}
