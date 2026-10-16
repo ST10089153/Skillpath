@@ -204,6 +204,20 @@ P = {  # paragraph start -> new text
         "above its threshold. How real graduates respond, particularly in confidence and engagement, remains for a "
         "naturalistic evaluation. Together, these points form the basis for the Discussion, Limitations and Future "
         "Work sections of the final research report.",
+    "The proposal intended the A/B comparison":
+        "The proposal intended the A/B comparison to test whether income visibility motivated users more than it "
+        "sustained them (Deci and Ryan, 2000). Self-Determination Theory predicts that it would not: extrinsic "
+        "rewards can prompt short-term compliance but do not sustain learning behaviour, which is why the proposal "
+        "positioned income as information rather than as the engine of the system (DD9). Testing that prediction "
+        "requires real graduates whose motivation can change. Neither data stream in this study has that property: "
+        "synthetic profiles have no motivation, and the simulated users in Section 3.3.4 were scripted to behave "
+        "identically in both versions. The paired design therefore answered the question that can be answered "
+        "without users, and that matters for the design claim: does income visibility change what SkillPath "
+        "recommends? If showing income caused the logic to steer profiles towards higher-paying skills, income "
+        "would in practice be functioning as an engine, contrary to the design. For each core profile, the outputs "
+        "of versions A and B were compared on four points: whether the primary recommendation was identical, how "
+        "far the alternative recommendations overlapped, whether income information appeared in A and was labelled "
+        "as an estimate, and whether any income information leaked into B.",
     "[Insert the completed specification sheet for all 28 profiles":
         "[Insert the completed specification sheet for all 28 profiles. Worked example: "
         "samples/example_study/profiles_EXAMPLE.csv and the run's profiles_ready.csv.]",
@@ -360,6 +374,41 @@ def add_app_data_sections(d):
         "in Section 6."), body5)
 
 
+def add_section6_trigger(d):
+    paras = list(d.paragraphs)
+    pos = {id(p._p): i for i, p in enumerate(paras)}
+    body = next(p for p in paras if p.text.startswith("Income visibility changed nothing about"))
+    after = paras[pos[id(body._p)] + 1:]
+    h_old66 = next(p for p in after if p.text.startswith("6.6 What controlled synthetic testing"))
+    h_old67 = next(p for p in after if p.text.startswith("6.7 Critical evaluation"))
+    set_text(h_old66, "6.7 What controlled synthetic testing could not show")
+    set_text(h_old67, "6.8 Critical evaluation of the findings")
+    for p in paras:
+        if "Section 6.6 addresses that gap" in p.text:
+            set_text(p, p.text.replace("Section 6.6 addresses that gap", "Section 6.7 addresses that gap"))
+    insert_par_before(h_old66, "6.6 Trigger timing should adapt to the learner", h_old66)
+    insert_par_before(h_old66, (
+        "The nudge rule passed its rule-level test: every first nudge fell on the second inactive day (Q5). The "
+        "operational data from simulated users (Section 5.8) showed what that test could not: how the rule behaves "
+        "across a whole learning journey. In its first form the rule nudged every inactive user once a day for as "
+        "long as they stayed away, including users who had already finished, and fewer than one nudge in thirty was "
+        "opened. Fogg (2003) argues that a prompt only produces behaviour when it coincides with motivation and "
+        "ability, and the proposal drew on Halkiopoulos and Gkintoni (2024) to argue that learning platforms break "
+        "down at exactly this trigger layer, where prompts that arrive at the wrong moment produce resistance rather "
+        "than neutral disengagement. Restricting nudges to users with an open pathway and stopping after three "
+        "unopened nudges reduced the volume by about two thirds and tripled the share that were opened."), body)
+    insert_par_before(h_old66, (
+        "One mismatch remained, and it qualifies DD7. A part-time learner who studied every third day, a pattern "
+        "typical of informal learners without institutional timetables (Du Plooy, Casteleijn and Franzsen, 2024), "
+        "was still nudged nine times, because a fixed two-day rule treats a deliberate rhythm as disengagement. The "
+        "rule is therefore correct in its own terms but blind to the learner. Self-Determination Theory adds a "
+        "second reason to change it: prompts the learner did not choose sit uneasily with autonomy, one of the three "
+        "needs that sustain motivation (Deci and Ryan, 2000). Two design requirements follow. Trigger timing should "
+        "adapt to each learner's observed rhythm rather than a fixed interval, and learners should be able to set "
+        "or pause their own reminders. Whether either change helps real graduates return to their pathway is a "
+        "question for naturalistic evaluation, but the simulation has already shown that the fixed rule cannot."), body)
+
+
 def main():
     src = sys.argv[1]
     d = docx.Document(src)
@@ -379,6 +428,7 @@ def main():
                      "for 100% of within-field profiles but 41.7% of pivot profiles (70.8% overall vs 70%); income "
                      "visibility did not alter recommendations; unrecognised input was disclosed, not hidden.")
     add_app_data_sections(d)
+    add_section6_trigger(d)
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     tmp = OUT + ".tmp"
     d.save(tmp)
