@@ -352,11 +352,13 @@ def create_app(db_path: Optional[str] = None, skill_map_path: Optional[str] = No
         user = get_user(conn, user_id)
         today = clock().date()
         days = (today - datetime.fromisoformat(user["last_active_at"]).date()).days
-        due = assignment.nudge_due(days, user["last_nudge_date"] == today.isoformat())
+        p = get_pathway(conn, user_id)
+        view = progress_view(user_id, p)
+        open_pathway = p is not None and assignment.has_open_pathway(p["status"], view["completed"])
+        due = assignment.nudge_due(days, user["last_nudge_date"] == today.isoformat(), open_pathway)
         message = ""
         if due:
-            p = get_pathway(conn, user_id)
-            passes = json.loads(p["state"])["passes"] if p is not None and p["state"] else 0
+            passes = json.loads(p["state"])["passes"] if p["state"] else 0
             message = engine.nudge_message(passes)
             conn.execute("UPDATE users SET last_nudge_date=? WHERE user_id=?", (today.isoformat(), user_id))
             log(conn, user, "notification_sent")

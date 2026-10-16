@@ -152,6 +152,7 @@ def test_swap_and_defer(client):
 
 def test_nudge_after_two_days_once_per_day(client, clock):
     uid = new_user(client)
+    client.get(f"/users/{uid}/recommendation")
     assert client.get(f"/users/{uid}/nudge").json()["nudge"] is False
     clock.advance(1)
     assert client.get(f"/users/{uid}/nudge").json()["nudge"] is False
@@ -240,3 +241,24 @@ def test_admin_export_all_zip(client):
 def test_root_points_to_the_app(client):
     r = client.get("/")
     assert r.status_code == 200 and "localhost:8081" in r.text
+
+
+def test_no_nudge_without_pathway_or_after_completion(client, clock):
+    no_rec = new_user(client, skills=None)          # never got a recommendation
+    done = new_user(client)
+    client.get(f"/users/{done}/recommendation")
+    client.post(f"/users/{done}/pathway/accept")
+    for _ in range(6):
+        mid = client.get(f"/users/{done}/progress").json()["current_module"]["module_id"]
+        client.post(f"/users/{done}/modules/{mid}/result", json={"passed": True})
+    clock.advance(3)
+    assert client.get(f"/users/{no_rec}/nudge").json()["nudge"] is False
+    assert client.get(f"/users/{done}/nudge").json()["nudge"] is False
+
+
+def test_deferred_user_is_nudged(client, clock):
+    uid = new_user(client)
+    client.get(f"/users/{uid}/recommendation")
+    client.post(f"/users/{uid}/pathway/defer")
+    clock.advance(2)
+    assert client.get(f"/users/{uid}/nudge").json()["nudge"] is True
