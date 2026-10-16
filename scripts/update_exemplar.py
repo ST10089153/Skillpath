@@ -1,6 +1,6 @@
 """Produce docs/exemplar/REIT8419_Part3_SkillPath_EXEMPLAR_v2.docx: the Part 3 teaching exemplar with every
 finding that depends on the CV/synthetic-profile test data replaced by the worked-example run of the real
-SkillPath build (samples/example_study/runs/EVAL20261016-032710-EXAMPLE, build 96fa987).
+SkillPath build (samples/example_study/runs/EVAL20261016-032710-EXAMPLE, build v1.0-eval (commit 8c154e6)).
 
     python scripts/update_exemplar.py path\\to\\REIT8419_Part3_SkillPath_EXEMPLAR.docx
 
@@ -22,13 +22,13 @@ import pandas as pd
 from docx.shared import Cm
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RUN = os.path.join(ROOT, "samples", "example_study", "runs", "EVAL20261016-032710-EXAMPLE")
+RUN = sorted(glob.glob(os.path.join(ROOT, "runs", "EVAL*-final")))[-1]
 OUT = os.path.join(ROOT, "docs", "exemplar", "REIT8419_Part3_SkillPath_EXEMPLAR_v2.docx")
-APP = sorted(glob.glob(os.path.join(ROOT, "samples", "example_study", "app_data", "APPSIM*")))[-1]
+APP = sorted(glob.glob(os.path.join(ROOT, "runs", "APPSIM*-final")))[-1]
 
 P = {  # paragraph start -> new text
     "Exemplar: Phase 3 results were generated":
-        "Exemplar: Phase 3 results come from a worked-example run of the real SkillPath build (commit 96fa987, "
+        "Exemplar: Phase 3 results come from a worked-example run of the real SkillPath build (build v1.0-eval (commit 8c154e6), "
         "16 October 2026) on watermarked EXAMPLE profiles. They illustrate the format and reasoning; they are not "
         "study data.",
     "Each cell of the design matrix (Table 3) was turned into":
@@ -48,7 +48,7 @@ P = {  # paragraph start -> new text
         "expectations it could not influence. The specification sheets and one sample CV are provided in Annexure C.",
     "Testing took place between":
         "Testing took place on 16 October 2026 (Week 13). Before testing began, the SkillPath build under evaluation "
-        "was frozen at commit 96fa987, so that every profile was tested against identical logic. Each profile was "
+        "was frozen and tagged as v1.0-eval (commit 8c154e6), so that every profile was tested against identical logic. Each profile was "
         "then run under both the income-visible (A) and income-neutral (B) versions of the recommendation logic, "
         "using five fixed test scripts (Table 5). The scripts were designed so that each one exercised a specific "
         "design directive.",
@@ -89,7 +89,7 @@ P = {  # paragraph start -> new text
     "28 synthetic profiles were tested":
         "28 synthetic profiles were tested: 24 core profiles covering every combination of the design matrix and 4 "
         "edge cases. Each was run under both logic versions and five scripts, producing 762 logged responses from "
-        "SkillPath build 96fa987. The reference table contained 24 occupations and 68 distinct skills. Table 9 "
+        "SkillPath build v1.0-eval (commit 8c154e6). The reference table contained 24 occupations and 68 distinct skills. Table 9 "
         "summarises the test set.",
     "Table 10 and Figure 6 present the nine metrics":
         "Table 10 and Figure 6 present the nine metrics against their thresholds. All nine thresholds were met.",
