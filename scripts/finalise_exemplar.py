@@ -29,6 +29,7 @@ from docx.shared import Pt
 from pypdf import PdfReader
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from concept_update import add_sq4, rebuild_annexure_g  # noqa: E402
 from refine_exemplar import apply_format, body_word_count, set_text  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -103,6 +104,10 @@ def main():
             set_cell(row.cells[1], "Annexure Q signed 30 June 2026 and accepted by the supervisor without conditions; "
                                    f"ethics clearance granted 9 October 2026 (reference {ETHICS_REF}). No human participants, "
                                    "no personal data, fictitious names on all CVs; data managed per the DMP.")
+
+    # 3b. SQ4 (one question per objective, per supervisor feedback) and the updated concept document
+    add_sq4(d)
+    rebuild_annexure_g(d, ETHICS_REF)
 
     # 4. B2 search log: one row per pillar, from Table 1 (databases, records) and Section 3.1 (search window)
     b2 = table_after(d, "B2. Search log")

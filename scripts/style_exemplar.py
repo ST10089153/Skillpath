@@ -261,9 +261,9 @@ def stat_strip(d):
     nxt = anchor._p.getnext()
     holder = d.add_paragraph()
     nxt.addprevious(holder._p)
-    stats = [(f"{met}/{total}", BLUE, "thresholds met in controlled synthetic testing"),
-             (infield[1], YELLOW_TEXT, f"of in-field profiles got an expected skill ({infield[0]})"),
-             (pivot[1], RED, f"of career-pivot profiles got an expected skill ({pivot[0]})")]
+    stats = [(f"{met}/{total}", BLUE, "thresholds met"),
+             (infield[1], YELLOW_TEXT, f"in-field profiles matched ({infield[0]})"),
+             (pivot[1], RED, f"career pivots matched ({pivot[0]})")]
     t = table_before(d, holder, 2, 3, [5.6, 5.6, 5.6])
     borders(t, none=True)
     for row in t.rows:  # gutter between the three columns
