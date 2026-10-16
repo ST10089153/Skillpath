@@ -48,8 +48,8 @@ export default function ProgressScreen({ userId }: { userId: string }) {
                   style={{ width: 96, height: 96, borderRadius: 48, marginRight: 12, marginBottom: 8, alignItems: 'center', justifyContent: 'center',
                            backgroundColor: got ? colors.success : colors.card, borderWidth: 2, borderColor: got ? colors.success : colors.border }}
                 >
-                  <Text style={{ fontSize: 22, fontWeight: '800', color: got ? '#fff' : colors.muted }}>{b}</Text>
-                  <Text style={{ fontSize: 13, color: got ? '#fff' : colors.muted }}>{got ? 'Reached' : `${MODULES_PER_MILESTONE} modules`}</Text>
+                  <Text style={{ fontSize: 22, fontWeight: '800', color: got ? colors.primaryText : colors.muted }}>{b}</Text>
+                  <Text style={{ fontSize: 13, color: got ? colors.primaryText : colors.muted }}>{got ? 'Reached' : `${MODULES_PER_MILESTONE} modules`}</Text>
                 </View>
               );
             })}

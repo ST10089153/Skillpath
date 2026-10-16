@@ -21,7 +21,7 @@ function Chip({ label, on, onPress }: { label: string; on: boolean; onPress: () 
       onPress={onPress}
       style={[styles.chip, on && styles.chipOn]}
     >
-      <Text style={{ fontSize: 16, color: on ? colors.primaryText : colors.primary }}>{on ? `✓ ${label}` : label}</Text>
+      <Text style={{ fontSize: 16, color: on ? colors.primaryText : colors.text }}>{on ? `✓ ${label}` : label}</Text>
     </Pressable>
   );
 }
@@ -103,7 +103,7 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
         </Pressable>
       ) : null}
       <Title sub="Upload your CV or choose the skills you already have.">Your skills</Title>
-      <Card style={{ backgroundColor: colors.accent, borderColor: '#E0E7FF' }}>
+      <Card style={{ borderLeftWidth: 4, borderLeftColor: colors.primary }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 6 }}>
           <Ionicons name="document-text" size={22} color={colors.onAccent} style={{ marginRight: 8 }} />
           <Text style={[styles.h2, { marginBottom: 0 }]}>Start with your CV (optional)</Text>
@@ -119,7 +119,7 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
             {detected.map((d) => (
               <Pressable key={d.skill} accessibilityRole="checkbox" accessibilityState={{ checked: selected.includes(d.skill) }}
                          onPress={() => toggle(d.skill)}
-                         style={{ flexDirection: 'row', backgroundColor: colors.card, borderRadius: 14, padding: 12, marginBottom: 8, minHeight: 48 }}>
+                         style={{ flexDirection: 'row', backgroundColor: colors.cardDeep, borderRadius: 6, padding: 12, marginBottom: 8, minHeight: 48 }}>
                 <Ionicons name={selected.includes(d.skill) ? 'checkbox' : 'square-outline'} size={24} color={colors.primary} style={{ marginRight: 10 }} />
                 <View style={{ flex: 1 }}>
                   <Text style={{ fontSize: 16, fontWeight: '700', color: colors.text }}>{label(d.skill)}</Text>

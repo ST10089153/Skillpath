@@ -11,7 +11,7 @@ function Action({ icon, label, onPress }: { icon: keyof typeof Ionicons.glyphMap
   return (
     <Pressable accessibilityRole="button" accessibilityLabel={label} onPress={onPress}
                style={({ pressed }) => [styles.card, { flexBasis: '47%', flexGrow: 1, marginRight: 8, alignItems: 'flex-start', opacity: pressed ? 0.85 : 1 }]}>
-      <View style={{ backgroundColor: colors.accent, borderRadius: 12, padding: 8, marginBottom: 10 }}>
+      <View style={{ backgroundColor: colors.accent, borderRadius: 6, padding: 8, marginBottom: 10 }}>
         <Ionicons name={icon} size={22} color={colors.onAccent} />
       </View>
       <Text style={{ fontSize: 15, fontWeight: '700', color: colors.text }}>{label}</Text>
@@ -40,7 +40,7 @@ export default function Home({ userId, go, onEditProfile }: { userId: string; go
   return (
     <Screen>
       <Hero icon="sparkles" eyebrow="SkillPath" title="Welcome back">
-        <Text style={{ color: '#E0E7FF', fontSize: 15, lineHeight: 22 }}>
+        <Text style={{ color: colors.muted, fontSize: 15, lineHeight: 22 }}>
           {adopted ? `You're building ${label(prog!.skill)}. Keep going.` : skills.length ? 'Your next skill is ready to explore.' : 'Start by telling SkillPath what you can already do.'}
         </Text>
       </Hero>

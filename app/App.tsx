@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { Lexend_400Regular, Lexend_600SemiBold, Lexend_700Bold, useFonts } from '@expo-google-fonts/lexend';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useRef, useState } from 'react';
@@ -12,12 +13,12 @@ import Profile from './src/screens/Profile';
 import ProgressScreen from './src/screens/ProgressScreen';
 import Settings from './src/screens/Settings';
 import Welcome from './src/screens/Welcome';
-import { Body, Loading, TAB_BAR_HEIGHT, colors, styles as ui } from './src/ui';
+import { Body, Loading, TAB_BAR_HEIGHT, colors, fonts, styles as ui } from './src/ui';
 
 const USER_KEY = 'skillpath.user_id';
 type Tab = 'home' | 'next' | 'pathway' | 'progress' | 'settings';
 type IconName = keyof typeof Ionicons.glyphMap;
-// Material 3 navigation bar: five destinations, icon + label, active destination in a tonal pill.
+// Bottom navigation: five destinations, icon + label, active destination in gold.
 const TABS: { key: Tab; label: string; icon: IconName; iconOn: IconName }[] = [
   { key: 'home', label: 'Home', icon: 'home-outline', iconOn: 'home' },
   { key: 'next', label: 'Next skill', icon: 'compass-outline', iconOn: 'compass' },
@@ -27,6 +28,7 @@ const TABS: { key: Tab; label: string; icon: IconName; iconOn: IconName }[] = [
 ];
 
 export default function App() {
+  useFonts({ Lexend_400Regular, Lexend_600SemiBold, Lexend_700Bold }); // system font until loaded; never blocks
   const [ready, setReady] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [editingProfile, setEditingProfile] = useState(false);
@@ -105,11 +107,11 @@ export default function App() {
 
   return (
     <View style={s.root}>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       <View style={s.header}>
         <Pressable accessibilityRole="button" accessibilityLabel="SkillPath home" disabled={!signedIn}
                    onPress={() => go('home')} style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View style={s.logo}><Ionicons name="trail-sign" size={18} color="#fff" /></View>
+          <View style={s.logo}><Ionicons name="trail-sign" size={18} color={colors.primaryText} /></View>
           <Text style={s.brand}>SkillPath</Text>
         </Pressable>
         {signedIn && tab !== 'home' && !editingProfile ? (
@@ -127,7 +129,7 @@ export default function App() {
         >
           <Ionicons name="notifications" size={20} color={colors.warnText} style={{ marginRight: 10 }} />
           <View style={{ flex: 1 }}>
-            <Body style={{ marginBottom: 0, fontWeight: '600' }}>{nudge}</Body>
+            <Body style={{ marginBottom: 0, fontFamily: fonts.semibold }}>{nudge}</Body>
             <Text style={ui.small}>Tap to continue</Text>
           </View>
         </Pressable>
@@ -141,9 +143,9 @@ export default function App() {
               <Pressable key={t.key} accessibilityRole="tab" accessibilityState={{ selected: on }} accessibilityLabel={t.label}
                          onPress={() => go(t.key)} style={s.tab}>
                 <View style={[s.tabIcon, on && s.tabIconOn]}>
-                  <Ionicons name={on ? t.iconOn : t.icon} size={22} color={on ? colors.onAccent : colors.faint} />
+                  <Ionicons name={on ? t.iconOn : t.icon} size={22} color={on ? colors.primaryText : colors.faint} />
                 </View>
-                <Text style={[s.tabText, on && { color: colors.text, fontWeight: '700' }]}>{t.label}</Text>
+                <Text style={[s.tabText, on && { color: colors.primary, fontFamily: fonts.semibold }]}>{t.label}</Text>
               </Pressable>
             );
           })}
@@ -157,15 +159,15 @@ const s = StyleSheet.create({
   // Fill the viewport on web so the navigation bar stays pinned to the bottom of the screen.
   root: { flex: 1, backgroundColor: colors.bg, paddingTop: Platform.OS === 'web' ? 0 : 36,
           ...(Platform.OS === 'web' ? { height: '100vh' as unknown as number, overflow: 'hidden' as const } : {}) },
-  header: { paddingHorizontal: 16, paddingVertical: 12, backgroundColor: colors.card, borderBottomWidth: 1, borderColor: colors.border,
+  header: { paddingHorizontal: 16, paddingVertical: 12, backgroundColor: colors.cardDeep, borderBottomWidth: 1, borderColor: colors.border,
             flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  logo: { width: 30, height: 30, borderRadius: 10, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', marginRight: 10 },
-  brand: { fontSize: 19, fontWeight: '800', color: colors.text, letterSpacing: -0.3 },
-  headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.accent },
+  logo: { width: 30, height: 30, borderRadius: 6, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', marginRight: 10 },
+  brand: { fontSize: 19, fontFamily: fonts.bold, color: colors.text, letterSpacing: -0.3 },
+  headerBtn: { width: 44, height: 44, borderRadius: 6, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.accent },
   tabs: { flexDirection: 'row', height: TAB_BAR_HEIGHT + (Platform.OS === 'ios' ? 18 : 0), paddingBottom: Platform.OS === 'ios' ? 18 : 0,
-          backgroundColor: colors.card, borderTopWidth: 1, borderColor: colors.border },
+          backgroundColor: colors.cardDeep, borderTopWidth: 1, borderColor: colors.border },
   tab: { flex: 1, alignItems: 'center', justifyContent: 'center', minHeight: 56 },
-  tabIcon: { width: 56, height: 30, borderRadius: 15, alignItems: 'center', justifyContent: 'center', marginBottom: 2 },
-  tabIconOn: { backgroundColor: colors.accent },
-  tabText: { fontSize: 12, color: colors.faint },
+  tabIcon: { width: 56, height: 30, borderRadius: 6, alignItems: 'center', justifyContent: 'center', marginBottom: 2 },
+  tabIconOn: { backgroundColor: colors.primary },
+  tabText: { fontSize: 12, color: colors.faint, fontFamily: fonts.regular },
 });

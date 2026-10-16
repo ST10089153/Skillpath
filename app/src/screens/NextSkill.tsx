@@ -57,8 +57,8 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
   return (
     <Screen>
       <Hero icon="compass" eyebrow="Recommended for you" title={info?.label ?? rec.recommended_skill}>
-        {info?.category ? <Text style={{ color: '#C7D2FE', fontSize: 14, fontWeight: '600', marginBottom: 6 }}>{info.category}</Text> : null}
-        {info?.description ? <Text style={{ color: '#EEF2FF', fontSize: 16, lineHeight: 23 }}>{info.description}</Text> : null}
+        {info?.category ? <Text style={{ color: colors.primary, fontSize: 14, fontWeight: '600', marginBottom: 6 }}>{info.category}</Text> : null}
+        {info?.description ? <Text style={{ color: colors.muted, fontSize: 16, lineHeight: 23 }}>{info.description}</Text> : null}
       </Hero>
       <Card>
         {info && info.occupations.length > 0 && (
@@ -72,7 +72,7 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
           <Pill icon="pricetag-outline" label="Free resources" tone="success" />
         </View>
         {rec.income_displayed !== '' && (
-          <View style={{ backgroundColor: colors.warnBg, borderRadius: 14, padding: 12, marginTop: 8 }}>
+          <View style={{ backgroundColor: colors.warnBg, borderRadius: 6, padding: 12, marginTop: 8 }}>
             <Text style={styles.small}>Income information</Text>
             <Body style={{ marginBottom: 0 }}>{rec.income_displayed}</Body>
           </View>

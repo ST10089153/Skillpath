@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text } from 'react-native';
 
 import { api } from '../api';
-import { Body, Button, Card, Checkbox, DISCLAIMER, ErrorText, Hero, Screen, styles } from '../ui';
+import { Body, Button, Card, Checkbox, DISCLAIMER, ErrorText, Hero, Screen, colors, styles } from '../ui';
 
 export default function Welcome({ onDone }: { onDone: (userId: string) => void }) {
   const [consent, setConsent] = useState(false);
@@ -26,7 +26,7 @@ export default function Welcome({ onDone }: { onDone: (userId: string) => void }
   return (
     <Screen>
       <Hero icon="trail-sign" eyebrow="Research prototype" title="Find your next skill">
-        <Text style={{ color: '#EEF2FF', fontSize: 16, lineHeight: 23 }}>
+        <Text style={{ color: colors.muted, fontSize: 16, lineHeight: 23 }}>
         SkillPath looks at the skills you already have (you can upload your CV or pick them yourself),
         shows what is missing for jobs close to your profile, and suggests the one skill to start with. You then
         get six short steps (5 to 10 minutes each) using free learning resources, with milestones to mark your
