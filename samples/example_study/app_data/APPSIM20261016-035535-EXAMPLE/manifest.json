@@ -1,0 +1,31 @@
+{
+ "run_id": "APPSIM20261016-035535-EXAMPLE",
+ "created": "2026-10-16T03:55:35",
+ "build": "2f41212",
+ "profiles_file": "samples\\example_study\\profiles_EXAMPLE.csv",
+ "profiles": 28,
+ "personas": [
+  "steady",
+  "struggler",
+  "drifter",
+  "explorer",
+  "deferrer",
+  "part_time",
+  "dropout"
+ ],
+ "arms": [
+  "A",
+  "B"
+ ],
+ "simulated_users": 392,
+ "simulated_period": "2026-10-19 + 21 days",
+ "sha256": {
+  "app_data.db": "f47136068a1d2f39d71ede25729d3893ffa1ae3353a0f4e79fee55f1e1685ad6",
+  "events.csv": "d2293f62d47af570c2680b3fff86d5c52cad2356666249df35bf27f5d4130b44",
+  "pathways.csv": "2841ba2871059c7c6907f11751799168fff085da58d28741537e17dbd78b998c",
+  "personas.json": "b2fef31076ae5194afe2e690e3265fd77fd64258bfabcaf77ac74fcaaba8ee80",
+  "simulated_users.csv": "7d8a63000ed29ad84539c1f15c62e8f6e733ee3e4fdb9525b7e2b3f752f92acf",
+  "users.csv": "ee761b50a6fa6d003c42eb4346d62a0bf5d5bce8e3126f7f87650d20539d42e7"
+ },
+ "note": "Scripted simulated users; behaviour identical in both arms. Not evidence of human behaviour."
+}
