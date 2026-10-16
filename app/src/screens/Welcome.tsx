@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text } from 'react-native';
 
 import { api } from '../api';
-import { Body, Button, Card, Checkbox, DISCLAIMER, ErrorText, Screen, Title, styles } from '../ui';
+import { Body, Button, Card, Checkbox, DISCLAIMER, ErrorText, Hero, Screen, styles } from '../ui';
 
 export default function Welcome({ onDone }: { onDone: (userId: string) => void }) {
   const [consent, setConsent] = useState(false);
@@ -25,13 +25,14 @@ export default function Welcome({ onDone }: { onDone: (userId: string) => void }
 
   return (
     <Screen>
-      <Title>Welcome to SkillPath</Title>
-      <Body>
+      <Hero icon="trail-sign" eyebrow="Research prototype" title="Find your next skill">
+        <Text style={{ color: '#EEF2FF', fontSize: 16, lineHeight: 23 }}>
         SkillPath looks at the skills you already have (you can upload your CV or pick them yourself),
         shows what is missing for jobs close to your profile, and suggests the one skill to start with. You then
         get six short steps (5 to 10 minutes each) using free learning resources, with milestones to mark your
         progress.
-      </Body>
+        </Text>
+      </Hero>
 
       <Card>
         <Text style={styles.h2}>What we store</Text>
@@ -55,7 +56,7 @@ export default function Welcome({ onDone }: { onDone: (userId: string) => void }
       />
       <Checkbox checked={adult} onChange={setAdult} label="I confirm that I am 18 years or older." />
       <ErrorText error={error} />
-      <Button label={busy ? 'Starting…' : 'Start'} onPress={start} disabled={!consent || !adult || busy} />
+      <Button label={busy ? 'Starting…' : 'Start'} icon="arrow-forward" onPress={start} disabled={!consent || !adult || busy} />
     </Screen>
   );
 }

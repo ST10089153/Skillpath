@@ -1,9 +1,10 @@
+import { Ionicons } from '@expo/vector-icons';
 import * as DocumentPicker from 'expo-document-picker';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Pressable, Text, TextInput, View } from 'react-native';
 
 import { api, Competency, DetectedSkill } from '../api';
-import { Body, Button, Card, ErrorText, Loading, Screen, Title, colors, styles } from '../ui';
+import { Body, Button, Card, ErrorText, Loading, Screen, SectionLabel, Title, colors, styles } from '../ui';
 
 const LEVELS: { value: Competency; label: string; detail: string }[] = [
   { value: 'limited', label: 'Just starting', detail: "I'm new to most of this and have had little chance to use these skills." },
@@ -25,7 +26,7 @@ function Chip({ label, on, onPress }: { label: string; on: boolean; onPress: () 
   );
 }
 
-export default function Profile({ userId, onDone }: { userId: string; onDone: () => void }) {
+export default function Profile({ userId, onDone, onCancel }: { userId: string; onDone: () => void; onCancel?: () => void }) {
   const [groups, setGroups] = useState<{ category: string; skills: string[] }[] | null>(null);
   const [labels, setLabels] = useState<Record<string, string>>({});
   const [open, setOpen] = useState<string | null>(null);
@@ -94,32 +95,46 @@ export default function Profile({ userId, onDone }: { userId: string; onDone: ()
 
   return (
     <Screen>
-      <Title>Your skills</Title>
-      <Card>
-        <Text style={styles.h2}>Start with your CV (optional)</Text>
+      {onCancel ? (
+        <Pressable accessibilityRole="button" accessibilityLabel="Back" onPress={onCancel}
+                   style={{ flexDirection: 'row', alignItems: 'center', minHeight: 44, alignSelf: 'flex-start' }}>
+          <Ionicons name="chevron-back" size={22} color={colors.primary} />
+          <Text style={{ color: colors.primary, fontSize: 16, fontWeight: '700' }}>Back</Text>
+        </Pressable>
+      ) : null}
+      <Title sub="Upload your CV or choose the skills you already have.">Your skills</Title>
+      <Card style={{ backgroundColor: colors.accent, borderColor: '#E0E7FF' }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 6 }}>
+          <Ionicons name="document-text" size={22} color={colors.onAccent} style={{ marginRight: 8 }} />
+          <Text style={[styles.h2, { marginBottom: 0 }]}>Start with your CV (optional)</Text>
+        </View>
         <Body>SkillPath's built-in AI reads your CV and suggests the skills it finds. Your CV is processed by
           SkillPath's own server, is never sent to outside AI services, and is not saved.</Body>
         <Button label={cvBusy ? 'Reading your CV… (first time takes ~20 s)' : 'Upload CV (PDF, Word or text)'}
-                variant="secondary" disabled={cvBusy} onPress={uploadCv} />
+                variant="primary" icon="cloud-upload-outline" disabled={cvBusy} onPress={uploadCv} />
         {cvNote !== '' && <Body muted>{cvNote}</Body>}
         {detected && detected.length > 0 && (
           <View>
             <Body style={{ fontWeight: '600' }}>Found {detected.length} skills. Untick any that are not right:</Body>
             {detected.map((d) => (
               <Pressable key={d.skill} accessibilityRole="checkbox" accessibilityState={{ checked: selected.includes(d.skill) }}
-                         onPress={() => toggle(d.skill)} style={{ paddingVertical: 8, minHeight: 48 }}>
-                <Text style={{ fontSize: 17, color: colors.text }}>
-                  {selected.includes(d.skill) ? '☑' : '☐'} {label(d.skill)}{' '}
-                  <Text style={styles.small}>({d.method === 'exact' ? 'named in CV' : `${Math.round(d.score * 100)}% match`})</Text>
-                </Text>
-                <Text style={styles.small}>From your CV: "{d.evidence}"</Text>
+                         onPress={() => toggle(d.skill)}
+                         style={{ flexDirection: 'row', backgroundColor: colors.card, borderRadius: 14, padding: 12, marginBottom: 8, minHeight: 48 }}>
+                <Ionicons name={selected.includes(d.skill) ? 'checkbox' : 'square-outline'} size={24} color={colors.primary} style={{ marginRight: 10 }} />
+                <View style={{ flex: 1 }}>
+                  <Text style={{ fontSize: 16, fontWeight: '700', color: colors.text }}>{label(d.skill)}</Text>
+                  <Text style={[styles.small, { color: colors.success, fontWeight: '600' }]}>
+                    {d.method === 'exact' ? 'Named in your CV' : `${Math.round(d.score * 100)}% match`}
+                  </Text>
+                  <Text style={styles.small} numberOfLines={2}>From your CV: "{d.evidence}"</Text>
+                </View>
               </Pressable>
             ))}
           </View>
         )}
       </Card>
 
-      <Body>Add or remove skills below. Search, or open a category.</Body>
+      <SectionLabel>Add or remove skills</SectionLabel>
       <TextInput
         style={styles.input}
         placeholder="Search skills"
@@ -176,7 +191,7 @@ export default function Profile({ userId, onDone }: { userId: string; onDone: ()
         })
       )}
 
-      <Title>How confident are you?</Title>
+      <SectionLabel>How confident are you?</SectionLabel>
       {LEVELS.map((l) => (
         <Pressable
           key={l.value}
@@ -185,13 +200,16 @@ export default function Profile({ userId, onDone }: { userId: string; onDone: ()
           onPress={() => setLevel(l.value)}
           style={[styles.card, { borderWidth: 2 }, level === l.value && { borderColor: colors.primary, backgroundColor: colors.accent }]}
         >
-          <Text style={styles.h2}>{level === l.value ? '◉ ' : '○ '}{l.label}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Ionicons name={level === l.value ? 'radio-button-on' : 'radio-button-off'} size={22} color={colors.primary} style={{ marginRight: 8 }} />
+            <Text style={[styles.h2, { marginBottom: 0 }]}>{l.label}</Text>
+          </View>
           <Body muted>{l.detail}</Body>
         </Pressable>
       ))}
 
       <ErrorText error={error} />
-      <Button label={busy ? 'Saving…' : 'Find my next skill'} onPress={save} disabled={!level || busy} />
+      <Button label={busy ? 'Saving…' : 'Find my next skill'} icon="arrow-forward" onPress={save} disabled={!level || busy} />
       {selected.length === 0 && <Body muted>Tip: add at least one skill so SkillPath can make a suggestion.</Body>}
     </Screen>
   );

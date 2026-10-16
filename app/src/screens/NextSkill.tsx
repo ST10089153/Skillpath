@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import { api, Recommendation, SkillInfo } from '../api';
-import { Body, Button, Card, ErrorText, Loading, Screen, Title, colors, styles } from '../ui';
+import { Body, Button, Card, ErrorText, Hero, Loading, Pill, Screen, Title, colors, styles } from '../ui';
 
 export default function NextSkill({ userId, onAdopted, onEditProfile }: {
   userId: string; onAdopted: () => void; onEditProfile: () => void;
@@ -56,22 +56,23 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
 
   return (
     <Screen>
-      <Title>Your next skill</Title>
-      <Card style={{ borderColor: colors.primary, borderWidth: 2 }}>
-        <Text style={[styles.small, { textTransform: 'uppercase', letterSpacing: 1 }]}>Recommended for you</Text>
-        <Text style={{ fontSize: 32, fontWeight: '800', color: colors.text, marginVertical: 8 }} accessibilityRole="header">
-          {info?.label ?? rec.recommended_skill}
-        </Text>
-        {info?.category ? <Text style={[styles.small, { marginBottom: 6 }]}>{info.category}</Text> : null}
-        {info?.description ? <Body>{info.description}</Body> : null}
+      <Hero icon="compass" eyebrow="Recommended for you" title={info?.label ?? rec.recommended_skill}>
+        {info?.category ? <Text style={{ color: '#C7D2FE', fontSize: 14, fontWeight: '600', marginBottom: 6 }}>{info.category}</Text> : null}
+        {info?.description ? <Text style={{ color: '#EEF2FF', fontSize: 16, lineHeight: 23 }}>{info.description}</Text> : null}
+      </Hero>
+      <Card>
         {info && info.occupations.length > 0 && (
           <Body muted>Asked for by: {info.occupations.join(', ')}</Body>
         )}
         {info?.how_to_show ? <Body><Text style={{ fontWeight: '700' }}>How you will show it: </Text>{info.how_to_show}</Body> : null}
         {info?.demand_evidence ? <Body muted>Why it is in demand: {info.demand_evidence}</Body> : null}
-        <Body muted>Six short steps, 5 to 10 minutes each, using free resources.</Body>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+          <Pill icon="layers-outline" label="6 short steps" />
+          <Pill icon="time-outline" label="5-10 min each" />
+          <Pill icon="pricetag-outline" label="Free resources" tone="success" />
+        </View>
         {rec.income_displayed !== '' && (
-          <View style={{ backgroundColor: colors.accent, borderRadius: 8, padding: 10, marginTop: 4 }}>
+          <View style={{ backgroundColor: colors.warnBg, borderRadius: 14, padding: 12, marginTop: 8 }}>
             <Text style={styles.small}>Income information</Text>
             <Body style={{ marginBottom: 0 }}>{rec.income_displayed}</Body>
           </View>
@@ -112,14 +113,18 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
               {o.occupation}: you have {o.skills_held} of {o.skills_total}
             </Body>
             <Body muted style={{ marginBottom: 2 }}>Still to learn ({o.skills_missing.length}):</Body>
-            <Body>{o.skills_missing.map((m) => (m === rec.recommended_skill ? `★ ${label(m)} (start here)` : label(m))).join(' · ')}</Body>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+              {o.skills_missing.map((m) => (m === rec.recommended_skill
+                ? <Pill key={m} icon="star" tone="success" label={`${label(m)} · start here`} />
+                : <Pill key={m} label={label(m)} />))}
+            </View>
           </View>
         ))}
       </Pressable>
 
       <ErrorText error={error} />
       {note !== '' && <View style={styles.banner}><Body style={{ marginBottom: 0 }}>{note}</Body></View>}
-      <Button label="Accept and start" disabled={busy} onPress={() => run(() => api.accept(userId), onAdopted)} />
+      <Button label="Accept and start" icon="play" disabled={busy} onPress={() => run(() => api.accept(userId), onAdopted)} />
       <Button label={showAlts ? 'Hide alternatives' : 'Show alternatives'} variant="secondary" onPress={() => setShowAlts(!showAlts)} />
       {showAlts && (
         <Card>

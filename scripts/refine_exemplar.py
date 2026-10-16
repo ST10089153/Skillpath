@@ -24,6 +24,23 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "docs", "exemplar", "REIT8419_Part3_SkillPath_EXEMPLAR_v2.docx")
 OUT = os.path.join(ROOT, "docs", "exemplar", "REIT8419_Part3_SkillPath_EXEMPLAR_v3.docx")
 PRISMA_PNG = os.path.join(ROOT, "docs", "exemplar", "fig_prisma.png")
+SHOTS = os.path.join(ROOT, "docs", "exemplar", "figures")  # from scripts/capture_screens.py
+
+# Figures 2-5: app screenshots, (file, annotation) per panel, then the caption.
+APP_FIGURES = [
+    ([("fig1_welcome.png", "Consent and age check; no name, email or phone"),
+      ("fig2_profile_cv.png", "Local AI proposes skills from the CV; user confirms")],
+     "Figure 2: Onboarding and CV-based skill profile (DD1)"),
+    ([("fig3a_recommendation.png", "One recommended skill with its demand evidence"),
+      ("fig3b_transparency.png", "Transparency: nearest occupations and missing skills")],
+     "Figure 3: Recommendation with the transparency panel (DD1, DD2, DD6, DD8)"),
+    ([("fig4_pathway.png", "Six 5-10 minute steps; difficulty shown as dots"),
+      ("fig_home.png", "Home: pathway progress and one-tap navigation")],
+     "Figure 4: Micro-learning pathway step and home screen (DD3, DD4)"),
+    ([("fig5_progress.png", "Milestone every three completed steps"),
+      ("fig_settings.png", "View and delete my data (POPIA)")],
+     "Figure 5: Progression view (DD5, DD10) and POPIA data controls"),
+]
 
 DELETE = ["Each sub-question maps to one DSR phase", "The two phases required different selection logics."]
 
@@ -466,6 +483,33 @@ def prisma_figure(path):
     plt.close()
 
 
+def app_panel(panels, path):
+    """Two phone screenshots side by side, each with a lettered annotation underneath."""
+    from PIL import Image, ImageDraw, ImageFont
+    shots = [Image.open(os.path.join(SHOTS, f)).convert("RGB") for f, _ in panels]
+    w, h = shots[0].size
+    gap, pad, foot = 60, 40, 170
+    canvas = Image.new("RGB", (pad * 2 + w * len(shots) + gap * (len(shots) - 1), pad + h + foot), "white")
+    draw = ImageDraw.Draw(canvas)
+    bold = ImageFont.truetype(os.path.join(os.environ.get("WINDIR", r"C:\Windows"), "Fonts", "arialbd.ttf"), 34)
+    reg = ImageFont.truetype(os.path.join(os.environ.get("WINDIR", r"C:\Windows"), "Fonts", "arial.ttf"), 32)
+    for i, (img, (_, note)) in enumerate(zip(shots, panels)):
+        x = pad + i * (w + gap)
+        canvas.paste(img, (x, pad))
+        draw.rectangle([x - 2, pad - 2, x + w + 1, pad + h + 1], outline="#CBD5E1", width=3)
+        words, lines = note.split(), [""]
+        for word in words:  # wrap the annotation to the screenshot width
+            trial = (lines[-1] + " " + word).strip()
+            if draw.textlength(f"({chr(97 + i)}) " + trial, font=reg) > w - 20 and lines[-1]:
+                lines.append(word)
+            else:
+                lines[-1] = trial
+        draw.text((x, pad + h + 24), f"({chr(97 + i)})", font=bold, fill="#1F3A5F")
+        for j, line in enumerate(lines):
+            draw.text((x + 62, pad + h + 24 + j * 42), line, font=reg, fill="#1F2937")
+    canvas.save(path)
+
+
 def add_ref(before_par, parts, like):
     p = before_par.insert_paragraph_before("", style=like.style)
     p.paragraph_format.alignment = like.paragraph_format.alignment
@@ -557,6 +601,20 @@ def main():
     set_text(fig_par, "")
     fig_par.runs[0].add_picture(PRISMA_PNG, width=Cm(15))
     fig_par.alignment = 1
+
+    # Figures 2-5: annotated app screenshots in place of the placeholder in 5.2
+    cap_like = next(p for p in d.paragraphs if p.text.startswith("Figure 1: PRISMA"))
+    holder = next(p for p in d.paragraphs if p.text.startswith("[INSERT FIGURES"))
+    for n, (panels, caption) in enumerate(APP_FIGURES, start=2):
+        png = os.path.join(SHOTS, f"Figure{n}_panel.png")
+        app_panel(panels, png)
+        pic = holder.insert_paragraph_before("", style=fig_par.style)
+        pic.add_run().add_picture(png, height=Cm(11.5))
+        pic.alignment = 1
+        cap = holder.insert_paragraph_before("", style=cap_like.style)
+        cap.alignment = cap_like.alignment
+        cap.add_run(caption).italic = True
+    holder._p.getparent().remove(holder._p)
 
     # References
     paras = list(d.paragraphs)

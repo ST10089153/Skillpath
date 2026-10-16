@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 
 import { api, Progress } from '../api';
-import { Body, Card, ErrorText, Loading, Screen, Title, colors, styles } from '../ui';
+import { Body, Card, ErrorText, Loading, ProgressBar, Screen, SectionLabel, Title, colors, styles } from '../ui';
 
 const MODULES_PER_MILESTONE = 3; // mirrors skillpath/config.py (display only)
 
 export default function ProgressScreen({ userId }: { userId: string }) {
   const [prog, setProg] = useState<Progress | null>(null);
   const [error, setError] = useState('');
+  const [labels, setLabels] = useState<Record<string, string>>({});
+  useEffect(() => { api.vocabulary().then((v) => setLabels(v.labels ?? {})).catch(() => undefined); }, []);
 
   useEffect(() => {
     api.progress(userId).then(setProg).catch((e) => setError(e.message));
@@ -28,19 +30,14 @@ export default function ProgressScreen({ userId }: { userId: string }) {
       ) : (
         <>
           <Card>
-            <Text style={styles.h2}>{prog.skill}</Text>
-            <View
-              accessibilityRole="progressbar"
-              accessibilityValue={{ min: 0, max: total, now: prog.modules_completed }}
-              style={{ height: 18, backgroundColor: colors.accent, borderRadius: 9, overflow: 'hidden', marginVertical: 8 }}
-            >
-              <View style={{ width: `${pct}%`, height: '100%', backgroundColor: colors.primary }} />
-            </View>
+            <SectionLabel>Current pathway</SectionLabel>
+            <Text style={styles.h2}>{labels[prog.skill] ?? prog.skill}</Text>
+            <ProgressBar value={prog.modules_completed} total={total} />
             <Body muted>{prog.modules_completed} of {total} modules ({pct}%)</Body>
             {prog.next_milestone_message ? <Body>{prog.next_milestone_message}</Body> : null}
           </Card>
 
-          <Text style={styles.h2}>Milestones</Text>
+          <SectionLabel>Milestones</SectionLabel>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 12 }}>
             {badges.map((b) => {
               const got = prog.milestones.includes(b);

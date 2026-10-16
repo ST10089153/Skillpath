@@ -75,8 +75,8 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
             )}
             {current && (
               <View style={{ marginTop: 4 }}>
-                <Button label="I completed this" disabled={busy} onPress={() => report(m.module_id, true)} />
-                <Button label="I struggled with this" variant="secondary" disabled={busy} onPress={() => report(m.module_id, false)} />
+                <Button label="I completed this" icon="checkmark-circle-outline" disabled={busy} onPress={() => report(m.module_id, true)} />
+                <Button label="I struggled with this" icon="help-buoy-outline" variant="secondary" disabled={busy} onPress={() => report(m.module_id, false)} />
               </View>
             )}
           </Card>

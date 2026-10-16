@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { Text, View } from 'react-native';
 
 import { api, API_URL } from '../api';
 import { Body, Button, Card, DISCLAIMER, ErrorText, Screen, Title, colors, styles } from '../ui';
@@ -39,17 +40,20 @@ export default function Settings({ userId, onDeleted, onEditProfile }: {
         <Body muted>This random ID is the only thing that links your data. No name, email or phone number is stored.</Body>
       </Card>
 
-      <Button label="Edit my skills" variant="secondary" onPress={onEditProfile} />
-      <Button label={data ? 'Refresh my data' : 'View my data'} variant="secondary" onPress={view} />
+      <Button label="Edit my skills" icon="create-outline" variant="tonal" onPress={onEditProfile} />
+      <Button label={data ? 'Refresh my data' : 'View my data'} icon="eye-outline" variant="tonal" onPress={view} />
       {data !== '' && (
         <Card><Text style={{ fontFamily: 'monospace', fontSize: 13, color: colors.text }} selectable>{data}</Text></Card>
       )}
 
       <Card>
-        <Text style={styles.h2}>Delete my data</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 6 }}>
+          <Ionicons name="trash-outline" size={22} color={colors.danger} style={{ marginRight: 8 }} />
+          <Text style={[styles.h2, { marginBottom: 0 }]}>Delete my data</Text>
+        </View>
         <Body>This permanently removes your profile, pathway and activity records from SkillPath.</Body>
         {!confirming ? (
-          <Button label="Delete my data" variant="danger" onPress={() => setConfirming(true)} />
+          <Button label="Delete my data" icon="trash-outline" variant="danger" onPress={() => setConfirming(true)} />
         ) : (
           <>
             <Body style={{ fontWeight: '700' }}>Are you sure? This cannot be undone.</Body>
