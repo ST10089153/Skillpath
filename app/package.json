@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.ts",
   "dependencies": {
+    "@expo-google-fonts/gloock": "^0.4.2",
     "@expo-google-fonts/lexend": "^0.4.1",
-    "@expo-google-fonts/playfair-display": "^0.4.2",
+    "@expo-google-fonts/syne-mono": "^0.4.1",
     "@expo/metro-runtime": "~57.0.16",
     "@expo/vector-icons": "^15.0.2",
     "@react-native-async-storage/async-storage": "2.2.0",

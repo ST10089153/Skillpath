@@ -2,7 +2,8 @@
 // of the researcher's Skillpath-ui design, refined with the redesign-existing-projects and high-end-visual-design
 // skills (Leonxlnx/taste-skill) and Vercel's Web Interface Guidelines:
 //  - one accent (gold); shadows tinted with the navy ground, never pure black; ambient light + grain on web
-//  - serif display headings (Playfair Display), Lexend body, tabular figures for counts, balanced headline wraps
+//  - type that avoids the usual AI defaults: Gloock (sharp, high-contrast serif) for display, Syne Mono for labels
+//    and readouts, Lexend (designed for reading fluency) for body; tabular figures, balanced headline wraps
 //  - "double-bezel" surfaces for key blocks (outer tray + inner core with a top highlight); radii vary by level
 //  - pill buttons with a trailing icon "island"; hover, press and visible keyboard-focus states on every control
 //  - staggered fade-and-rise entrances on a custom spring-like curve; skeleton loading; all motion is skipped
@@ -57,7 +58,8 @@ export const surfaces = {
 };
 
 export const fonts = {
-  display: 'PlayfairDisplay_600SemiBold',
+  display: 'Gloock_400Regular',
+  mono: 'SyneMono_400Regular',
   regular: 'Lexend_400Regular',
   semibold: 'Lexend_600SemiBold',
   bold: 'Lexend_700Bold',
@@ -396,11 +398,12 @@ export const styles = StyleSheet.create({
   inner: { width: '100%', maxWidth: 560, alignSelf: 'center' },
   title: { fontSize: 34, lineHeight: 42, fontFamily: fonts.display, color: colors.text, letterSpacing: -0.4, ...balance },
   h2: { fontSize: 21, lineHeight: 28, fontFamily: fonts.display, color: colors.text, marginBottom: 6, ...balance },
-  eyebrow: { fontSize: 12, fontFamily: fonts.semibold, color: colors.primary, textTransform: 'uppercase', letterSpacing: 3 },
-  sectionLabel: { fontSize: 12, fontFamily: fonts.semibold, color: colors.primary, textTransform: 'uppercase', letterSpacing: 3, marginTop: 8, marginBottom: 8 },
+  eyebrow: { fontSize: 12, fontFamily: fonts.mono, color: colors.primary, textTransform: 'uppercase', letterSpacing: 2.2 },
+  sectionLabel: { fontSize: 12, fontFamily: fonts.mono, color: colors.primary, textTransform: 'uppercase', letterSpacing: 2.2, marginTop: 8, marginBottom: 8 },
   body: { fontSize: 16, lineHeight: 26, color: colors.text, marginBottom: 8, fontFamily: fonts.regular },
   small: { fontSize: 13, lineHeight: 19, color: colors.faint, fontFamily: fonts.regular },
-  numeric: { fontVariant: ['tabular-nums'] },
+  // Readouts (counts, levels, durations) in the mono face.
+  numeric: { fontFamily: fonts.mono, fontVariant: ['tabular-nums'], letterSpacing: 0.3 },
   cardShell: { marginBottom: 18, borderRadius: 10, ...depth },
   cardInner: { backgroundColor: colors.card, borderRadius: 10, padding: 20, borderWidth: 1, borderColor: colors.border,
                borderTopColor: 'rgba(255,255,255,0.16)' },
@@ -413,7 +416,7 @@ export const styles = StyleSheet.create({
           ...(WEB ? ({ backgroundImage: 'linear-gradient(135deg, #17343F 0%, #0E232C 100%)' } as object) : {}) },
   hero: { borderRadius: 12, padding: 22, paddingTop: 24, overflow: 'hidden', borderWidth: 1, borderColor: colors.border,
           borderTopColor: 'rgba(255,255,255,0.18)' },
-  heroEyebrow: { color: colors.primary, fontSize: 12, fontFamily: fonts.semibold, textTransform: 'uppercase', letterSpacing: 3 },
+  heroEyebrow: { color: colors.primary, fontSize: 12, fontFamily: fonts.mono, textTransform: 'uppercase', letterSpacing: 2.2 },
   heroTitle: { color: colors.text, fontSize: 38, lineHeight: 46, fontFamily: fonts.display, marginBottom: 10, letterSpacing: -0.6, ...balance },
   // Soft gold light in the top-right corner of the hero.
   heroGlow: { position: 'absolute', top: -90, right: -70, width: 220, height: 220, borderRadius: 110,

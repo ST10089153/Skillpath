@@ -49,7 +49,7 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
   return (
     <Screen>
       <Title>Pathway: {info?.label ?? prog.skill}</Title>
-      <Body muted>{prog.modules_completed} of {prog.total_modules} modules done</Body>
+      <Body muted style={styles.numeric}>{prog.modules_completed} of {prog.total_modules} modules done</Body>
       {flash !== '' && <View style={styles.banner}><Body style={{ marginBottom: 0 }}>{flash}</Body></View>}
       <ErrorText error={error} />
       {prog.modules.map((m, i) => {
@@ -60,7 +60,7 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
         return (
           <Card key={m.module_id} style={current ? { borderColor: colors.primary } : m.done ? { opacity: 0.75 } : undefined}>
             <BigNumber n={i + 1} />
-            <Text style={styles.small}>Module {i + 1} · about {minutes} min {m.done ? '· ✓ Done' : ''}</Text>
+            <Text style={[styles.small, styles.numeric]}>Module {i + 1} · about {minutes} min {m.done ? '· ✓ Done' : ''}</Text>
             <Text style={[styles.h2, { marginTop: 4 }]}>{c.title}</Text>
             <Difficulty level={difficulty} />
             {(current || m.done) && <Body style={{ marginTop: 8 }}>{c.description}</Body>}

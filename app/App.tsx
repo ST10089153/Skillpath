@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Lexend_400Regular, Lexend_600SemiBold, Lexend_700Bold, useFonts } from '@expo-google-fonts/lexend';
-import { PlayfairDisplay_600SemiBold } from '@expo-google-fonts/playfair-display';
+import { Gloock_400Regular } from '@expo-google-fonts/gloock';
+import { SyneMono_400Regular } from '@expo-google-fonts/syne-mono';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useRef, useState } from 'react';
@@ -29,7 +30,7 @@ const TABS: { key: Tab; label: string; icon: IconName; iconOn: IconName }[] = [
 ];
 
 export default function App() {
-  useFonts({ Lexend_400Regular, Lexend_600SemiBold, Lexend_700Bold, PlayfairDisplay_600SemiBold }); // system font until loaded; never blocks
+  useFonts({ Lexend_400Regular, Lexend_600SemiBold, Lexend_700Bold, Gloock_400Regular, SyneMono_400Regular }); // system font until loaded; never blocks
   const [ready, setReady] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [editingProfile, setEditingProfile] = useState(false);

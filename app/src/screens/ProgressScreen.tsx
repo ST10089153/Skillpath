@@ -47,7 +47,7 @@ export default function ProgressScreen({ userId }: { userId: string }) {
               const face = (
                 <>
                   <Text style={{ fontSize: 24, fontFamily: fonts.display, color: got ? colors.primary : colors.muted }}>{b}</Text>
-                  <Text style={{ fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase', fontFamily: fonts.regular, color: got ? colors.primary : colors.faint }}>{got ? 'Reached' : `${MODULES_PER_MILESTONE} modules`}</Text>
+                  <Text style={{ fontSize: 11, letterSpacing: 1.2, textTransform: 'uppercase', fontFamily: fonts.mono, color: got ? colors.primary : colors.faint }}>{got ? 'Reached' : `${MODULES_PER_MILESTONE} modules`}</Text>
                 </>
               );
               // A reached milestone is ringed with split light; one still to come is a quiet hairline circle.
