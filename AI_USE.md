@@ -29,6 +29,8 @@ AI coding assistant, on 2026-10-05, from a specification written by the research
 
 - At the user's request (as a teacher), generated a watermarked WORKED EXAMPLE of the Phase 3 inputs
   (`samples/example_study/`: 28 example profiles and CVs). This is a teaching exemplar, not study data.
+  At the user's request the same watermarked example was then placed in `profiles.csv` and `profiles/cvs/`
+  so that the full pipeline could be run end to end on it (2026-10-16).
 
 ## What the AI assistant did not do
 - It did not create, fill in or edit the study's synthetic profiles or study CVs, acceptable recommendations, test output logs
