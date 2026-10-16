@@ -7,7 +7,8 @@
 //  - pill buttons with a trailing icon "island"; hover, press and visible keyboard-focus states on every control
 //  - staggered fade-and-rise entrances on a custom spring-like curve; skeleton loading; all motion is skipped
 //    when the device's reduce-motion setting is on
-// Prism: light split into a spectrum marks only the key moments (a refracted-light streak in the hero, the
+// Hero art: a slowly turning glass bloom (GlassBloom.tsx) behind a fade, after the researcher's references.
+// Prism: light split into a spectrum marks only the key moments (the bloom's edges, the
 // primary button's rim, progress fill, reached milestones, the active tab). Decorative only: text never carries
 // the spectrum, and the active-tab shimmer stops under reduce-motion.
 // Fonts are free Google Fonts bundled with the app (system font until loaded). Every text/background pair
@@ -18,6 +19,11 @@ import React, { createContext, ReactNode, useContext, useEffect, useRef, useStat
 import {
   AccessibilityInfo, Animated, Easing, Platform, Pressable, ScrollView, StyleSheet, Text, View, ViewStyle,
 } from 'react-native';
+
+import { PRISM, useReducedMotion } from './fx';
+import GlassBloom from './GlassBloom';
+
+export { PRISM, useReducedMotion };
 
 export const colors = {
   bg: '#0B1D26',
@@ -49,9 +55,6 @@ export const surfaces = {
   hero: ['#1B3A47', '#0B1D26'] as const,
   gold: ['#FCE3A4', '#E9C46A'] as const,
 };
-
-// Spectrum tuned for a dark navy ground (saturated enough to read as prismatic light, not neon).
-export const PRISM = ['#FF7A7A', '#FFB36B', '#FBD784', '#8BE3A8', '#6CC8FF', '#9D8CFF', '#F07BD0'] as const;
 
 export const fonts = {
   display: 'PlayfairDisplay_600SemiBold',
@@ -90,17 +93,6 @@ if (WEB && typeof window !== 'undefined') {
 }
 /** Style for a Pressable's state: a gold ring when focused from the keyboard. */
 export const focusVisible = (state: unknown) => ((state as { focused?: boolean }).focused && keyboardMode ? focusRing : null);
-
-/** True when the user asked the OS to reduce motion. */
-export function useReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    AccessibilityInfo.isReduceMotionEnabled().then(setReduced).catch(() => undefined);
-    const sub = AccessibilityInfo.addEventListener?.('reduceMotionChanged', setReduced);
-    return () => sub?.remove?.();
-  }, []);
-  return reduced;
-}
 
 // Each <Screen> numbers the blocks inside it so they cascade in one after another.
 const Stagger = createContext<{ next: () => number } | null>(null);
@@ -165,15 +157,6 @@ export function PrismLine({ height = 2, shimmer = true, style }: { height?: numb
           <LinearGradient colors={band} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{ width: w, height }} />
         </Animated.View>
       )}
-    </View>
-  );
-}
-
-/** A soft diagonal band of refracted light (decorative, sits behind content). */
-function Refraction() {
-  return (
-    <View pointerEvents="none" style={styles.refraction}>
-      <LinearGradient colors={PRISM} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{ flex: 1 }} />
     </View>
   );
 }
@@ -244,7 +227,10 @@ export function Hero({ eyebrow, title, children }: {
     <Animated.View style={[styles.bezel, { marginBottom: 24 }, entrance]}>
       <LinearGradient colors={surfaces.hero} start={{ x: 1, y: 0 }} end={{ x: 0, y: 1 }} style={styles.hero}>
         <View style={styles.heroGlow} pointerEvents="none" />
-        <Refraction />
+        <View style={styles.bloom} pointerEvents="none"><GlassBloom size={250} /></View>
+        {/* Fade keeps the text side of the hero calm so copy stays at full contrast over the bloom. */}
+        <LinearGradient pointerEvents="none" colors={['rgba(18,40,50,0.97)', 'rgba(18,40,50,0.88)', 'rgba(18,40,50,0)']}
+                        locations={[0, 0.58, 0.98]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }} style={StyleSheet.absoluteFill} />
         {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
         <Text style={styles.heroTitle} accessibilityRole="header">{title}</Text>
         {children}
@@ -434,9 +420,7 @@ export const styles = StyleSheet.create({
               backgroundColor: 'rgba(251,215,132,0.10)',
               ...(WEB ? ({ filter: 'blur(30px)' } as object) : {}) },
   prismRim: { borderRadius: 999, padding: 1.5 },
-  refraction: { position: 'absolute', top: 26, right: -70, width: 320, height: 22, opacity: WEB ? 0.30 : 0.14,
-                transform: [{ rotate: '-24deg' }], borderRadius: 11,
-                ...(WEB ? ({ filter: 'blur(9px)' } as object) : {}) },
+  bloom: { position: 'absolute', top: -78, right: -112, opacity: 0.95 },
   bigNumber: { fontSize: 56, lineHeight: 60, fontFamily: fonts.display, color: 'rgba(255,255,255,0.14)', fontVariant: ['lining-nums'], marginTop: -6, marginBottom: 4 },
   btn: { minHeight: 52, borderRadius: 999, paddingHorizontal: 22, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' },
   btnPrimary: { paddingLeft: 22, paddingRight: 7 },
