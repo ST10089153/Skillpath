@@ -110,11 +110,12 @@ def test_section_headings_and_banners_are_not_evidence():
     assert "EXPERIENCE AND PROJECTS" not in segments("EXPERIENCE AND PROJECTS\nBuilt dashboards in Power BI")
 
 
-def test_demo_cvs_are_readable_in_every_format():
-    folder = os.path.join(ROOT, "samples", "demo_cvs")
+def test_example_cvs_are_readable_in_every_format():
+    folder = os.path.join(ROOT, "samples", "example_study", "cvs")
     if not os.path.isdir(folder):
-        pytest.skip("demo CVs not generated")
-    for fn in os.listdir(folder):
-        if fn.endswith((".pdf", ".docx", ".txt")) and fn.startswith("DEMO"):
-            text = extract_text(open(os.path.join(folder, fn), "rb").read(), fn)
-            assert "NOT STUDY DATA" in text and "EDUCATION" in text, fn
+        pytest.skip("example study not generated")
+    names = [f for f in os.listdir(folder) if f.endswith((".pdf", ".docx"))]
+    assert names and {f.rsplit(".", 1)[1] for f in names} == {"pdf", "docx"}
+    for fn in names:
+        text = extract_text(open(os.path.join(folder, fn), "rb").read(), fn)
+        assert "NOT STUDY DATA" in text and "EDUCATION" in text, fn

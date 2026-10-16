@@ -25,8 +25,7 @@ AI coding assistant, on 2026-10-05, from a specification written by the research
   tasks, WEF cluster assignment, evidencing ESCO labels, CV keywords) and extracted WEF Future of Jobs 2025
   figures (`data/wef_skills_2025.csv`). These are design choices for the researcher to review and approve.
 
-- Wrote 8 clearly labelled DEMO CVs (`samples/demo_cvs/`, fictional people) and their expected-skill labels for
-  trying the app and checking the CV reader during development. They are not study data.
+- Wrote 8 clearly labelled DEMO CVs for development checks (later removed and superseded by the worked example).
 
 - At the user's request (as a teacher), generated a watermarked WORKED EXAMPLE of the Phase 3 inputs
   (`samples/example_study/`: 28 example profiles and CVs). This is a teaching exemplar, not study data.

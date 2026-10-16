@@ -59,17 +59,19 @@ python scripts/make_skill_reference.py     # refreshes profiles/skill_reference.
 
 Commit the outputs before any test run so `--app-version` identifies the exact data used.
 
-## Demo CVs and CV-reader accuracy
+## Worked example and CV-reader accuracy
 
-`samples/demo_cvs/` holds 8 fictional DEMO CVs (PDF, Word, text) for trying **Upload CV** in the app. They are
-not study data. To measure how well the CV reader finds skills:
+`samples/example_study/` is a complete, watermarked **EXAMPLE** (not study data): 28 profiles covering the full
+design matrix and edge cases, one fictional CV per profile, expected skills, and a full example evaluation run.
+Use its CVs to try **Upload CV** in the app. To measure how well the CV reader finds skills:
 
 ```bash
-python scripts/cv_accuracy.py samples/demo_cvs
+python scripts/cv_accuracy.py samples/example_study/cvs
 ```
 
-For your own study CVs, put them in a folder with an `expected_skills.csv` (`cv_file, expected_skills`, written
-before running) and run the same command on that folder (add `--out report.csv` to save the table).
+For a real study, build profiles with `profiles/profile_builder.xlsx` and CVs from
+`profiles/cv_template/CV_TEMPLATE.docx`, convert with `python scripts/profiles_from_builder.py`, then run the same
+accuracy command on `profiles/cvs` (with an `expected_skills.csv` written before running).
 
 ## Evaluation run for Part 3 (recommended)
 

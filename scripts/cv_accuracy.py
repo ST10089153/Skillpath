@@ -1,6 +1,6 @@
 """Measure how well SkillPath's CV reader finds the skills a set of CVs actually contain.
 
-    python scripts/cv_accuracy.py samples/demo_cvs                 # demo set (development check)
+    python scripts/cv_accuracy.py samples/example_study/cvs        # worked example (development check)
     python scripts/cv_accuracy.py path/to/your_cvs --out report.csv
 
 The folder must contain the CV files and expected_skills.csv with columns
