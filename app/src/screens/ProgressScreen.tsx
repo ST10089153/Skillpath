@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 
 import { api, Progress } from '../api';
-import { Body, Card, ErrorText, Loading, ProgressBar, Screen, SectionLabel, Title, colors, fonts, styles } from '../ui';
+import { Body, Card, EmptyState, ErrorText, Loading, ProgressBar, Screen, SectionLabel, Title, colors, fonts, styles } from '../ui';
 
 const MODULES_PER_MILESTONE = 3; // mirrors skillpath/config.py (display only)
 
@@ -26,14 +26,16 @@ export default function ProgressScreen({ userId }: { userId: string }) {
     <Screen>
       <Title>Your progress</Title>
       {prog.status !== 'adopted' ? (
-        <Body>Start a pathway to see your progress here.</Body>
+        <EmptyState icon="trophy-outline" title="No pathway yet">
+          <Body muted>Accept a recommended skill under Next skill and your steps and milestones will show here.</Body>
+        </EmptyState>
       ) : (
         <>
-          <Card>
+          <Card bezel>
             <SectionLabel>Current pathway</SectionLabel>
             <Text style={styles.h2}>{labels[prog.skill] ?? prog.skill}</Text>
             <ProgressBar value={prog.modules_completed} total={total} />
-            <Body muted>{prog.modules_completed} of {total} modules ({pct}%)</Body>
+            <Body muted style={styles.numeric}>{prog.modules_completed} of {total} modules ({pct}%)</Body>
             {prog.next_milestone_message ? <Body>{prog.next_milestone_message}</Body> : null}
           </Card>
 

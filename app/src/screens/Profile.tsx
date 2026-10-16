@@ -124,7 +124,7 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
                 <Ionicons name={selected.includes(d.skill) ? 'checkbox' : 'square-outline'} size={24} color={colors.primary} style={{ marginRight: 10 }} />
                 <View style={{ flex: 1 }}>
                   <Text style={{ fontSize: 16, fontFamily: 'Lexend_600SemiBold', color: colors.text }}>{label(d.skill)}</Text>
-                  <Text style={[styles.small, { color: colors.success, fontWeight: '600' }]}>
+                  <Text style={[styles.small, { color: colors.primary, fontFamily: 'Lexend_600SemiBold' }]}>
                     {d.method === 'exact' ? 'Named in your CV' : `${Math.round(d.score * 100)}% match`}
                   </Text>
                   <Text style={styles.small} numberOfLines={2}>From your CV: "{d.evidence}"</Text>

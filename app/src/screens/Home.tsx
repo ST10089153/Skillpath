@@ -53,11 +53,11 @@ export default function Home({ userId, go, onEditProfile }: { userId: string; go
           <Button label="Add my skills" icon="add-circle-outline" onPress={onEditProfile} />
         </Card>
       ) : adopted && prog ? (
-        <Card>
+        <Card bezel>
           <SectionLabel>Your pathway</SectionLabel>
           <Text style={styles.h2}>{label(prog.skill)}</Text>
           <ProgressBar value={prog.modules_completed} total={prog.total_modules} />
-          <Body muted>{prog.modules_completed} of {prog.total_modules} steps done{prog.completed ? ' · complete!' : ''}</Body>
+          <Body muted style={styles.numeric}>{prog.modules_completed} of {prog.total_modules} steps done{prog.completed ? ' · complete' : ''}</Body>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 4 }}>
             {['MS1', 'MS2'].map((m) => (
               <Pill key={m} label={prog.milestones.includes(m) ? `${m} reached` : `${m} to go`}

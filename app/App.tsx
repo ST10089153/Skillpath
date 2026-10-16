@@ -14,12 +14,12 @@ import Profile from './src/screens/Profile';
 import ProgressScreen from './src/screens/ProgressScreen';
 import Settings from './src/screens/Settings';
 import Welcome from './src/screens/Welcome';
-import { Body, Loading, TAB_BAR_HEIGHT, colors, fonts, styles as ui } from './src/ui';
+import { Body, Loading, TAB_BAR_HEIGHT, colors, focusVisible, fonts, styles as ui } from './src/ui';
 
 const USER_KEY = 'skillpath.user_id';
 type Tab = 'home' | 'next' | 'pathway' | 'progress' | 'settings';
 type IconName = keyof typeof Ionicons.glyphMap;
-// Bottom navigation: five destinations, outline icons; the active one is gold with a rule above it.
+// Floating "island" navigation: five destinations, outline icons; the active one sits on a soft gold pill.
 const TABS: { key: Tab; label: string; icon: IconName; iconOn: IconName }[] = [
   { key: 'home', label: 'Home', icon: 'home-outline', iconOn: 'home' },
   { key: 'next', label: 'Next skill', icon: 'compass-outline', iconOn: 'compass' },
@@ -37,6 +37,15 @@ export default function App() {
   const [nudge, setNudge] = useState('');
   const [refreshKey, setRefreshKey] = useState(0);
   const appState = useRef(AppState.currentState);
+
+  // Web: tell the browser the page is dark (form controls, scrollbars) and colour its UI to match.
+  useEffect(() => {
+    if (Platform.OS !== 'web' || typeof document === 'undefined') return;
+    document.documentElement.style.colorScheme = 'dark';
+    let meta = document.querySelector('meta[name="theme-color"]');
+    if (!meta) { meta = document.createElement('meta'); meta.setAttribute('name', 'theme-color'); document.head.appendChild(meta); }
+    meta.setAttribute('content', colors.bg);
+  }, []);
 
   // Restore the pseudonymous ID; drop it if the server no longer knows it (e.g. data deleted).
   useEffect(() => {
@@ -116,7 +125,8 @@ export default function App() {
           <Text style={s.brand}>SkillPath</Text>
         </Pressable>
         {signedIn && tab !== 'home' && !editingProfile ? (
-          <Pressable accessibilityRole="button" accessibilityLabel="Go to home" onPress={() => go('home')} style={s.headerBtn}>
+          <Pressable accessibilityRole="button" accessibilityLabel="Go to home" onPress={() => go('home')}
+                     style={(st) => [s.headerBtn, focusVisible(st)]}>
             <Ionicons name="home-outline" size={20} color={colors.primary} />
           </Pressable>
         ) : null}
@@ -142,7 +152,7 @@ export default function App() {
             const on = tab === t.key && !editingProfile;
             return (
               <Pressable key={t.key} accessibilityRole="tab" accessibilityState={{ selected: on }} accessibilityLabel={t.label}
-                         onPress={() => go(t.key)} style={s.tab}>
+                         onPress={() => go(t.key)} style={(st) => [s.tab, focusVisible(st)]}>
                 <View style={[s.tabIcon, on && s.tabIconOn]}>
                   <Ionicons name={t.icon} size={22} color={on ? colors.primary : colors.faint} />
                 </View>
@@ -152,24 +162,33 @@ export default function App() {
           })}
         </View>
       )}
+      {Platform.OS === 'web' ? <View style={s.grain} pointerEvents="none" /> : null}
     </View>
   );
 }
 
 const s = StyleSheet.create({
-  // Fill the viewport on web so the navigation bar stays pinned to the bottom of the screen.
+  // Fill the dynamic viewport on web (100dvh avoids the iOS Safari jump) so the navigation stays pinned; an ambient
+  // gold/teal light sits behind everything.
   root: { flex: 1, backgroundColor: colors.bg, paddingTop: Platform.OS === 'web' ? 0 : 36,
-          ...(Platform.OS === 'web' ? { height: '100vh' as unknown as number, overflow: 'hidden' as const } : {}) },
-  header: { paddingHorizontal: 16, paddingVertical: 12, backgroundColor: colors.cardDeep, borderBottomWidth: 1, borderColor: colors.border,
+          ...(Platform.OS === 'web' ? ({ height: '100dvh', overflow: 'hidden',
+            backgroundImage: 'radial-gradient(700px 420px at 100% -8%, rgba(251,215,132,0.09), transparent 62%), '
+              + 'radial-gradient(640px 520px at -12% 108%, rgba(40,110,130,0.16), transparent 60%)' } as object) : {}) },
+  // Fixed film grain over the whole app (web only, never intercepts touches).
+  grain: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, opacity: 0.05,
+           ...(Platform.OS === 'web' ? ({ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")" } as object) : {}) },
+  header: { paddingHorizontal: 16, paddingVertical: 12, borderBottomWidth: 1, borderColor: colors.border,
             flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  logo: { width: 30, height: 30, borderRadius: 2, borderWidth: 1, borderColor: colors.primary, alignItems: 'center', justifyContent: 'center', marginRight: 12 },
-  brand: { fontSize: 22, fontFamily: fonts.display, color: colors.text },
-  headerBtn: { width: 44, height: 44, borderRadius: 2, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: colors.hairline },
-  tabs: { flexDirection: 'row', height: TAB_BAR_HEIGHT + (Platform.OS === 'ios' ? 18 : 0), paddingBottom: Platform.OS === 'ios' ? 18 : 0,
-          backgroundColor: colors.cardDeep, borderTopWidth: 1, borderColor: colors.border,
-          ...(Platform.OS === 'web' ? ({ boxShadow: '0 -12px 28px rgba(0,0,0,0.35)' } as object) : { elevation: 12 }) },
-  tab: { flex: 1, alignItems: 'center', justifyContent: 'center', minHeight: 56 },
-  tabIcon: { width: 40, height: 30, borderTopWidth: 2, borderTopColor: 'transparent', paddingTop: 4, alignItems: 'center', justifyContent: 'center', marginBottom: 2 },
-  tabIconOn: { borderTopColor: colors.primary },
+  logo: { width: 32, height: 32, borderRadius: 9, borderWidth: 1, borderColor: colors.primary, alignItems: 'center', justifyContent: 'center', marginRight: 12 },
+  brand: { fontSize: 22, fontFamily: fonts.display, color: colors.text, letterSpacing: -0.3 },
+  headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: colors.hairline },
+  tabs: { flexDirection: 'row', height: TAB_BAR_HEIGHT, marginHorizontal: 12, marginBottom: Platform.OS === 'ios' ? 26 : 12, borderRadius: 24,
+          backgroundColor: 'rgba(8,24,32,0.88)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.10)', borderTopColor: 'rgba(255,255,255,0.16)',
+          ...(Platform.OS === 'web'
+            ? ({ boxShadow: '0 22px 44px -18px rgba(1,10,16,0.9), 0 4px 12px rgba(1,10,16,0.5)', backdropFilter: 'blur(16px)' } as object)
+            : { shadowColor: '#010A10', shadowOpacity: 0.6, shadowRadius: 18, shadowOffset: { width: 0, height: 10 }, elevation: 12 }) },
+  tab: { flex: 1, alignItems: 'center', justifyContent: 'center', minHeight: 56, borderRadius: 20 },
+  tabIcon: { width: 52, height: 30, borderRadius: 15, alignItems: 'center', justifyContent: 'center', marginBottom: 2 },
+  tabIconOn: { backgroundColor: 'rgba(251,215,132,0.14)' },
   tabText: { fontSize: 11, color: colors.faint, fontFamily: fonts.regular, letterSpacing: 0.5 },
 });

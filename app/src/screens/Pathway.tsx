@@ -83,7 +83,7 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
           </Card>
         );
       })}
-      {prog.completed && <Card style={{ borderColor: colors.primary }}><Body>You've finished this pathway. Well done!</Body></Card>}
+      {prog.completed && <Card style={{ borderColor: colors.primary }}><Body>You've finished this pathway. Well done.</Body></Card>}
     </Screen>
   );
 }
