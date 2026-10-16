@@ -457,11 +457,11 @@ def prisma_figure(path):
     ax.axis("off")
 
     def box(x, y, w, h, text, fc="#FFFFFF"):
-        ax.add_patch(plt.Rectangle((x, y), w, h, fill=True, fc=fc, ec="#1F3A5F", lw=1.2))
+        ax.add_patch(plt.Rectangle((x, y), w, h, fill=True, fc=fc, ec="#286D58", lw=1.2))
         ax.text(x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=8.5, wrap=True, family="Arial")
 
     def arrow(x1, y1, x2, y2):
-        ax.annotate("", xy=(x2, y2), xytext=(x1, y1), arrowprops=dict(arrowstyle="->", color="#1F3A5F", lw=1.1))
+        ax.annotate("", xy=(x2, y2), xytext=(x1, y1), arrowprops=dict(arrowstyle="->", color="#286D58", lw=1.1))
 
     for y, lab in [(0.84, "Identification"), (0.47, "Screening"), (0.08, "Included")]:
         ax.text(0.015, y, lab, rotation=90, va="center", fontsize=9, fontweight="bold", family="Arial")
@@ -471,7 +471,7 @@ def prisma_figure(path):
     box(0.56, 0.56, 0.40, 0.11, "Records excluded\n(n = 861)")
     box(0.06, 0.34, 0.40, 0.11, "Full-text reports assessed for eligibility\n(n = 111)")
     box(0.56, 0.31, 0.40, 0.17, "Reports excluded (n = 74):\npillar addressed only in passing\nand other reasons (Annexure B)")
-    box(0.56, 0.14, 0.40, 0.11, "Other methods: backward citation\nsearching (n = 9)", fc="#F2F5F9")
+    box(0.56, 0.14, 0.40, 0.11, "Other methods: backward citation\nsearching (n = 9)", fc="#EEF4F1")
     box(0.06, 0.02, 0.40, 0.12, "Studies included in review\n(n = 46: 37 from databases + 9)")
     arrow(0.26, 0.78, 0.26, 0.67); arrow(0.46, 0.85, 0.56, 0.85)
     arrow(0.26, 0.56, 0.26, 0.45); arrow(0.46, 0.615, 0.56, 0.615)
@@ -504,7 +504,7 @@ def app_panel(panels, path):
                 lines.append(word)
             else:
                 lines[-1] = trial
-        draw.text((x, pad + h + 24), f"({chr(97 + i)})", font=bold, fill="#1F3A5F")
+        draw.text((x, pad + h + 24), f"({chr(97 + i)})", font=bold, fill="#286D58")
         for j, line in enumerate(lines):
             draw.text((x + 62, pad + h + 24 + j * 42), line, font=reg, fill="#1F2937")
     canvas.save(path)
