@@ -1,0 +1,31 @@
+{
+ "run_id": "APPSIM20261016-041458-EXAMPLE",
+ "created": "2026-10-16T04:14:58",
+ "build": "620e443",
+ "profiles_file": "samples\\example_study\\profiles_EXAMPLE.csv",
+ "profiles": 28,
+ "personas": [
+  "steady",
+  "struggler",
+  "drifter",
+  "explorer",
+  "deferrer",
+  "part_time",
+  "dropout"
+ ],
+ "arms": [
+  "A",
+  "B"
+ ],
+ "simulated_users": 392,
+ "simulated_period": "2026-10-19 + 21 days",
+ "sha256": {
+  "app_data.db": "3701059b42a3be273569b05f8f8a92aaa64089216c3c126f9930a6812cf6d090",
+  "events.csv": "251f302f9c7d7a38e21098f08fabf00332d89f84201f04b4e5c166cd5826555e",
+  "pathways.csv": "21c9725a5c45d951f5a65be579200d7ea1b0352f3a67fd844d239676128f67b0",
+  "personas.json": "b2fef31076ae5194afe2e690e3265fd77fd64258bfabcaf77ac74fcaaba8ee80",
+  "simulated_users.csv": "94bb70f552d4154c58dd56cebc715a904e7eff3ca374bde81602de85bba03395",
+  "users.csv": "917b1897a93add70f4fa3c5bcbabb1d5abaee9505ec72ca90323261a401a8ef7"
+ },
+ "note": "Scripted simulated users; behaviour identical in both arms. Not evidence of human behaviour."
+}

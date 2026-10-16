@@ -1,0 +1,393 @@
+user_id,profile_id,persona,arm,competency_level,discipline,employment_goal,is_edge_case,recommended,decision,modules_passed
+U94052C,SP01,steady,A,limited,Commerce,in-field,N,Y,accept,6
+U371B3C,SP01,steady,B,limited,Commerce,in-field,N,Y,accept,6
+UBEAEEE,SP01,struggler,A,limited,Commerce,in-field,N,Y,accept,6
+UE8337D,SP01,struggler,B,limited,Commerce,in-field,N,Y,accept,6
+U7EC7B1,SP01,drifter,A,limited,Commerce,in-field,N,Y,accept,6
+U98AF8C,SP01,drifter,B,limited,Commerce,in-field,N,Y,accept,6
+U2865E4,SP01,explorer,A,limited,Commerce,in-field,N,Y,swap,4
+U4124EB,SP01,explorer,B,limited,Commerce,in-field,N,Y,swap,4
+U537A2B,SP01,deferrer,A,limited,Commerce,in-field,N,Y,defer+accept,3
+U345C05,SP01,deferrer,B,limited,Commerce,in-field,N,Y,defer+accept,3
+U798324,SP01,part_time,A,limited,Commerce,in-field,N,Y,accept,6
+U3D5DDF,SP01,part_time,B,limited,Commerce,in-field,N,Y,accept,6
+U4E73F1,SP01,dropout,A,limited,Commerce,in-field,N,Y,accept,1
+U35F12D,SP01,dropout,B,limited,Commerce,in-field,N,Y,accept,1
+UE784B4,SP02,steady,A,limited,Commerce,pivot,N,Y,accept,6
+U18B439,SP02,steady,B,limited,Commerce,pivot,N,Y,accept,6
+UA01AC3,SP02,struggler,A,limited,Commerce,pivot,N,Y,accept,6
+UD54389,SP02,struggler,B,limited,Commerce,pivot,N,Y,accept,6
+UC22A9D,SP02,drifter,A,limited,Commerce,pivot,N,Y,accept,6
+UDF5995,SP02,drifter,B,limited,Commerce,pivot,N,Y,accept,6
+UDB3389,SP02,explorer,A,limited,Commerce,pivot,N,Y,swap,4
+U5245D9,SP02,explorer,B,limited,Commerce,pivot,N,Y,swap,4
+UFBBF62,SP02,deferrer,A,limited,Commerce,pivot,N,Y,defer+accept,3
+U0DEE94,SP02,deferrer,B,limited,Commerce,pivot,N,Y,defer+accept,3
+UE66A6F,SP02,part_time,A,limited,Commerce,pivot,N,Y,accept,6
+UF89105,SP02,part_time,B,limited,Commerce,pivot,N,Y,accept,6
+UB471EE,SP02,dropout,A,limited,Commerce,pivot,N,Y,accept,1
+U5E053A,SP02,dropout,B,limited,Commerce,pivot,N,Y,accept,1
+UEEC1D6,SP03,steady,A,limited,Humanities,in-field,N,Y,accept,6
+U890C17,SP03,steady,B,limited,Humanities,in-field,N,Y,accept,6
+UEA213C,SP03,struggler,A,limited,Humanities,in-field,N,Y,accept,6
+U6D3E6B,SP03,struggler,B,limited,Humanities,in-field,N,Y,accept,6
+U720021,SP03,drifter,A,limited,Humanities,in-field,N,Y,accept,6
+U305A22,SP03,drifter,B,limited,Humanities,in-field,N,Y,accept,6
+UFC7C91,SP03,explorer,A,limited,Humanities,in-field,N,Y,swap,4
+U2DBDB9,SP03,explorer,B,limited,Humanities,in-field,N,Y,swap,4
+U5FDF5D,SP03,deferrer,A,limited,Humanities,in-field,N,Y,defer+accept,3
+UB6E9B2,SP03,deferrer,B,limited,Humanities,in-field,N,Y,defer+accept,3
+UDDDF82,SP03,part_time,A,limited,Humanities,in-field,N,Y,accept,6
+U26657F,SP03,part_time,B,limited,Humanities,in-field,N,Y,accept,6
+UCC6AFB,SP03,dropout,A,limited,Humanities,in-field,N,Y,accept,1
+U41C97C,SP03,dropout,B,limited,Humanities,in-field,N,Y,accept,1
+U5790B8,SP04,steady,A,limited,Humanities,pivot,N,Y,accept,6
+UADE233,SP04,steady,B,limited,Humanities,pivot,N,Y,accept,6
+U18E458,SP04,struggler,A,limited,Humanities,pivot,N,Y,accept,6
+U3208BC,SP04,struggler,B,limited,Humanities,pivot,N,Y,accept,6
+UA10459,SP04,drifter,A,limited,Humanities,pivot,N,Y,accept,6
+UE1E286,SP04,drifter,B,limited,Humanities,pivot,N,Y,accept,6
+U22B3B9,SP04,explorer,A,limited,Humanities,pivot,N,Y,swap,4
+U96D1DE,SP04,explorer,B,limited,Humanities,pivot,N,Y,swap,4
+U0CD940,SP04,deferrer,A,limited,Humanities,pivot,N,Y,defer+accept,3
+U5391DE,SP04,deferrer,B,limited,Humanities,pivot,N,Y,defer+accept,3
+U32D328,SP04,part_time,A,limited,Humanities,pivot,N,Y,accept,6
+UF2A945,SP04,part_time,B,limited,Humanities,pivot,N,Y,accept,6
+U9BE152,SP04,dropout,A,limited,Humanities,pivot,N,Y,accept,1
+U914AB5,SP04,dropout,B,limited,Humanities,pivot,N,Y,accept,1
+U9A46AC,SP05,steady,A,limited,Natural Sciences,in-field,N,Y,accept,6
+U67E075,SP05,steady,B,limited,Natural Sciences,in-field,N,Y,accept,6
+U49E08B,SP05,struggler,A,limited,Natural Sciences,in-field,N,Y,accept,6
+U5F5107,SP05,struggler,B,limited,Natural Sciences,in-field,N,Y,accept,6
+U9BE180,SP05,drifter,A,limited,Natural Sciences,in-field,N,Y,accept,6
+U252FAE,SP05,drifter,B,limited,Natural Sciences,in-field,N,Y,accept,6
+U9C2D99,SP05,explorer,A,limited,Natural Sciences,in-field,N,Y,swap,4
+U62BD23,SP05,explorer,B,limited,Natural Sciences,in-field,N,Y,swap,4
+U787BD0,SP05,deferrer,A,limited,Natural Sciences,in-field,N,Y,defer+accept,3
+UDCC1F7,SP05,deferrer,B,limited,Natural Sciences,in-field,N,Y,defer+accept,3
+U3424BC,SP05,part_time,A,limited,Natural Sciences,in-field,N,Y,accept,6
+UC69FF8,SP05,part_time,B,limited,Natural Sciences,in-field,N,Y,accept,6
+UE07EEF,SP05,dropout,A,limited,Natural Sciences,in-field,N,Y,accept,1
+U68418E,SP05,dropout,B,limited,Natural Sciences,in-field,N,Y,accept,1
+UA152FB,SP06,steady,A,limited,Natural Sciences,pivot,N,Y,accept,6
+U238707,SP06,steady,B,limited,Natural Sciences,pivot,N,Y,accept,6
+U4EF941,SP06,struggler,A,limited,Natural Sciences,pivot,N,Y,accept,6
+U38478C,SP06,struggler,B,limited,Natural Sciences,pivot,N,Y,accept,6
+UC83EF6,SP06,drifter,A,limited,Natural Sciences,pivot,N,Y,accept,6
+UC70BD9,SP06,drifter,B,limited,Natural Sciences,pivot,N,Y,accept,6
+UA3FD08,SP06,explorer,A,limited,Natural Sciences,pivot,N,Y,swap,4
+U2763D7,SP06,explorer,B,limited,Natural Sciences,pivot,N,Y,swap,4
+UEF1F50,SP06,deferrer,A,limited,Natural Sciences,pivot,N,Y,defer+accept,3
+U3B8EA0,SP06,deferrer,B,limited,Natural Sciences,pivot,N,Y,defer+accept,3
+UA64BAF,SP06,part_time,A,limited,Natural Sciences,pivot,N,Y,accept,6
+UF82F02,SP06,part_time,B,limited,Natural Sciences,pivot,N,Y,accept,6
+UBE9E49,SP06,dropout,A,limited,Natural Sciences,pivot,N,Y,accept,1
+U7534D4,SP06,dropout,B,limited,Natural Sciences,pivot,N,Y,accept,1
+UA4A23C,SP07,steady,A,limited,IT,in-field,N,Y,accept,6
+U7C071A,SP07,steady,B,limited,IT,in-field,N,Y,accept,6
+UC7B30B,SP07,struggler,A,limited,IT,in-field,N,Y,accept,6
+U62C503,SP07,struggler,B,limited,IT,in-field,N,Y,accept,6
+U9637F0,SP07,drifter,A,limited,IT,in-field,N,Y,accept,6
+UAAAE84,SP07,drifter,B,limited,IT,in-field,N,Y,accept,6
+UD97E74,SP07,explorer,A,limited,IT,in-field,N,Y,swap,4
+UCC4170,SP07,explorer,B,limited,IT,in-field,N,Y,swap,4
+U331095,SP07,deferrer,A,limited,IT,in-field,N,Y,defer+accept,3
+U00124E,SP07,deferrer,B,limited,IT,in-field,N,Y,defer+accept,3
+U91EA08,SP07,part_time,A,limited,IT,in-field,N,Y,accept,6
+U680AA9,SP07,part_time,B,limited,IT,in-field,N,Y,accept,6
+UFBCF86,SP07,dropout,A,limited,IT,in-field,N,Y,accept,1
+UDEF2F0,SP07,dropout,B,limited,IT,in-field,N,Y,accept,1
+U62471A,SP08,steady,A,limited,IT,pivot,N,Y,accept,6
+U23E5EC,SP08,steady,B,limited,IT,pivot,N,Y,accept,6
+U34A129,SP08,struggler,A,limited,IT,pivot,N,Y,accept,6
+U61E34E,SP08,struggler,B,limited,IT,pivot,N,Y,accept,6
+U0272D7,SP08,drifter,A,limited,IT,pivot,N,Y,accept,6
+U5EA327,SP08,drifter,B,limited,IT,pivot,N,Y,accept,6
+U8E90CD,SP08,explorer,A,limited,IT,pivot,N,Y,swap,4
+UF54E89,SP08,explorer,B,limited,IT,pivot,N,Y,swap,4
+U664B36,SP08,deferrer,A,limited,IT,pivot,N,Y,defer+accept,3
+U2AD98D,SP08,deferrer,B,limited,IT,pivot,N,Y,defer+accept,3
+U7018C3,SP08,part_time,A,limited,IT,pivot,N,Y,accept,6
+U71AB66,SP08,part_time,B,limited,IT,pivot,N,Y,accept,6
+U829AF3,SP08,dropout,A,limited,IT,pivot,N,Y,accept,1
+U29AB7B,SP08,dropout,B,limited,IT,pivot,N,Y,accept,1
+U2703A2,SP09,steady,A,foundational,Commerce,in-field,N,Y,accept,6
+UFA91E4,SP09,steady,B,foundational,Commerce,in-field,N,Y,accept,6
+UC479E5,SP09,struggler,A,foundational,Commerce,in-field,N,Y,accept,6
+U546CC0,SP09,struggler,B,foundational,Commerce,in-field,N,Y,accept,6
+U0C2B99,SP09,drifter,A,foundational,Commerce,in-field,N,Y,accept,6
+U504D82,SP09,drifter,B,foundational,Commerce,in-field,N,Y,accept,6
+U6BC5CA,SP09,explorer,A,foundational,Commerce,in-field,N,Y,swap,4
+U670987,SP09,explorer,B,foundational,Commerce,in-field,N,Y,swap,4
+UA40B28,SP09,deferrer,A,foundational,Commerce,in-field,N,Y,defer+accept,3
+UD27D1B,SP09,deferrer,B,foundational,Commerce,in-field,N,Y,defer+accept,3
+U42C70C,SP09,part_time,A,foundational,Commerce,in-field,N,Y,accept,6
+U12066E,SP09,part_time,B,foundational,Commerce,in-field,N,Y,accept,6
+U885700,SP09,dropout,A,foundational,Commerce,in-field,N,Y,accept,1
+U927448,SP09,dropout,B,foundational,Commerce,in-field,N,Y,accept,1
+U6E6241,SP10,steady,A,foundational,Commerce,pivot,N,Y,accept,6
+UD0B1E9,SP10,steady,B,foundational,Commerce,pivot,N,Y,accept,6
+U64C0A7,SP10,struggler,A,foundational,Commerce,pivot,N,Y,accept,6
+U36A735,SP10,struggler,B,foundational,Commerce,pivot,N,Y,accept,6
+U9BAD99,SP10,drifter,A,foundational,Commerce,pivot,N,Y,accept,6
+U6FCBD9,SP10,drifter,B,foundational,Commerce,pivot,N,Y,accept,6
+UD9865C,SP10,explorer,A,foundational,Commerce,pivot,N,Y,swap,4
+UF472B5,SP10,explorer,B,foundational,Commerce,pivot,N,Y,swap,4
+UC0BF56,SP10,deferrer,A,foundational,Commerce,pivot,N,Y,defer+accept,3
+UCCC9CC,SP10,deferrer,B,foundational,Commerce,pivot,N,Y,defer+accept,3
+U7D5671,SP10,part_time,A,foundational,Commerce,pivot,N,Y,accept,6
+UE2905A,SP10,part_time,B,foundational,Commerce,pivot,N,Y,accept,6
+U9DF2C7,SP10,dropout,A,foundational,Commerce,pivot,N,Y,accept,1
+U4A70EB,SP10,dropout,B,foundational,Commerce,pivot,N,Y,accept,1
+UA09398,SP11,steady,A,foundational,Humanities,in-field,N,Y,accept,6
+UFD7026,SP11,steady,B,foundational,Humanities,in-field,N,Y,accept,6
+U2E7ED9,SP11,struggler,A,foundational,Humanities,in-field,N,Y,accept,6
+UEB37CB,SP11,struggler,B,foundational,Humanities,in-field,N,Y,accept,6
+U6DEF16,SP11,drifter,A,foundational,Humanities,in-field,N,Y,accept,6
+U7139F1,SP11,drifter,B,foundational,Humanities,in-field,N,Y,accept,6
+UD8DC9A,SP11,explorer,A,foundational,Humanities,in-field,N,Y,swap,4
+UF14A76,SP11,explorer,B,foundational,Humanities,in-field,N,Y,swap,4
+U913137,SP11,deferrer,A,foundational,Humanities,in-field,N,Y,defer+accept,3
+U120D00,SP11,deferrer,B,foundational,Humanities,in-field,N,Y,defer+accept,3
+UB620E2,SP11,part_time,A,foundational,Humanities,in-field,N,Y,accept,6
+U44E188,SP11,part_time,B,foundational,Humanities,in-field,N,Y,accept,6
+UE65525,SP11,dropout,A,foundational,Humanities,in-field,N,Y,accept,1
+UCD975F,SP11,dropout,B,foundational,Humanities,in-field,N,Y,accept,1
+U59A4B6,SP12,steady,A,foundational,Humanities,pivot,N,Y,accept,6
+U0B3606,SP12,steady,B,foundational,Humanities,pivot,N,Y,accept,6
+U2C65ED,SP12,struggler,A,foundational,Humanities,pivot,N,Y,accept,6
+U723348,SP12,struggler,B,foundational,Humanities,pivot,N,Y,accept,6
+U3CBF74,SP12,drifter,A,foundational,Humanities,pivot,N,Y,accept,6
+UE4425D,SP12,drifter,B,foundational,Humanities,pivot,N,Y,accept,6
+U3F12F4,SP12,explorer,A,foundational,Humanities,pivot,N,Y,swap,4
+U37ACE0,SP12,explorer,B,foundational,Humanities,pivot,N,Y,swap,4
+U249CF3,SP12,deferrer,A,foundational,Humanities,pivot,N,Y,defer+accept,3
+U4CD9F6,SP12,deferrer,B,foundational,Humanities,pivot,N,Y,defer+accept,3
+U3F7050,SP12,part_time,A,foundational,Humanities,pivot,N,Y,accept,6
+U8DCBCF,SP12,part_time,B,foundational,Humanities,pivot,N,Y,accept,6
+UFA8565,SP12,dropout,A,foundational,Humanities,pivot,N,Y,accept,1
+U06CE55,SP12,dropout,B,foundational,Humanities,pivot,N,Y,accept,1
+U58D697,SP13,steady,A,foundational,Natural Sciences,in-field,N,Y,accept,6
+U675544,SP13,steady,B,foundational,Natural Sciences,in-field,N,Y,accept,6
+UA037F6,SP13,struggler,A,foundational,Natural Sciences,in-field,N,Y,accept,6
+U992080,SP13,struggler,B,foundational,Natural Sciences,in-field,N,Y,accept,6
+U814CCF,SP13,drifter,A,foundational,Natural Sciences,in-field,N,Y,accept,6
+U862D77,SP13,drifter,B,foundational,Natural Sciences,in-field,N,Y,accept,6
+UB93AC2,SP13,explorer,A,foundational,Natural Sciences,in-field,N,Y,swap,4
+UFCC861,SP13,explorer,B,foundational,Natural Sciences,in-field,N,Y,swap,4
+U7A4464,SP13,deferrer,A,foundational,Natural Sciences,in-field,N,Y,defer+accept,3
+U0D048C,SP13,deferrer,B,foundational,Natural Sciences,in-field,N,Y,defer+accept,3
+U8F35D3,SP13,part_time,A,foundational,Natural Sciences,in-field,N,Y,accept,6
+U722C62,SP13,part_time,B,foundational,Natural Sciences,in-field,N,Y,accept,6
+U68B4ED,SP13,dropout,A,foundational,Natural Sciences,in-field,N,Y,accept,1
+U94C94F,SP13,dropout,B,foundational,Natural Sciences,in-field,N,Y,accept,1
+U08693F,SP14,steady,A,foundational,Natural Sciences,pivot,N,Y,accept,6
+UFEB916,SP14,steady,B,foundational,Natural Sciences,pivot,N,Y,accept,6
+UD3AB34,SP14,struggler,A,foundational,Natural Sciences,pivot,N,Y,accept,6
+UCD9619,SP14,struggler,B,foundational,Natural Sciences,pivot,N,Y,accept,6
+U367DC9,SP14,drifter,A,foundational,Natural Sciences,pivot,N,Y,accept,6
+U500B7C,SP14,drifter,B,foundational,Natural Sciences,pivot,N,Y,accept,6
+U526C20,SP14,explorer,A,foundational,Natural Sciences,pivot,N,Y,swap,4
+U85F3BD,SP14,explorer,B,foundational,Natural Sciences,pivot,N,Y,swap,4
+U9F1D19,SP14,deferrer,A,foundational,Natural Sciences,pivot,N,Y,defer+accept,3
+UD9F424,SP14,deferrer,B,foundational,Natural Sciences,pivot,N,Y,defer+accept,3
+U395B88,SP14,part_time,A,foundational,Natural Sciences,pivot,N,Y,accept,6
+UA67950,SP14,part_time,B,foundational,Natural Sciences,pivot,N,Y,accept,6
+U785C03,SP14,dropout,A,foundational,Natural Sciences,pivot,N,Y,accept,1
+UBFA34D,SP14,dropout,B,foundational,Natural Sciences,pivot,N,Y,accept,1
+U187317,SP15,steady,A,foundational,IT,in-field,N,Y,accept,6
+U53C405,SP15,steady,B,foundational,IT,in-field,N,Y,accept,6
+U03C7E4,SP15,struggler,A,foundational,IT,in-field,N,Y,accept,6
+U8CF90A,SP15,struggler,B,foundational,IT,in-field,N,Y,accept,6
+UE51D0E,SP15,drifter,A,foundational,IT,in-field,N,Y,accept,6
+U29E728,SP15,drifter,B,foundational,IT,in-field,N,Y,accept,6
+UFABB76,SP15,explorer,A,foundational,IT,in-field,N,Y,swap,4
+UE20E22,SP15,explorer,B,foundational,IT,in-field,N,Y,swap,4
+UFD639B,SP15,deferrer,A,foundational,IT,in-field,N,Y,defer+accept,3
+UFCE11B,SP15,deferrer,B,foundational,IT,in-field,N,Y,defer+accept,3
+UEB6FD7,SP15,part_time,A,foundational,IT,in-field,N,Y,accept,6
+U35ED07,SP15,part_time,B,foundational,IT,in-field,N,Y,accept,6
+U23394D,SP15,dropout,A,foundational,IT,in-field,N,Y,accept,1
+UD94BAA,SP15,dropout,B,foundational,IT,in-field,N,Y,accept,1
+UAFE3D3,SP16,steady,A,foundational,IT,pivot,N,Y,accept,6
+U4A91DA,SP16,steady,B,foundational,IT,pivot,N,Y,accept,6
+U38513E,SP16,struggler,A,foundational,IT,pivot,N,Y,accept,6
+UEB29F2,SP16,struggler,B,foundational,IT,pivot,N,Y,accept,6
+U0605A5,SP16,drifter,A,foundational,IT,pivot,N,Y,accept,6
+U60FE50,SP16,drifter,B,foundational,IT,pivot,N,Y,accept,6
+U44167B,SP16,explorer,A,foundational,IT,pivot,N,Y,swap,4
+U8FD841,SP16,explorer,B,foundational,IT,pivot,N,Y,swap,4
+U0046B1,SP16,deferrer,A,foundational,IT,pivot,N,Y,defer+accept,3
+U895B17,SP16,deferrer,B,foundational,IT,pivot,N,Y,defer+accept,3
+UB64678,SP16,part_time,A,foundational,IT,pivot,N,Y,accept,6
+U048CB8,SP16,part_time,B,foundational,IT,pivot,N,Y,accept,6
+U5D60F7,SP16,dropout,A,foundational,IT,pivot,N,Y,accept,1
+UB90E3C,SP16,dropout,B,foundational,IT,pivot,N,Y,accept,1
+UCF89F5,SP17,steady,A,moderate,Commerce,in-field,N,Y,accept,6
+UEF8944,SP17,steady,B,moderate,Commerce,in-field,N,Y,accept,6
+U812DD0,SP17,struggler,A,moderate,Commerce,in-field,N,Y,accept,6
+UE15480,SP17,struggler,B,moderate,Commerce,in-field,N,Y,accept,6
+UFD0FD4,SP17,drifter,A,moderate,Commerce,in-field,N,Y,accept,6
+U6F3375,SP17,drifter,B,moderate,Commerce,in-field,N,Y,accept,6
+U649CA5,SP17,explorer,A,moderate,Commerce,in-field,N,Y,swap,4
+UB9149D,SP17,explorer,B,moderate,Commerce,in-field,N,Y,swap,4
+UD65048,SP17,deferrer,A,moderate,Commerce,in-field,N,Y,defer+accept,3
+UAB7994,SP17,deferrer,B,moderate,Commerce,in-field,N,Y,defer+accept,3
+UA19936,SP17,part_time,A,moderate,Commerce,in-field,N,Y,accept,6
+U9542B3,SP17,part_time,B,moderate,Commerce,in-field,N,Y,accept,6
+U6BE08C,SP17,dropout,A,moderate,Commerce,in-field,N,Y,accept,1
+U035074,SP17,dropout,B,moderate,Commerce,in-field,N,Y,accept,1
+U501378,SP18,steady,A,moderate,Commerce,pivot,N,Y,accept,6
+U533314,SP18,steady,B,moderate,Commerce,pivot,N,Y,accept,6
+U4C4A67,SP18,struggler,A,moderate,Commerce,pivot,N,Y,accept,6
+U2F79F1,SP18,struggler,B,moderate,Commerce,pivot,N,Y,accept,6
+UF97C14,SP18,drifter,A,moderate,Commerce,pivot,N,Y,accept,6
+U2F71EC,SP18,drifter,B,moderate,Commerce,pivot,N,Y,accept,6
+U1A39C7,SP18,explorer,A,moderate,Commerce,pivot,N,Y,swap,4
+U1C7454,SP18,explorer,B,moderate,Commerce,pivot,N,Y,swap,4
+U40F86A,SP18,deferrer,A,moderate,Commerce,pivot,N,Y,defer+accept,3
+U395162,SP18,deferrer,B,moderate,Commerce,pivot,N,Y,defer+accept,3
+UCE94CE,SP18,part_time,A,moderate,Commerce,pivot,N,Y,accept,6
+U5DE7F6,SP18,part_time,B,moderate,Commerce,pivot,N,Y,accept,6
+U39FAA5,SP18,dropout,A,moderate,Commerce,pivot,N,Y,accept,1
+U25E319,SP18,dropout,B,moderate,Commerce,pivot,N,Y,accept,1
+U4821F4,SP19,steady,A,moderate,Humanities,in-field,N,Y,accept,6
+U1FA8DA,SP19,steady,B,moderate,Humanities,in-field,N,Y,accept,6
+U3C7A28,SP19,struggler,A,moderate,Humanities,in-field,N,Y,accept,6
+U5AE989,SP19,struggler,B,moderate,Humanities,in-field,N,Y,accept,6
+UFCE5D8,SP19,drifter,A,moderate,Humanities,in-field,N,Y,accept,6
+U5BECAE,SP19,drifter,B,moderate,Humanities,in-field,N,Y,accept,6
+U2CD9CC,SP19,explorer,A,moderate,Humanities,in-field,N,Y,swap,4
+U06D818,SP19,explorer,B,moderate,Humanities,in-field,N,Y,swap,4
+UBC556F,SP19,deferrer,A,moderate,Humanities,in-field,N,Y,defer+accept,3
+U661A6C,SP19,deferrer,B,moderate,Humanities,in-field,N,Y,defer+accept,3
+UF6F1C1,SP19,part_time,A,moderate,Humanities,in-field,N,Y,accept,6
+U54A7C1,SP19,part_time,B,moderate,Humanities,in-field,N,Y,accept,6
+UAB51D6,SP19,dropout,A,moderate,Humanities,in-field,N,Y,accept,1
+U78CBDA,SP19,dropout,B,moderate,Humanities,in-field,N,Y,accept,1
+UA01C7C,SP20,steady,A,moderate,Humanities,pivot,N,Y,accept,6
+U6827AA,SP20,steady,B,moderate,Humanities,pivot,N,Y,accept,6
+U8E45A1,SP20,struggler,A,moderate,Humanities,pivot,N,Y,accept,6
+U06EC4F,SP20,struggler,B,moderate,Humanities,pivot,N,Y,accept,6
+UE76034,SP20,drifter,A,moderate,Humanities,pivot,N,Y,accept,6
+U443DF8,SP20,drifter,B,moderate,Humanities,pivot,N,Y,accept,6
+UCDD3BC,SP20,explorer,A,moderate,Humanities,pivot,N,Y,swap,4
+UA3F653,SP20,explorer,B,moderate,Humanities,pivot,N,Y,swap,4
+UECC135,SP20,deferrer,A,moderate,Humanities,pivot,N,Y,defer+accept,3
+U3916B0,SP20,deferrer,B,moderate,Humanities,pivot,N,Y,defer+accept,3
+U9BA408,SP20,part_time,A,moderate,Humanities,pivot,N,Y,accept,6
+UC3D4FB,SP20,part_time,B,moderate,Humanities,pivot,N,Y,accept,6
+U2F83E7,SP20,dropout,A,moderate,Humanities,pivot,N,Y,accept,1
+U8EA887,SP20,dropout,B,moderate,Humanities,pivot,N,Y,accept,1
+UB35ECF,SP21,steady,A,moderate,Natural Sciences,in-field,N,Y,accept,6
+U545033,SP21,steady,B,moderate,Natural Sciences,in-field,N,Y,accept,6
+UFE0308,SP21,struggler,A,moderate,Natural Sciences,in-field,N,Y,accept,6
+UBC554B,SP21,struggler,B,moderate,Natural Sciences,in-field,N,Y,accept,6
+U787F8A,SP21,drifter,A,moderate,Natural Sciences,in-field,N,Y,accept,6
+U6CE345,SP21,drifter,B,moderate,Natural Sciences,in-field,N,Y,accept,6
+U679806,SP21,explorer,A,moderate,Natural Sciences,in-field,N,Y,swap,4
+UD0E684,SP21,explorer,B,moderate,Natural Sciences,in-field,N,Y,swap,4
+UF3AD1A,SP21,deferrer,A,moderate,Natural Sciences,in-field,N,Y,defer+accept,3
+U612313,SP21,deferrer,B,moderate,Natural Sciences,in-field,N,Y,defer+accept,3
+U67C421,SP21,part_time,A,moderate,Natural Sciences,in-field,N,Y,accept,6
+U8E1E57,SP21,part_time,B,moderate,Natural Sciences,in-field,N,Y,accept,6
+U0BFFB2,SP21,dropout,A,moderate,Natural Sciences,in-field,N,Y,accept,1
+U9DFA0B,SP21,dropout,B,moderate,Natural Sciences,in-field,N,Y,accept,1
+U5D061E,SP22,steady,A,moderate,Natural Sciences,pivot,N,Y,accept,6
+U14390A,SP22,steady,B,moderate,Natural Sciences,pivot,N,Y,accept,6
+U577F81,SP22,struggler,A,moderate,Natural Sciences,pivot,N,Y,accept,6
+U028382,SP22,struggler,B,moderate,Natural Sciences,pivot,N,Y,accept,6
+U0F935F,SP22,drifter,A,moderate,Natural Sciences,pivot,N,Y,accept,6
+U3B86E9,SP22,drifter,B,moderate,Natural Sciences,pivot,N,Y,accept,6
+U123C1C,SP22,explorer,A,moderate,Natural Sciences,pivot,N,Y,swap,4
+U1ABFFA,SP22,explorer,B,moderate,Natural Sciences,pivot,N,Y,swap,4
+U3CBA48,SP22,deferrer,A,moderate,Natural Sciences,pivot,N,Y,defer+accept,3
+UBB2CB2,SP22,deferrer,B,moderate,Natural Sciences,pivot,N,Y,defer+accept,3
+U1EF182,SP22,part_time,A,moderate,Natural Sciences,pivot,N,Y,accept,6
+U80ACDB,SP22,part_time,B,moderate,Natural Sciences,pivot,N,Y,accept,6
+UE68A8C,SP22,dropout,A,moderate,Natural Sciences,pivot,N,Y,accept,1
+U6566E5,SP22,dropout,B,moderate,Natural Sciences,pivot,N,Y,accept,1
+U66D69A,SP23,steady,A,moderate,IT,in-field,N,Y,accept,6
+U6A8D01,SP23,steady,B,moderate,IT,in-field,N,Y,accept,6
+UCF5540,SP23,struggler,A,moderate,IT,in-field,N,Y,accept,6
+UA38F84,SP23,struggler,B,moderate,IT,in-field,N,Y,accept,6
+U28B20C,SP23,drifter,A,moderate,IT,in-field,N,Y,accept,6
+U9EBE4D,SP23,drifter,B,moderate,IT,in-field,N,Y,accept,6
+UDF44FF,SP23,explorer,A,moderate,IT,in-field,N,Y,swap,4
+U9F9971,SP23,explorer,B,moderate,IT,in-field,N,Y,swap,4
+UD10218,SP23,deferrer,A,moderate,IT,in-field,N,Y,defer+accept,3
+UA2DEBA,SP23,deferrer,B,moderate,IT,in-field,N,Y,defer+accept,3
+U33C0BC,SP23,part_time,A,moderate,IT,in-field,N,Y,accept,6
+UFFC2E0,SP23,part_time,B,moderate,IT,in-field,N,Y,accept,6
+U8D9625,SP23,dropout,A,moderate,IT,in-field,N,Y,accept,1
+U12C3F4,SP23,dropout,B,moderate,IT,in-field,N,Y,accept,1
+U8649B0,SP24,steady,A,moderate,IT,pivot,N,Y,accept,6
+U20B9F5,SP24,steady,B,moderate,IT,pivot,N,Y,accept,6
+UE43F16,SP24,struggler,A,moderate,IT,pivot,N,Y,accept,6
+UD36C40,SP24,struggler,B,moderate,IT,pivot,N,Y,accept,6
+U9B9597,SP24,drifter,A,moderate,IT,pivot,N,Y,accept,6
+U7888F4,SP24,drifter,B,moderate,IT,pivot,N,Y,accept,6
+U5A7FB1,SP24,explorer,A,moderate,IT,pivot,N,Y,swap,4
+U5120AF,SP24,explorer,B,moderate,IT,pivot,N,Y,swap,4
+UA0DBDC,SP24,deferrer,A,moderate,IT,pivot,N,Y,defer+accept,3
+UDD5FE3,SP24,deferrer,B,moderate,IT,pivot,N,Y,defer+accept,3
+UA24072,SP24,part_time,A,moderate,IT,pivot,N,Y,accept,6
+U50F12C,SP24,part_time,B,moderate,IT,pivot,N,Y,accept,6
+UEC6302,SP24,dropout,A,moderate,IT,pivot,N,Y,accept,1
+UED6AFA,SP24,dropout,B,moderate,IT,pivot,N,Y,accept,1
+U47A2E4,SP25,steady,A,edge,mixed,n/a,Y,N,,0
+UB34C23,SP25,steady,B,edge,mixed,n/a,Y,N,,0
+U571A98,SP25,struggler,A,edge,mixed,n/a,Y,N,,0
+UA83754,SP25,struggler,B,edge,mixed,n/a,Y,N,,0
+U14BF49,SP25,drifter,A,edge,mixed,n/a,Y,N,,0
+UE54087,SP25,drifter,B,edge,mixed,n/a,Y,N,,0
+U05F1EB,SP25,explorer,A,edge,mixed,n/a,Y,N,,0
+UDF5206,SP25,explorer,B,edge,mixed,n/a,Y,N,,0
+UC331FF,SP25,deferrer,A,edge,mixed,n/a,Y,N,,0
+U2F9397,SP25,deferrer,B,edge,mixed,n/a,Y,N,,0
+U642AF2,SP25,part_time,A,edge,mixed,n/a,Y,N,,0
+U05D4B3,SP25,part_time,B,edge,mixed,n/a,Y,N,,0
+U95B29C,SP25,dropout,A,edge,mixed,n/a,Y,N,,0
+U812439,SP25,dropout,B,edge,mixed,n/a,Y,N,,0
+U12761A,SP26,steady,A,edge,mixed,n/a,Y,Y,accept,6
+U790DB6,SP26,steady,B,edge,mixed,n/a,Y,Y,accept,6
+U701C33,SP26,struggler,A,edge,mixed,n/a,Y,Y,accept,6
+UE20D07,SP26,struggler,B,edge,mixed,n/a,Y,Y,accept,6
+UF5FB7E,SP26,drifter,A,edge,mixed,n/a,Y,Y,accept,6
+UF51F97,SP26,drifter,B,edge,mixed,n/a,Y,Y,accept,6
+U438CD4,SP26,explorer,A,edge,mixed,n/a,Y,Y,swap,4
+U7B2B7B,SP26,explorer,B,edge,mixed,n/a,Y,Y,swap,4
+UC629FC,SP26,deferrer,A,edge,mixed,n/a,Y,Y,defer+accept,3
+U041E7A,SP26,deferrer,B,edge,mixed,n/a,Y,Y,defer+accept,3
+U079AAC,SP26,part_time,A,edge,mixed,n/a,Y,Y,accept,6
+UDF8DA6,SP26,part_time,B,edge,mixed,n/a,Y,Y,accept,6
+U3D1035,SP26,dropout,A,edge,mixed,n/a,Y,Y,accept,1
+U235039,SP26,dropout,B,edge,mixed,n/a,Y,Y,accept,1
+UF2B8E4,SP27,steady,A,edge,mixed,n/a,Y,N,,0
+UD5884C,SP27,steady,B,edge,mixed,n/a,Y,N,,0
+UF13912,SP27,struggler,A,edge,mixed,n/a,Y,N,,0
+UD8460B,SP27,struggler,B,edge,mixed,n/a,Y,N,,0
+UD5F28E,SP27,drifter,A,edge,mixed,n/a,Y,N,,0
+U76B70D,SP27,drifter,B,edge,mixed,n/a,Y,N,,0
+UCD5528,SP27,explorer,A,edge,mixed,n/a,Y,N,,0
+U313B77,SP27,explorer,B,edge,mixed,n/a,Y,N,,0
+U93A6CD,SP27,deferrer,A,edge,mixed,n/a,Y,N,,0
+UD41230,SP27,deferrer,B,edge,mixed,n/a,Y,N,,0
+U3E57C8,SP27,part_time,A,edge,mixed,n/a,Y,N,,0
+U537632,SP27,part_time,B,edge,mixed,n/a,Y,N,,0
+U6B441F,SP27,dropout,A,edge,mixed,n/a,Y,N,,0
+U6471DF,SP27,dropout,B,edge,mixed,n/a,Y,N,,0
+UF51DF7,SP28,steady,A,edge,mixed,n/a,Y,N,,0
+UDDBE64,SP28,steady,B,edge,mixed,n/a,Y,N,,0
+U41CAFA,SP28,struggler,A,edge,mixed,n/a,Y,N,,0
+U06579C,SP28,struggler,B,edge,mixed,n/a,Y,N,,0
+UEF7254,SP28,drifter,A,edge,mixed,n/a,Y,N,,0
+U5AC8A6,SP28,drifter,B,edge,mixed,n/a,Y,N,,0
+U1DDEAB,SP28,explorer,A,edge,mixed,n/a,Y,N,,0
+U3A06CE,SP28,explorer,B,edge,mixed,n/a,Y,N,,0
+U791109,SP28,deferrer,A,edge,mixed,n/a,Y,N,,0
+U21E355,SP28,deferrer,B,edge,mixed,n/a,Y,N,,0
+UC46E42,SP28,part_time,A,edge,mixed,n/a,Y,N,,0
+U9B791F,SP28,part_time,B,edge,mixed,n/a,Y,N,,0
+UF75142,SP28,dropout,A,edge,mixed,n/a,Y,N,,0
+U1E2BFC,SP28,dropout,B,edge,mixed,n/a,Y,N,,0
