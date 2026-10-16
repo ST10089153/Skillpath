@@ -7,6 +7,9 @@
 //  - pill buttons with a trailing icon "island"; hover, press and visible keyboard-focus states on every control
 //  - staggered fade-and-rise entrances on a custom spring-like curve; skeleton loading; all motion is skipped
 //    when the device's reduce-motion setting is on
+// Prism: light split into a spectrum marks only the key moments (shimmering edge line on the hero and key
+// cards, a refracted-light streak in the hero, the primary button's rim, progress fill, reached milestones, the
+// active tab). Decorative only: text never carries the spectrum, and the shimmer stops under reduce-motion.
 // Fonts are free Google Fonts bundled with the app (system font until loaded). Every text/background pair
 // meets WCAG AA (4.5:1 or better).
 import { Ionicons } from '@expo/vector-icons';
@@ -47,6 +50,9 @@ export const surfaces = {
   gold: ['#FCE3A4', '#E9C46A'] as const,
 };
 
+// Spectrum tuned for a dark navy ground (saturated enough to read as prismatic light, not neon).
+export const PRISM = ['#FF7A7A', '#FFB36B', '#FBD784', '#8BE3A8', '#6CC8FF', '#9D8CFF', '#F07BD0'] as const;
+
 export const fonts = {
   display: 'PlayfairDisplay_600SemiBold',
   regular: 'Lexend_400Regular',
@@ -70,7 +76,7 @@ const depth = Platform.select({
   default: { shadowColor: '#010A10', shadowOpacity: 0.55, shadowRadius: 18, shadowOffset: { width: 0, height: 12 }, elevation: 8 },
 });
 const goldGlow = Platform.select({
-  web: { boxShadow: '0 12px 30px -10px rgba(251,215,132,0.45)' } as object,
+  web: { boxShadow: '0 12px 30px -12px rgba(108,200,255,0.40), 0 14px 34px -14px rgba(240,123,208,0.38), 0 8px 22px -10px rgba(251,215,132,0.45)' } as object,
   default: { shadowColor: '#FBD784', shadowOpacity: 0.35, shadowRadius: 14, shadowOffset: { width: 0, height: 6 }, elevation: 6 },
 });
 const focusRing = WEB ? ({ outlineStyle: 'solid', outlineWidth: 2, outlineColor: '#FBD784', outlineOffset: 3 } as object) : {};
@@ -138,6 +144,40 @@ export function PressableScale({ children, style, onPress, disabled, onHover, ..
   );
 }
 
+/** A thin line of split light. `shimmer` slowly drifts the spectrum along it (static under reduce-motion). */
+export function PrismLine({ height = 2, shimmer = true, style }: { height?: number; shimmer?: boolean; style?: object }) {
+  const reduced = useReducedMotion();
+  const [w, setW] = useState(0);
+  const x = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    if (!w || reduced || !shimmer) { x.setValue(0); return; }
+    const loop = Animated.loop(Animated.timing(x, { toValue: -w, duration: 7000, easing: Easing.linear, useNativeDriver: NATIVE_DRIVER }));
+    loop.start();
+    return () => loop.stop();
+  }, [w, reduced, shimmer, x]);
+  const band = [...PRISM, PRISM[0]] as unknown as typeof PRISM; // close the loop so the drift is seamless
+  return (
+    <View pointerEvents="none" onLayout={(e) => setW(e.nativeEvent.layout.width)}
+          style={[{ height, overflow: 'hidden', borderRadius: height }, style]}>
+      {w > 0 && (
+        <Animated.View style={{ width: w * 2, height, flexDirection: 'row', transform: [{ translateX: x }] }}>
+          <LinearGradient colors={band} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{ width: w, height }} />
+          <LinearGradient colors={band} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{ width: w, height }} />
+        </Animated.View>
+      )}
+    </View>
+  );
+}
+
+/** A soft diagonal band of refracted light (decorative, sits behind content). */
+function Refraction() {
+  return (
+    <View pointerEvents="none" style={styles.refraction}>
+      <LinearGradient colors={PRISM} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{ flex: 1 }} />
+    </View>
+  );
+}
+
 export function Screen({ children }: { children: ReactNode }) {
   const counter = useRef(0);
   const value = useRef({ next: () => counter.current++ }).current;
@@ -184,7 +224,8 @@ export function Card({ children, style, animate = true, bezel = false }: {
   const entrance = useEntrance();
   const core = (
     <LinearGradient colors={surfaces.card} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
-                    style={[styles.cardInner, bezel && { borderRadius: 12 }, style]}>
+                    style={[styles.cardInner, bezel && { borderRadius: 12, overflow: 'hidden' }, style]}>
+      {bezel ? <PrismLine height={1.5} style={styles.prismEdge} /> : null}
       {children}
     </LinearGradient>
   );
@@ -204,6 +245,8 @@ export function Hero({ eyebrow, title, children }: {
     <Animated.View style={[styles.bezel, { marginBottom: 24 }, entrance]}>
       <LinearGradient colors={surfaces.hero} start={{ x: 1, y: 0 }} end={{ x: 0, y: 1 }} style={styles.hero}>
         <View style={styles.heroGlow} pointerEvents="none" />
+        <Refraction />
+        <PrismLine height={1.5} style={styles.prismEdge} />
         {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
         <Text style={styles.heroTitle} accessibilityRole="header">{title}</Text>
         {children}
@@ -244,11 +287,13 @@ export function Button({ label, onPress, variant = 'primary', disabled, hint, ic
       style={[{ marginVertical: 6, borderRadius: 999 }, primary && !disabled ? goldGlow : null, disabled ? { opacity: 0.45 } : null]}
     >
       {primary ? (
-        <LinearGradient colors={surfaces.gold} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[styles.btn, styles.btnPrimary]}>
-          <Text style={[styles.btnText, { color: fg, flex: 1, textAlign: 'center' }]}>{label}</Text>
-          <View style={[styles.btnIsland, hover && { transform: [{ translateX: 3 }] }]}>
-            <Ionicons name={icon ?? 'arrow-forward'} size={16} color={colors.primaryText} />
-          </View>
+        <LinearGradient colors={PRISM} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.prismRim}>
+          <LinearGradient colors={surfaces.gold} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[styles.btn, styles.btnPrimary]}>
+            <Text style={[styles.btnText, { color: fg, flex: 1, textAlign: 'center' }]}>{label}</Text>
+            <View style={[styles.btnIsland, hover && { transform: [{ translateX: 3 }] }]}>
+              <Ionicons name={icon ?? 'arrow-forward'} size={16} color={colors.primaryText} />
+            </View>
+          </LinearGradient>
         </LinearGradient>
       ) : (
         <View style={[styles.btn, v, hover && { backgroundColor: 'rgba(255,255,255,0.04)' }]}>
@@ -284,7 +329,7 @@ export function ProgressBar({ value, total }: { value: number; total: number }) 
   return (
     <View accessibilityRole="progressbar" accessibilityValue={{ min: 0, max: total, now: value }} style={styles.progressTrack}>
       <Animated.View style={[styles.progressFill, { width }]}>
-        <LinearGradient colors={surfaces.gold} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{ flex: 1 }} />
+        <LinearGradient colors={PRISM} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{ flex: 1 }} />
       </Animated.View>
     </View>
   );
@@ -390,6 +435,11 @@ export const styles = StyleSheet.create({
   heroGlow: { position: 'absolute', top: -90, right: -70, width: 220, height: 220, borderRadius: 110,
               backgroundColor: 'rgba(251,215,132,0.10)',
               ...(WEB ? ({ filter: 'blur(30px)' } as object) : {}) },
+  prismEdge: { position: 'absolute', top: 0, left: 18, right: 18, opacity: 0.9 },
+  prismRim: { borderRadius: 999, padding: 1.5 },
+  refraction: { position: 'absolute', top: 26, right: -70, width: 320, height: 22, opacity: WEB ? 0.30 : 0.14,
+                transform: [{ rotate: '-24deg' }], borderRadius: 11,
+                ...(WEB ? ({ filter: 'blur(9px)' } as object) : {}) },
   bigNumber: { fontSize: 56, lineHeight: 60, fontFamily: fonts.display, color: 'rgba(255,255,255,0.14)', fontVariant: ['lining-nums'], marginTop: -6, marginBottom: 4 },
   btn: { minHeight: 52, borderRadius: 999, paddingHorizontal: 22, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' },
   btnPrimary: { paddingLeft: 22, paddingRight: 7 },

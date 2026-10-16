@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Text, View } from 'react-native';
 
 import { api, Progress } from '../api';
-import { Body, Card, EmptyState, ErrorText, Loading, ProgressBar, Screen, SectionLabel, Title, colors, fonts, styles } from '../ui';
+import { Body, Card, EmptyState, ErrorText, Loading, PRISM, ProgressBar, Screen, SectionLabel, Title, colors, fonts, styles } from '../ui';
 
 const MODULES_PER_MILESTONE = 3; // mirrors skillpath/config.py (display only)
 
@@ -43,16 +44,25 @@ export default function ProgressScreen({ userId }: { userId: string }) {
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 12 }}>
             {badges.map((b) => {
               const got = prog.milestones.includes(b);
-              return (
-                <View
-                  key={b}
-                  accessibilityLabel={`${b} ${got ? 'reached' : 'not reached yet'}`}
-                  style={{ width: 96, height: 96, borderRadius: 48, marginRight: 12, marginBottom: 8, alignItems: 'center', justifyContent: 'center',
-                           backgroundColor: got ? 'rgba(251,215,132,0.06)' : 'transparent', borderWidth: got ? 1.5 : 1, borderColor: got ? colors.primary : colors.hairline,
-                           ...(got ? ({ boxShadow: '0 0 24px rgba(251,215,132,0.30), inset 0 0 18px rgba(251,215,132,0.10)' } as object) : {}) }}
-                >
+              const face = (
+                <>
                   <Text style={{ fontSize: 24, fontFamily: fonts.display, color: got ? colors.primary : colors.muted }}>{b}</Text>
                   <Text style={{ fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase', fontFamily: fonts.regular, color: got ? colors.primary : colors.faint }}>{got ? 'Reached' : `${MODULES_PER_MILESTONE} modules`}</Text>
+                </>
+              );
+              // A reached milestone is ringed with split light; one still to come is a quiet hairline circle.
+              return got ? (
+                <LinearGradient key={b} colors={PRISM} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
+                                accessibilityLabel={`${b} reached`}
+                                style={{ width: 96, height: 96, borderRadius: 48, padding: 2, marginRight: 12, marginBottom: 8,
+                                         ...({ boxShadow: '0 0 26px rgba(108,200,255,0.22), 0 0 30px rgba(240,123,208,0.18)' } as object) }}>
+                  <View style={{ flex: 1, borderRadius: 46, backgroundColor: colors.bg, alignItems: 'center', justifyContent: 'center' }}>{face}</View>
+                </LinearGradient>
+              ) : (
+                <View key={b} accessibilityLabel={`${b} not reached yet`}
+                      style={{ width: 96, height: 96, borderRadius: 48, marginRight: 12, marginBottom: 8, alignItems: 'center', justifyContent: 'center',
+                               borderWidth: 1, borderColor: colors.hairline }}>
+                  {face}
                 </View>
               );
             })}

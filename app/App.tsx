@@ -14,7 +14,7 @@ import Profile from './src/screens/Profile';
 import ProgressScreen from './src/screens/ProgressScreen';
 import Settings from './src/screens/Settings';
 import Welcome from './src/screens/Welcome';
-import { Body, Loading, TAB_BAR_HEIGHT, colors, focusVisible, fonts, styles as ui } from './src/ui';
+import { Body, Loading, PrismLine, TAB_BAR_HEIGHT, colors, focusVisible, fonts, styles as ui } from './src/ui';
 
 const USER_KEY = 'skillpath.user_id';
 type Tab = 'home' | 'next' | 'pathway' | 'progress' | 'settings';
@@ -157,6 +157,7 @@ export default function App() {
                   <Ionicons name={t.icon} size={22} color={on ? colors.primary : colors.faint} />
                 </View>
                 <Text style={[s.tabText, on && { color: colors.primary, fontFamily: fonts.semibold }]}>{t.label}</Text>
+                {on ? <PrismLine height={2} style={{ width: 22, marginTop: 3 }} /> : <View style={{ height: 2, marginTop: 3 }} />}
               </Pressable>
             );
           })}
