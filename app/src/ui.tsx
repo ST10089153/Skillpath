@@ -57,8 +57,8 @@ export const TAB_BAR_HEIGHT = 64;
 // Wide screens (laptops, desktops, landscape tablets) get a wider page, two columns and larger type. Phones keep the
 // single 560 px column exactly as it is, so the report's phone screenshots stay accurate.
 export const WIDE_MIN = 960;
-export const CONTENT_MAX = 1180;
-export const WIDE_PAD = 48;
+export const CONTENT_MAX = 1120;
+export const WIDE_PAD = 88;
 export function useWide() { return useWindowDimensions().width >= WIDE_MIN; }
 
 const WEB = Platform.OS === 'web';
