@@ -119,7 +119,7 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
     return (
       <Screen>
         {/* The decision: what the skill is, with the choice right beside it */}
-        <Panel style={{ padding: 40 }}>
+        <View>
           <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
             <View style={{ flex: 1, minWidth: 0, paddingRight: 48 }}>
               <Eyebrow>YOUR NEXT SKILL · RECOMMENDED FOR YOU</Eyebrow>
@@ -141,20 +141,20 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
               {note !== '' && <View style={[styles.banner, { marginTop: 8 }]}><Body style={{ marginBottom: 0 }}>{note}</Body></View>}
             </View>
           </View>
-        </Panel>
+        </View>
 
         {/* What it leads to: one card per nearest job, how close you are and what is still missing */}
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 36, marginBottom: 14 }}>
-          <Text style={[styles.h2, { fontSize: 34, lineHeight: 36, marginBottom: 0 }]}>What's missing?</Text>
+          <Text style={[styles.h2, { fontSize: 30, lineHeight: 32, marginBottom: 0 }]}>What's missing?</Text>
           <Text style={[styles.sectionLabel, { fontSize: 13, alignSelf: 'flex-end' }]}>
             {`THIS SKILL LEADS TO ${branches.length} NEAREST ${branches.length === 1 ? 'JOB' : 'JOBS'}`}
           </Text>
         </View>
-        <Grid cols={Math.min(3, Math.max(1, branches.length))}>
+        <Grid cols={Math.min(3, Math.max(1, branches.length))} gap={40}>
           {branches.map((b) => <JobCard key={b.key} job={b} />)}
         </Grid>
 
-        <Grid cols={2} style={{ marginTop: 20 }}>
+        <Grid cols={2} gap={48} style={{ marginTop: 36 }}>
           <Panel label="Why this skill?">
             <Body>{rec.explanation}</Body>
           </Panel>
@@ -168,7 +168,7 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
         </Grid>
 
         {rec.alternatives.length > 0 && (
-          <Panel label="Or choose another skill" right={String(rec.alternatives.length)} style={{ marginTop: 20 }}>
+          <Panel label="Or choose another skill" right={String(rec.alternatives.length)} style={{ marginTop: 36 }}>
             <Grid cols={3} gap={12}>
               {rec.alternatives.map((a) => (
                 <Button key={a} label={`Choose ${label(a)}`} variant="tonal" disabled={busy}
@@ -198,7 +198,7 @@ type Job = { key: string; title: string; code: string; held: number; total: numb
 function JobCard({ job }: { job: Job }) {
   return (
     <Panel>
-      <Text style={[styles.h2, { fontSize: 30, lineHeight: 32 }]}>{job.title}</Text>
+      <Text style={[styles.h2, { fontSize: 26, lineHeight: 28 }]}>{job.title}</Text>
       <Text style={[styles.numeric, { fontSize: 12, color: colors.faint }]}>{job.code || 'OFO code not recorded'}</Text>
       <ProgressBar value={job.held} total={job.total} />
       <Text style={[styles.numeric, { fontSize: 13, color: colors.muted, marginBottom: 12 }]}>{`YOU HAVE ${job.held} OF ${job.total} SKILLS`}</Text>

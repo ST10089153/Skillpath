@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 
 import { api, moduleContent, ModuleLibrary, Progress, SkillInfo } from '../api';
 import { RouteStrip } from '../route';
-import { Body, Button, Eyebrow, Grid, Hero, Loading, Panel, Screen, SectionLabel, Stat, TextLink, colors, fonts, styles, useWide } from '../ui';
+import { Body, Button, Eyebrow, Hero, Loading, Panel, Screen, SectionLabel, Summary, TextLink, colors, fonts, styles, useWide } from '../ui';
 
 type Go = 'next' | 'pathway' | 'progress' | 'settings';
 
@@ -51,15 +51,15 @@ export default function Home({ userId, go, onEditProfile }: { userId: string; go
     if (wide) {
       return (
         <Screen>
-          <Panel style={{ padding: 40 }}>
+          <View>
             <Eyebrow>No pathway yet</Eyebrow>
             <Text style={[styles.heroTitle, styles.heroTitleWide]} accessibilityRole="header">Find your next skill</Text>
             <Body muted style={{ fontSize: 20, lineHeight: 30, maxWidth: 760 }}>
               {`SkillPath looks at the ${skills.length} skills you have and finds the one skill that brings you closest to jobs near your profile.`}
             </Body>
             <View style={{ maxWidth: 420, marginTop: 10 }}><Button label="See my next skill" onPress={() => go('next')} /></View>
-          </Panel>
-          <Panel label="Skills you have" right={String(skills.length)} style={{ marginTop: 20 }}>
+          </View>
+          <Panel label="Skills you have" right={String(skills.length)} style={{ marginTop: 36 }}>
             <SkillChips skills={skills} label={label} />
             <TextLink label="Edit my skills" onPress={onEditProfile} />
           </Panel>
@@ -90,7 +90,7 @@ export default function Home({ userId, go, onEditProfile }: { userId: string; go
     return (
       <Screen>
         {/* Where you are, and the one thing to do next */}
-        <Panel style={{ padding: 40 }}>
+        <View>
           <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
             <View style={{ flex: 1, minWidth: 0, paddingRight: 40 }}>
               <Eyebrow>{prog.completed ? 'Pathway complete' : 'You are here'}</Eyebrow>
@@ -101,7 +101,7 @@ export default function Home({ userId, go, onEditProfile }: { userId: string; go
             </View>
             <View style={{ width: 440 }}>
               {current ? (
-                <View style={[styles.cardInner, { backgroundColor: colors.bg, padding: 28 }]}>
+                <View style={[styles.cardInner, { padding: 28 }]}>
                   <Eyebrow color={colors.primary}>{`NEXT · STEP ${String(here).padStart(2, '0')} · ABOUT ${prog.current_module?.minutes ?? 6} MIN`}</Eyebrow>
                   <Text style={[styles.h2, { fontSize: 34, lineHeight: 36, marginBottom: 16 }]}>{current.title}</Text>
                   <Button label={`Continue step ${here}`} onPress={() => go('pathway')} />
@@ -114,18 +114,18 @@ export default function Home({ userId, go, onEditProfile }: { userId: string; go
           <View style={{ marginTop: 32 }}>
             <RouteStrip total={total} done={prog.modules_completed} here={here} interchanges={interchanges} />
           </View>
-        </Panel>
+        </View>
 
-        <Grid cols={4} style={{ marginTop: 20 }}>
-          <Stat label="Steps done" value={`${prog.modules_completed} / ${total}`} sub={`${Math.round((prog.modules_completed / total) * 100)}% of your pathway`} />
-          <Stat label="Next milestone" value={nextInterchange ? `MS${nextInterchange / MODULES_PER_MILESTONE}` : 'All done'}
-                color={colors.line}
-                sub={nextInterchange ? `${toMilestone} ${toMilestone === 1 ? 'step' : 'steps'} to go` : 'Every milestone reached'} />
-          <Stat label="Time left" value={`${minutesLeft} min`} sub="In 5 to 10 minute steps" />
-          <Stat label="Milestones" value={`${prog.milestones.length} / ${interchanges.length}`} sub="One every three steps" />
-        </Grid>
+        <View style={{ marginTop: 28 }}>
+          <Summary items={[
+            { label: 'Steps done', value: `${prog.modules_completed} of ${total}` },
+            { label: 'Next milestone', value: nextInterchange ? `MS${nextInterchange / MODULES_PER_MILESTONE} in ${toMilestone} ${toMilestone === 1 ? 'step' : 'steps'}` : 'All reached' },
+            { label: 'Time left', value: `About ${minutesLeft} min` },
+            { label: 'Milestones reached', value: `${prog.milestones.length} of ${interchanges.length}` },
+          ]} />
+        </View>
 
-        <Panel label="Skills you have" right={String(skills.length)} style={{ marginTop: 20 }}>
+        <Panel label="Skills you have" right={String(skills.length)} style={{ marginTop: 36 }}>
           <SkillChips skills={skills} label={label} />
           <TextLink label="Edit my skills" onPress={onEditProfile} />
         </Panel>

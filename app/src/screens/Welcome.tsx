@@ -72,16 +72,16 @@ export default function Welcome({ onDone, notice = '' }: { onDone: (userId: stri
         <Hero eyebrow="RESEARCH PROTOTYPE" title="Find your next skill">
           <Text style={{ color: colors.muted, fontSize: 20, lineHeight: 31, maxWidth: 760 }}>{INTRO}</Text>
         </Hero>
-        <Grid cols={3}>
+        <Grid cols={3} gap={40} style={{ marginTop: 12 }}>
           {HOW.map((h) => (
             <Panel key={h.n}>
-              <Text style={{ fontFamily: fonts.display, fontSize: 48, lineHeight: 48, color: colors.line, paddingTop: 4 }}>{h.n}</Text>
-              <Text style={[styles.h2, { marginTop: 10 }]}>{h.title}</Text>
+              <Text style={[styles.numeric, { fontSize: 13, color: colors.line }]}>{`STEP ${h.n}`}</Text>
+              <Text style={[styles.h2, { marginTop: 8 }]}>{h.title}</Text>
               <Body muted style={{ marginBottom: 0 }}>{h.text}</Body>
             </Panel>
           ))}
         </Grid>
-        <Panel label="Before you start" style={{ marginTop: 20 }}>
+        <Panel raised label="Before you start" style={{ marginTop: 36 }}>
           <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
             <View style={{ flex: 6, minWidth: 0 }}>
               <Text style={[styles.h2, { marginBottom: 12 }]}>What we store</Text>

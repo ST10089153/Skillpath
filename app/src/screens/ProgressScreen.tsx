@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 
 import { api, Progress } from '../api';
 import { RouteStrip } from '../route';
-import { Body, EmptyState, ErrorText, Grid, Loading, Panel, ProgressBar, Screen, SectionLabel, Stat, Title, colors, fonts, styles, useWide } from '../ui';
+import { Body, EmptyState, ErrorText, Grid, Loading, Panel, ProgressBar, Screen, SectionLabel, Summary, Title, colors, fonts, styles, useWide } from '../ui';
 
 const MODULES_PER_MILESTONE = 3; // mirrors skillpath/config.py (display only)
 
@@ -47,16 +47,15 @@ export default function ProgressScreen({ userId }: { userId: string }) {
     return (
       <Screen>
         <Title>Your progress</Title>
-        <Grid cols={4}>
-          <Stat label="Steps done" value={`${prog.modules_completed} / ${total}`} sub={`${pct}% of the pathway`} />
-          <Stat label="Next milestone" value={nextMs ? `MS${nextMs / MODULES_PER_MILESTONE}` : 'All done'} color={colors.line}
-                sub={nextMs ? `${toGo} ${toGo === 1 ? 'step' : 'steps'} to go` : 'Every milestone reached'} />
-          <Stat label="Milestones" value={`${prog.milestones.length} / ${badges.length}`} sub="One every three steps" />
-          <Stat label="Difficulty" value={prog.difficulty !== null ? `${prog.difficulty} / 5` : '–'} sub="Level of the current step" />
-        </Grid>
+        <Summary items={[
+          { label: 'Steps done', value: `${prog.modules_completed} of ${total} (${pct}%)` },
+          { label: 'Next milestone', value: nextMs ? `MS${nextMs / MODULES_PER_MILESTONE} in ${toGo} ${toGo === 1 ? 'step' : 'steps'}` : 'All reached' },
+          { label: 'Milestones reached', value: `${prog.milestones.length} of ${badges.length}` },
+          { label: 'Current difficulty', value: prog.difficulty !== null ? `Level ${prog.difficulty} of 5` : 'None' },
+        ]} />
 
-        <Panel label="Current pathway" style={{ marginTop: 20, padding: 36 }}>
-          <Text style={[styles.h2, { fontSize: 40, lineHeight: 42 }]}>{skillName}</Text>
+        <Panel label="Current pathway" style={{ marginTop: 36 }}>
+          <Text style={[styles.h2, { fontSize: 30, lineHeight: 32 }]}>{skillName}</Text>
           <View style={{ marginTop: 18 }}>
             <RouteStrip total={total} done={prog.modules_completed} here={here} interchanges={ends} />
           </View>
@@ -67,7 +66,7 @@ export default function ProgressScreen({ userId }: { userId: string }) {
           <View style={[styles.banner, { marginTop: 20, marginBottom: 0 }]}><Body style={{ marginBottom: 0 }}>{prog.message}</Body></View>
         )}
 
-        <Grid cols={badges.length || 1} style={{ marginTop: 20 }}>
+        <Grid cols={badges.length || 1} gap={40} style={{ marginTop: 32 }}>
           {ends.map((n) => {
             const name = `MS${n / MODULES_PER_MILESTONE}`;
             const got = prog.milestones.includes(name);
@@ -75,10 +74,10 @@ export default function ProgressScreen({ userId }: { userId: string }) {
             return (
               <Panel key={name} label={`Milestone ${name.slice(2)}`}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }} accessibilityLabel={`${name} ${got ? 'reached' : 'not reached yet'}`}>
-                  <View style={{ width: 64, height: 34, borderRadius: 17, borderWidth: 5, marginRight: 20,
+                  <View style={{ width: 40, height: 22, borderRadius: 11, borderWidth: 4, marginRight: 16,
                                  borderColor: got ? colors.text : colors.track, backgroundColor: got ? colors.line : colors.bg }} />
                   <View>
-                    <Text style={{ fontFamily: fonts.display, fontSize: 52, lineHeight: 52, color: got ? colors.primary : colors.text, paddingTop: 4 }}>{name}</Text>
+                    <Text style={{ fontFamily: fonts.semibold, fontSize: 19, lineHeight: 26, color: got ? colors.primary : colors.text }}>{name}</Text>
                     <Text style={[styles.numeric, { fontSize: 13, color: got ? colors.primary : colors.faint }]}>
                       {got ? `REACHED · AFTER STEP ${n}` : `AFTER STEP ${n} · ${left} ${left === 1 ? 'STEP' : 'STEPS'} TO GO`}
                     </Text>

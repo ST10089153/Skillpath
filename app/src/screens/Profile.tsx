@@ -109,7 +109,7 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
         ) : null}
         <Title sub="Upload your CV or choose the skills you already have.">Your skills</Title>
 
-        <Panel style={{ padding: 36 }}>
+        <Panel>
           <PartHead n={1} title="Start with your CV (optional)" />
           <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
             <View style={{ flex: 4, minWidth: 0, paddingRight: 40 }}>
@@ -150,7 +150,7 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
           </View>
         </Panel>
 
-        <Panel style={{ marginTop: 20, padding: 36 }}>
+        <Panel style={{ marginTop: 36 }}>
           <PartHead n={2} title="Add or remove skills" right={`${selected.length} selected`} />
           <TextInput style={[styles.input, { maxWidth: 560 }]} placeholder="Search skills" value={query} onChangeText={setQuery}
                      accessibilityLabel="Search skills" autoCorrect={false} autoCapitalize="none" />
@@ -199,7 +199,7 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
           ) : null}
         </Panel>
 
-        <Panel style={{ marginTop: 20, padding: 36 }}>
+        <Panel style={{ marginTop: 36 }}>
           <PartHead n={3} title="How confident are you?" />
           <Grid cols={3} gap={16}>
             {LEVELS.map((l) => (
@@ -360,8 +360,8 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
 function PartHead({ n, title, right }: { n: number; title: string; right?: string }) {
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 18 }}>
-      <Text style={{ fontFamily: fonts.display, fontSize: 44, lineHeight: 44, color: colors.line, paddingTop: 4, marginRight: 16 }}>{String(n).padStart(2, '0')}</Text>
-      <Text style={[styles.h2, { fontSize: 32, lineHeight: 34, marginBottom: 0, flex: 1 }]}>{title}</Text>
+      <Text style={[styles.numeric, { fontSize: 13, color: colors.line, marginRight: 14 }]}>{`PART ${n} OF 3`}</Text>
+      <Text style={[styles.h2, { fontSize: 28, lineHeight: 30, marginBottom: 0, flex: 1 }]}>{title}</Text>
       {right ? <Text style={[styles.sectionLabel, { fontSize: 13 }]}>{right}</Text> : null}
     </View>
   );

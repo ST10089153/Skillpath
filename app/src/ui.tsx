@@ -117,10 +117,15 @@ export function Screen({ children }: { children: ReactNode }) {
 
 // ---- Desktop building blocks (wide screens only; phones never render these) ----
 
-/** A raised panel with an optional label row: the unit desktop screens are composed from. */
-export function Panel({ label, right, children, style }: { label?: string; right?: string; children: ReactNode; style?: object }) {
+/**
+ * A section of a desktop screen: a label over a hairline rule, no box. Pass `raised` for the one thing on a screen
+ * the user acts on (the current step, the consent); everything else sits on the page.
+ */
+export function Panel({ label, right, children, style, raised }: {
+  label?: string; right?: string; children: ReactNode; style?: object; raised?: boolean;
+}) {
   return (
-    <View style={[styles.panel, style]}>
+    <View style={[raised ? styles.panel : styles.section, style]}>
       {label ? (
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 14 }}>
           <Text style={[styles.sectionLabel, { fontSize: 13 }]}>{label}</Text>
@@ -150,13 +155,21 @@ export function Grid({ cols, gap = 20, children, style }: { cols: number; gap?: 
   );
 }
 
-/** A number tile: small label, big display figure, one line under it. */
-export function Stat({ label, value, sub, color = colors.text }: { label: string; value: string; sub?: string; color?: string }) {
+/**
+ * A quiet summary strip: label and value pairs in one row between hairlines, in body type (no big figures).
+ * Use it instead of a row of number cards.
+ */
+export function Summary({ items }: { items: { label: string; value: string; color?: string }[] }) {
   return (
-    <Panel label={label}>
-      <Text style={{ fontFamily: fonts.display, fontSize: 52, lineHeight: 52, color, paddingTop: 4, letterSpacing: 0.5 }}>{value}</Text>
-      {sub ? <Text style={[styles.body, styles.bodyWide, { color: colors.muted, marginBottom: 0, marginTop: 6 }]}>{sub}</Text> : null}
-    </Panel>
+    <View style={styles.summary}>
+      {items.map((it, i) => (
+        <View key={it.label} style={[{ flex: 1, minWidth: 0, paddingVertical: 16, paddingHorizontal: 20 },
+                                     i === 0 && { paddingLeft: 0 }, i > 0 && { borderLeftWidth: 1, borderLeftColor: colors.border }]}>
+          <Text style={[styles.sectionLabel, { fontSize: 12, marginBottom: 6 }]}>{it.label}</Text>
+          <Text style={{ fontFamily: fonts.semibold, fontSize: 19, lineHeight: 26, color: it.color ?? colors.text }}>{it.value}</Text>
+        </View>
+      ))}
+    </View>
   );
 }
 
@@ -352,7 +365,7 @@ export const styles = StyleSheet.create({
   inner: { width: '100%', maxWidth: 560, alignSelf: 'center' },
   innerWide: { maxWidth: CONTENT_MAX },
   title: { fontSize: 46, lineHeight: 46, fontFamily: fonts.display, color: colors.text, letterSpacing: 0.6, paddingTop: 4, ...balance },
-  titleWide: { fontSize: 76, lineHeight: 74 },
+  titleWide: { fontSize: 60, lineHeight: 60 },
   h2: { fontSize: 28, lineHeight: 30, fontFamily: fonts.display, color: colors.text, letterSpacing: 0.5, marginBottom: 6, paddingTop: 2, ...balance },
   eyebrow: { fontSize: 12, fontFamily: fonts.mono, letterSpacing: 2.4, textTransform: 'uppercase', marginBottom: 10 },
   sectionHead: { flexDirection: 'row', justifyContent: 'space-between', borderTopWidth: 1, borderTopColor: colors.hairline,
@@ -362,13 +375,15 @@ export const styles = StyleSheet.create({
   bodyWide: { fontSize: 17, lineHeight: 27 },
   small: { fontSize: 13, lineHeight: 19, color: colors.faint, fontFamily: fonts.regular },
   numeric: { fontFamily: fonts.mono, fontVariant: ['tabular-nums'], letterSpacing: 1.2, textTransform: 'uppercase' },
+  section: { flexGrow: 1, borderTopWidth: 1, borderTopColor: colors.hairline, paddingTop: 18, paddingBottom: 6 },
+  summary: { flexDirection: 'row', borderTopWidth: 1, borderBottomWidth: 1, borderColor: colors.hairline },
   panel: { flexGrow: 1, backgroundColor: colors.card, borderRadius: 22, padding: 28, borderWidth: 1, borderColor: colors.border },
   cardInner: { backgroundColor: colors.card, borderRadius: 22, padding: 20, borderWidth: 1, borderColor: colors.border },
   card: { backgroundColor: colors.card, borderRadius: 22, padding: 20, marginBottom: 16, borderWidth: 1, borderColor: colors.border },
   hero: { paddingTop: 12, paddingBottom: 8, marginBottom: 8 },
   heroEyebrow: { color: colors.line, fontSize: 12, fontFamily: fonts.mono, letterSpacing: 2.4, textTransform: 'uppercase' },
   heroTitle: { color: colors.text, fontSize: 60, lineHeight: 58, fontFamily: fonts.display, marginBottom: 12, letterSpacing: 0.8, paddingTop: 6, ...balance },
-  heroTitleWide: { fontSize: 104, lineHeight: 98, marginBottom: 16, letterSpacing: 1 },
+  heroTitleWide: { fontSize: 76, lineHeight: 74, marginBottom: 14, letterSpacing: 0.8 },
   bigNumber: { fontSize: 56, lineHeight: 56, fontFamily: fonts.display, color: colors.line, paddingTop: 4 },
   btn: { minHeight: 54, borderRadius: 999, paddingHorizontal: 24, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
   btnPrimary: { backgroundColor: colors.primary },

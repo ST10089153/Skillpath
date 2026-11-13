@@ -102,19 +102,19 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
               <RouteStops stops={stopFor(false)} />
             </Panel>
           </View>
-          <View style={{ width: 24 }} />
+          <View style={{ width: 40 }} />
           <View style={{ flex: 1, minWidth: 0 }}>
             {cur ? (
-              <Panel style={{ padding: 40 }}>
+              <Panel raised style={{ padding: 36 }}>
                 <Eyebrow color={colors.here}>{`STEP ${String(hereIndex + 1).padStart(2, '0')} OF ${prog.total_modules} · ${curMinutes} MIN · YOU ARE HERE`}</Eyebrow>
-                <Text style={[styles.title, styles.titleWide, { fontSize: 60, lineHeight: 60, marginBottom: 14 }]} accessibilityRole="header">
+                <Text style={[styles.title, styles.titleWide, { fontSize: 44, lineHeight: 46, marginBottom: 12 }]} accessibilityRole="header">
                   {content(hereIndex).title}
                 </Text>
                 <StepDetail c={content(hereIndex)} first={hereIndex === 0} info={info} difficulty={curDifficulty} busy={busy} large
                             onDone={() => report(cur.module_id, true)} onStruggle={() => report(cur.module_id, false)} />
               </Panel>
             ) : doneBanner}
-            <Grid cols={2} style={{ marginTop: 20 }}>
+            <Grid cols={2} gap={40} style={{ marginTop: 32 }}>
               {info?.how_to_show ? (
                 <Panel label="At the end, show it by">
                   <Body style={{ marginBottom: 0 }}>{info.how_to_show}</Body>

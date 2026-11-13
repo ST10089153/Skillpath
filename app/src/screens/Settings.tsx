@@ -85,7 +85,7 @@ export default function Settings({ userId, onDeleted, onEditProfile, onCheckNudg
         <Title>Settings</Title>
         <ErrorText error={error} />
         <Section title="Your ID" text="This random ID is the only thing that links your data. No name, email or phone number is stored.">
-          <Text style={[styles.title, { fontSize: 56, lineHeight: 56 }]} selectable>{userId}</Text>
+          <Text style={[styles.body, { fontFamily: 'Outfit_600SemiBold', fontSize: 20, letterSpacing: 2, marginBottom: 0 }]} selectable>{userId}</Text>
         </Section>
         <Section title="Your skills" text="Change the skills SkillPath starts from. Your next recommendation is worked out again.">
           <View style={{ maxWidth: 420 }}>
@@ -190,7 +190,7 @@ function Section({ title, text, danger, children }: { title: string; text: strin
       <View style={{ width: 380, paddingRight: 48 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 6 }}>
           {danger ? <Ionicons name="trash-outline" size={22} color={colors.danger} style={{ marginRight: 8 }} /> : null}
-          <Text style={[styles.h2, { fontSize: 32, lineHeight: 34, marginBottom: 0 }]}>{title}</Text>
+          <Text style={[styles.h2, { fontSize: 26, lineHeight: 28, marginBottom: 0 }]}>{title}</Text>
         </View>
         <Body muted style={{ marginBottom: 0 }}>{text}</Body>
       </View>
