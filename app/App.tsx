@@ -8,7 +8,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AppState, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { api } from './src/api';
-import { DEMO, DEMO_NOTICE } from './src/demo';
 import Home from './src/screens/Home';
 import NextSkill from './src/screens/NextSkill';
 import Pathway from './src/screens/Pathway';
@@ -133,11 +132,6 @@ export default function App() {
           </Pressable>
         ) : null}
       </View>
-      {DEMO ? (
-        <View style={s.demo} accessibilityRole="text">
-          <Text style={s.demoText}>{DEMO_NOTICE}</Text>
-        </View>
-      ) : null}
       {nudge !== '' && userId && (
         <Pressable
           accessibilityRole="button"
