@@ -45,7 +45,7 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
   if (!rec.recommended_skill) {
     return (
       <Screen>
-        <Hero eyebrow="No stop found" title="We need more to go on">
+        <Hero eyebrow="No recommendation yet" title="We need more to go on">
           <Body>{rec.explanation}</Body>
         </Hero>
         <Button label="Edit my skills" onPress={onEditProfile} />
@@ -66,13 +66,13 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
 
   return (
     <Screen>
-      <Hero eyebrow="NEXT STOP · RECOMMENDED FOR YOU" title={name}>
+      <Hero eyebrow="YOUR NEXT SKILL · RECOMMENDED FOR YOU" title={name}>
         {info?.description ? <Body muted>{info.description}</Body> : null}
       </Hero>
 
       <View style={{ borderTopWidth: 1, borderTopColor: colors.hairline, marginBottom: 6 }}>
-        {info?.category ? <TicketRow label="Line" value={info.category} /> : null}
-        <TicketRow label="Stops" value="6 short steps · 5 to 10 min each · free resources" />
+        {info?.category ? <TicketRow label="Category" value={info.category} /> : null}
+        <TicketRow label="Steps" value="6 short steps · 5 to 10 min each · free resources" />
         {info?.how_to_show ? <TicketRow label="Show it by" value={info.how_to_show} /> : null}
         {info?.demand_evidence ? <TicketRow label="Demand" value={info.demand_evidence} /> : null}
         {rec.income_displayed !== '' ? <TicketRow label="Income" value={rec.income_displayed} /> : null}
@@ -80,7 +80,7 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
 
       <SectionLabel right={`${branches.length} nearest jobs`}>What's missing?</SectionLabel>
       <Text style={[styles.numeric, { fontSize: 12, color: colors.faint, marginBottom: 4 }]}>
-        {`THIS STOP LEADS TO ${branches.length === 1 ? 'THIS JOB' : 'THESE JOBS'}`}
+        {`THIS SKILL LEADS TO ${branches.length === 1 ? 'THIS JOB' : 'THESE JOBS'}`}
       </Text>
       <Branches branches={branches} />
 
@@ -95,7 +95,7 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
 
       {rec.alternatives.length > 0 && (
         <>
-          <SectionLabel right={String(rec.alternatives.length)}>Other routes</SectionLabel>
+          <SectionLabel right={String(rec.alternatives.length)}>Alternatives</SectionLabel>
           {rec.alternatives.map((a) => (
             <Button key={a} label={`Choose ${label(a)}`} variant="tonal" disabled={busy}
                     onPress={() => run(() => api.swap(userId, a), onAdopted)} />

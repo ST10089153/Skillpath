@@ -30,7 +30,7 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
     try {
       const r = await api.result(userId, moduleId, passed);
       setProg(r.progress);
-      setFlash(r.message || (passed ? 'Stop passed. On to the next one.' : 'Thanks for telling us. Try this stop again when you are ready.'));
+      setFlash(r.message || (passed ? 'Step done. On to the next one.' : 'Thanks for telling us. Try this step again when you are ready.'));
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -42,10 +42,10 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
   if (prog.status !== 'adopted') {
     return (
       <Screen>
-        <Hero eyebrow="No line yet" title="Your route will appear here">
-          <Body muted>Accept a recommended skill and its six stops will be laid out on this screen.</Body>
+        <Hero eyebrow="No pathway yet" title="Your pathway will appear here">
+          <Body muted>Accept a recommended skill and its six steps will be laid out on this screen.</Body>
         </Hero>
-        <Button label="See my next stop" onPress={onGoToNextSkill} />
+        <Button label="See my next skill" onPress={onGoToNextSkill} />
       </Screen>
     );
   }
@@ -87,9 +87,9 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
 
   return (
     <Screen>
-      <Hero eyebrow={`${skillName.toUpperCase()} LINE`} title={prog.completed ? 'End of the line' : 'Your route'}>
+      <Hero eyebrow={`YOUR PATHWAY · ${skillName.toUpperCase()}`} title={prog.completed ? 'Pathway complete' : 'Six steps'}>
         <Text style={[styles.numeric, { fontSize: 13, color: colors.muted }]}>
-          {`${prog.modules_completed} OF ${prog.total_modules} STOPS PASSED · ABOUT ${prog.modules.reduce((t, m) => t + m.minutes, 0)} MIN IN TOTAL`}
+          {`${prog.modules_completed} OF ${prog.total_modules} STEPS DONE · ABOUT ${prog.modules.reduce((t, m) => t + m.minutes, 0)} MIN IN TOTAL`}
         </Text>
       </Hero>
       {flash !== '' && <View style={styles.banner}><Body style={{ marginBottom: 0 }}>{flash}</Body></View>}
@@ -97,7 +97,7 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
       <View style={{ marginTop: 10 }}><RouteStops stops={stops} /></View>
       {prog.completed && (
         <View style={[styles.banner, { marginTop: 18 }]}>
-          <Body style={{ marginBottom: 0 }}>You've reached the end of this line. Well done.</Body>
+          <Body style={{ marginBottom: 0 }}>You've completed this pathway. Well done.</Body>
         </View>
       )}
     </Screen>

@@ -13,7 +13,7 @@ import io
 import json
 import os
 import secrets
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Literal, Optional
 
 import threading
@@ -66,6 +66,14 @@ class SwapIn(BaseModel):
 
 class ResultIn(BaseModel):
     passed: bool
+
+
+class DemoArmIn(BaseModel):
+    arm: Literal["A", "B"]
+
+
+class DemoInactiveIn(BaseModel):
+    days: int = 2
 
 
 class EventIn(BaseModel):
@@ -375,6 +383,30 @@ def create_app(db_path: Optional[str] = None, skill_map_path: Optional[str] = No
             touch(conn, user_id)
         log(conn, user, body.event_type, body.item_id)
         return {"logged": body.event_type}
+
+    # Marker tools, registered only on the hosted demo (SKILLPATH_DEMO=1): they let a marker see both logic versions
+    # (DD9) and the nudge rule (DD7) without waiting days. The recommendation engine is not involved.
+    if env.get("SKILLPATH_DEMO") == "1":
+        @app.post("/users/{user_id}/demo/arm")
+        def demo_arm(user_id: str, body: DemoArmIn, conn=Depends(get_conn)):
+            get_user(conn, user_id)
+            conn.execute("UPDATE users SET arm=? WHERE user_id=?", (body.arm, user_id))
+            return {"arm": body.arm}
+
+        @app.post("/users/{user_id}/demo/inactive")
+        def demo_inactive(user_id: str, body: DemoInactiveIn, conn=Depends(get_conn)):
+            get_user(conn, user_id)
+            # As if `days` days pass with no activity: the last activity and the last reminder move back in time;
+            # the unopened-reminder count is kept, so the three-unopened cap still applies.
+            user = get_user(conn, user_id)
+            days = max(1, min(body.days, 14))
+            shift = timedelta(days=days)
+            last_active = (datetime.fromisoformat(user["last_active_at"]) - shift).isoformat(timespec="seconds")
+            last_nudge = ((datetime.fromisoformat(user["last_nudge_date"]) - shift).date().isoformat()
+                          if user["last_nudge_date"] else None)
+            conn.execute("UPDATE users SET last_active_at=?, last_nudge_date=? WHERE user_id=?",
+                         (last_active, last_nudge, user_id))
+            return {"days_inactive": (clock().date() - datetime.fromisoformat(last_active).date()).days}
 
     @app.delete("/users/{user_id}")
     def delete_user(user_id: str, conn=Depends(get_conn)):

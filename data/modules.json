@@ -4,8 +4,8 @@
     {
       "title": "What is {skill}?",
       "description": "Read what this skill means and what you will be able to show at the end (below). Takes about 5 minutes.",
-      "resource_label": "",
-      "resource_url": ""
+      "resource_label": "Read an overview (Wikipedia)",
+      "resource_url": "https://en.wikipedia.org/w/index.php?search={query}"
     },
     {
       "title": "Watch a short introduction",

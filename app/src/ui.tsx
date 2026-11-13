@@ -87,8 +87,10 @@ export function PressableScale({ children, style, onPress, disabled, ...a11y }: 
   accessibilityRole?: 'button' | 'tab' | 'checkbox' | 'radio' | 'link'; accessibilityLabel?: string; accessibilityHint?: string;
   accessibilityState?: object;
 }) {
+  const st = (a11y.accessibilityState ?? {}) as { checked?: boolean; selected?: boolean; disabled?: boolean; expanded?: boolean };
   return (
-    <Pressable {...a11y} disabled={disabled} onPress={onPress}
+    <Pressable {...a11y} aria-checked={st.checked} aria-selected={st.selected} aria-disabled={st.disabled ?? disabled}
+               aria-expanded={st.expanded} disabled={disabled} onPress={onPress}
                style={(state) => [style, (state as { pressed?: boolean }).pressed ? { opacity: 0.8, transform: [{ translateY: 1 }] } : null,
                                   (state as { hovered?: boolean }).hovered ? { opacity: 0.92 } : null, focusVisible(state)]}>
       {children}
@@ -192,7 +194,7 @@ export function TextLink({ label, onPress, hint }: { label: string; onPress: () 
 
 export function Checkbox({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
   return (
-    <Pressable accessibilityRole="checkbox" accessibilityState={{ checked }} onPress={() => onChange(!checked)}
+    <Pressable accessibilityRole="checkbox" accessibilityState={{ checked }} aria-checked={checked} onPress={() => onChange(!checked)}
                style={(s) => [styles.checkRow, focusVisible(s)]}>
       <View style={[styles.checkBox, checked && styles.checkBoxOn]}>
         {checked && <Ionicons name="checkmark" size={18} color={colors.primaryText} />}

@@ -285,3 +285,47 @@ def test_opening_a_nudge_resets_the_count(client, clock):
     client.post(f"/users/{uid}/events", json={"event_type": "notification_opened"})
     user = client.get(f"/users/{uid}").json()["user"]
     assert user["nudges_unopened"] == 0
+
+
+# --- Marker tools on the hosted demo (SKILLPATH_DEMO=1); absent from the research build -----------------------
+
+@pytest.fixture
+def demo_client(tmp_path, clock, monkeypatch):
+    monkeypatch.setenv("SKILLPATH_DEMO", "1")
+    app = create_app(db_path=str(tmp_path / "d.db"), skill_map_path=SKILL_MAP_CSV, admin_token=TOKEN, clock=clock)
+    return TestClient(app)
+
+
+def test_demo_tools_absent_from_research_build(client):
+    uid = new_user(client)
+    assert client.post(f"/users/{uid}/demo/arm", json={"arm": "A"}).status_code == 404
+    assert client.post(f"/users/{uid}/demo/inactive", json={"days": 2}).status_code == 404
+
+
+def test_demo_arm_switch_changes_income_not_recommendation(demo_client):
+    uid = new_user(demo_client, arm="B")
+    b = demo_client.get(f"/users/{uid}/recommendation").json()
+    assert demo_client.post(f"/users/{uid}/demo/arm", json={"arm": "A"}).json() == {"arm": "A"}
+    a = demo_client.get(f"/users/{uid}/recommendation").json()
+    assert a["arm"] == "A" and b["arm"] == "B"
+    assert a["recommended_skill"] == b["recommended_skill"] and a["alternatives"] == b["alternatives"]
+    assert b["income_displayed"] == ""
+    assert demo_client.post(f"/users/{uid}/demo/arm", json={"arm": "C"}).status_code == 422
+
+
+def test_demo_inactive_triggers_the_real_nudge_rule(demo_client):
+    uid = new_user(demo_client)
+    demo_client.get(f"/users/{uid}/recommendation")          # open pathway: recommended
+    assert demo_client.get(f"/users/{uid}/nudge").json()["nudge"] is False
+    assert demo_client.post(f"/users/{uid}/demo/inactive", json={"days": 2}).json() == {"days_inactive": 2}
+    n = demo_client.get(f"/users/{uid}/nudge").json()
+    assert n["nudge"] is True and n["days_inactive"] == 2 and "milestone" in n["message"]
+    assert demo_client.get(f"/users/{uid}/nudge").json()["nudge"] is False   # still at most once a day
+    # two more days pass each time: reminders 2 and 3 are sent, then the three-unopened cap stops them
+    for expected in (True, True, False):
+        demo_client.post(f"/users/{uid}/demo/inactive", json={"days": 2})
+        assert demo_client.get(f"/users/{uid}/nudge").json()["nudge"] is expected
+    # opening the app (activity) resets the cap
+    demo_client.post(f"/users/{uid}/events", json={"event_type": "session_start"})
+    demo_client.post(f"/users/{uid}/demo/inactive", json={"days": 2})
+    assert demo_client.get(f"/users/{uid}/nudge").json()["nudge"] is True

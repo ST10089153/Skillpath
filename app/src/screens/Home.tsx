@@ -49,10 +49,10 @@ export default function Home({ userId, go, onEditProfile }: { userId: string; go
   if (!adopted || !prog) {
     return (
       <Screen>
-        <Hero eyebrow="No line yet" title="Plan your first route">
-          <Body muted>SkillPath looks at the {skills.length} skills you have and finds the one stop that brings you closest to jobs near your profile.</Body>
+        <Hero eyebrow="No pathway yet" title="Find your next skill">
+          <Body muted>SkillPath looks at the {skills.length} skills you have and finds the one skill that brings you closest to jobs near your profile.</Body>
         </Hero>
-        <Button label="See my next stop" onPress={() => go('next')} />
+        <Button label="See my next skill" onPress={() => go('next')} />
         <SkillsList skills={skills} label={label} onEdit={onEditProfile} />
       </Screen>
     );
@@ -67,24 +67,24 @@ export default function Home({ userId, go, onEditProfile }: { userId: string; go
 
   return (
     <Screen>
-      <Hero eyebrow={prog.completed ? 'End of the line' : 'You are here'}
-            title={prog.completed ? `All ${total} stops done` : `Stop ${here} of ${total}`}>
-        <Body muted>{`On the ${skillName} line.`}</Body>
+      <Hero eyebrow={prog.completed ? 'Pathway complete' : 'You are here'}
+            title={prog.completed ? `All ${total} steps done` : `Step ${here} of ${total}`}>
+        <Body muted>{`Your pathway: ${skillName}.`}</Body>
       </Hero>
 
       <RouteStrip total={total} done={prog.modules_completed} here={here} interchanges={interchanges} />
 
       {nextInterchange ? (
         <Text style={[styles.numeric, { fontSize: 13, color: colors.muted, marginBottom: 18 }]}>
-          {`${nextInterchange - prog.modules_completed} ${nextInterchange - prog.modules_completed === 1 ? 'stop' : 'stops'} to milestone MS${nextInterchange / MODULES_PER_MILESTONE}`}
+          {`${nextInterchange - prog.modules_completed} ${nextInterchange - prog.modules_completed === 1 ? 'step' : 'steps'} to milestone MS${nextInterchange / MODULES_PER_MILESTONE}`}
         </Text>
       ) : null}
 
       {current ? (
         <View style={styles.cardInner}>
-          <Eyebrow color={colors.primary}>{`STOP ${String(here).padStart(2, '0')} · ABOUT ${prog.current_module?.minutes ?? 6} MIN`}</Eyebrow>
+          <Eyebrow color={colors.primary}>{`STEP ${String(here).padStart(2, '0')} · ABOUT ${prog.current_module?.minutes ?? 6} MIN`}</Eyebrow>
           <Text style={[styles.h2, { marginBottom: 12 }]}>{current.title}</Text>
-          <Button label={`Go to stop ${here}`} onPress={() => go('pathway')} />
+          <Button label={`Continue step ${here}`} onPress={() => go('pathway')} />
         </View>
       ) : (
         <Button label="See my progress" onPress={() => go('progress')} />

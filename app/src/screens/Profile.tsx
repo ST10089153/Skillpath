@@ -17,6 +17,7 @@ function Chip({ label, on, onPress }: { label: string; on: boolean; onPress: () 
     <Pressable
       accessibilityRole="checkbox"
       accessibilityState={{ checked: on }}
+      aria-checked={on}
       accessibilityLabel={label}
       onPress={onPress}
       style={[styles.chip, on && styles.chipOn]}
@@ -119,6 +120,7 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
             <Body style={{ fontWeight: '600' }}>Found {detected.length} skills. Untick any that are not right:</Body>
             {detected.map((d) => (
               <Pressable key={d.skill} accessibilityRole="checkbox" accessibilityState={{ checked: selected.includes(d.skill) }}
+                         aria-checked={selected.includes(d.skill)}
                          onPress={() => toggle(d.skill)}
                          style={{ flexDirection: 'row', backgroundColor: colors.cardDeep, borderRadius: 6, padding: 12, marginBottom: 8, minHeight: 48 }}>
                 <Ionicons name={selected.includes(d.skill) ? 'checkbox' : 'square-outline'} size={24} color={colors.primary} style={{ marginRight: 10 }} />
@@ -174,6 +176,7 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
               <Pressable
                 accessibilityRole="button"
                 accessibilityState={{ expanded: isOpen }}
+                aria-expanded={isOpen}
                 accessibilityLabel={`${g.category}, ${g.skills.length} skills${count ? `, ${count} selected` : ''}`}
                 onPress={() => setOpen(isOpen ? null : g.category)}
                 style={{ flexDirection: 'row', alignItems: 'center', minHeight: 56, paddingHorizontal: 16 }}
@@ -198,6 +201,7 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
           key={l.value}
           accessibilityRole="radio"
           accessibilityState={{ selected: level === l.value }}
+          aria-checked={level === l.value}
           onPress={() => setLevel(l.value)}
           style={[styles.card, { borderWidth: 2 }, level === l.value && { borderColor: colors.primary, backgroundColor: colors.accent }]}
         >

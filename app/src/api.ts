@@ -138,6 +138,10 @@ export const api = {
   nudge: (id: string) => call<{ nudge: boolean; days_inactive: number; message: string }>('GET', `/users/${id}/nudge`),
   event: (id: string, event_type: string, item_id = '') =>
     call('POST', `/users/${id}/events`, { event_type, item_id }).catch(() => undefined),
+  // Hosted demo only (marker tools)
+  demoArm: (id: string, arm: 'A' | 'B') => call<{ arm: string }>('POST', `/users/${id}/demo/arm`, { arm }),
+  demoInactive: (id: string, days = 2) =>
+    call<{ days_inactive: number }>('POST', `/users/${id}/demo/inactive`, { days }),
   deleteMe: (id: string) => call<{ deleted: boolean }>('DELETE', `/users/${id}`),
 };
 

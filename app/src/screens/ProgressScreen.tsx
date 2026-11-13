@@ -20,6 +20,7 @@ export default function ProgressScreen({ userId }: { userId: string }) {
 
   const total = prog.total_modules || 6;
   const pct = Math.round((prog.modules_completed / total) * 100);
+  const nextMs = prog.completed ? 0 : (Math.floor(prog.modules_completed / MODULES_PER_MILESTONE) + 1) * MODULES_PER_MILESTONE;
   const badges = Array.from({ length: Math.floor(total / MODULES_PER_MILESTONE) }, (_, i) => `MS${i + 1}`);
 
   return (
@@ -35,8 +36,8 @@ export default function ProgressScreen({ userId }: { userId: string }) {
             <SectionLabel>Current pathway</SectionLabel>
             <Text style={styles.h2}>{labels[prog.skill] ?? prog.skill}</Text>
             <ProgressBar value={prog.modules_completed} total={total} />
-            <Body muted style={styles.numeric}>{prog.modules_completed} of {total} modules ({pct}%)</Body>
-            {prog.next_milestone_message ? <Body>{prog.next_milestone_message}</Body> : null}
+            <Body muted style={styles.numeric}>{prog.modules_completed} of {total} steps ({pct}%)</Body>
+            {nextMs ? <Body>{`${nextMs - prog.modules_completed} short ${nextMs - prog.modules_completed === 1 ? 'step' : 'steps'} to milestone MS${nextMs / MODULES_PER_MILESTONE}. A 5 to 10 minute session gets you closer.`}</Body> : null}
           </View>
 
           <SectionLabel>Milestones</SectionLabel>
@@ -46,7 +47,7 @@ export default function ProgressScreen({ userId }: { userId: string }) {
               const face = (
                 <>
                   <Text style={{ fontSize: 24, fontFamily: fonts.display, color: got ? colors.primary : colors.muted }}>{b}</Text>
-                  <Text style={{ fontSize: 11, letterSpacing: 1.2, textTransform: 'uppercase', fontFamily: fonts.mono, color: got ? colors.primary : colors.faint }}>{got ? 'Reached' : `${MODULES_PER_MILESTONE} modules`}</Text>
+                  <Text style={{ fontSize: 11, letterSpacing: 1.2, textTransform: 'uppercase', fontFamily: fonts.mono, color: got ? colors.primary : colors.faint }}>{got ? 'Reached' : `${MODULES_PER_MILESTONE} steps`}</Text>
                 </>
               );
               // Milestones are interchanges on the route: a capsule marker, filled in the route colour once reached.

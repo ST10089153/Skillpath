@@ -51,9 +51,9 @@ export function RouteStops({ stops }: { stops: Stop[] }) {
         const last = i === stops.length - 1;
         const above = s.state !== 'next' ? colors.line : colors.track;
         const below = s.state === 'done' ? colors.line : colors.track;
-        const stateText = s.state === 'done' ? 'passed' : s.state === 'here' ? 'you are here' : 'to come';
+        const stateText = s.state === 'done' ? 'done' : s.state === 'here' ? 'you are here' : 'to come';
         return (
-          <View key={s.key} style={{ flexDirection: 'row' }} accessibilityLabel={`Stop ${s.number}, ${s.title}, ${stateText}`}>
+          <View key={s.key} style={{ flexDirection: 'row' }} accessibilityLabel={`Step ${s.number}, ${s.title}, ${stateText}`}>
             <View style={{ width: GUTTER, alignItems: 'center' }}>
               <View style={{ width: LINE_W, height: 14, backgroundColor: first ? 'transparent' : above }} />
               <Marker state={s.state} interchange={!!s.interchange} />
@@ -62,7 +62,7 @@ export function RouteStops({ stops }: { stops: Stop[] }) {
             </View>
             <View style={{ flex: 1, paddingTop: 8, paddingBottom: last ? 0 : 22, paddingLeft: 6 }}>
               <Text style={[styles.numeric, { fontSize: 12, color: s.state === 'here' ? colors.here : colors.faint, letterSpacing: 1 }]}>
-                {`STOP ${String(s.number).padStart(2, '0')}${s.meta ? ` · ${s.meta}` : ''}${s.state === 'here' ? ' · YOU ARE HERE' : ''}`}
+                {`STEP ${String(s.number).padStart(2, '0')}${s.meta ? ` · ${s.meta}` : ''}${s.state === 'here' ? ' · YOU ARE HERE' : ''}`}
               </Text>
               <Text style={[styles.h2, { fontSize: s.state === 'here' ? 24 : 19, lineHeight: s.state === 'here' ? 30 : 25, marginTop: 4,
                                          color: s.state === 'next' ? colors.muted : colors.text }]}>
@@ -70,7 +70,7 @@ export function RouteStops({ stops }: { stops: Stop[] }) {
               </Text>
               {s.interchange ? (
                 <Text style={[styles.numeric, { fontSize: 12, color: s.state === 'done' ? colors.line : colors.faint, marginBottom: 4 }]}>
-                  {`INTERCHANGE · ${s.interchange.toUpperCase()}${s.state === 'done' ? ' REACHED' : ''}`}
+                  {`${s.interchange.toUpperCase()}${s.state === 'done' ? ' REACHED' : ' AFTER THIS STEP'}`}
                 </Text>
               ) : null}
               {s.children}
@@ -87,7 +87,7 @@ export function RouteStrip({ total, done, here, interchanges }: {
   total: number; done: number; here: number | null; interchanges: number[];
 }) {
   return (
-    <View accessible accessibilityLabel={`${done} of ${total} stops passed`} style={{ marginVertical: 18 }}>
+    <View accessible accessibilityLabel={`${done} of ${total} steps done`} style={{ marginVertical: 18 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         {Array.from({ length: total }, (_, i) => {
           const n = i + 1;
@@ -150,7 +150,7 @@ export function Branches({ branches }: { branches: Branch[] }) {
                   {'Still to learn: '}
                   {b.missing.map((m, j) => (
                     <Text key={m.label} style={m.isThis ? { color: colors.here, fontFamily: fonts.semibold } : undefined}>
-                      {m.label}{m.isThis ? ' (this stop)' : ''}{j < b.missing.length - 1 ? ' · ' : ''}
+                      {m.label}{m.isThis ? ' (recommended)' : ''}{j < b.missing.length - 1 ? ' · ' : ''}
                     </Text>
                   ))}
                 </Text>

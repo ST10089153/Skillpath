@@ -64,14 +64,22 @@ export default function App() {
     })();
   }, []);
 
+  // Nudge check, shared with the demo's marker tools. Returns whether a reminder was shown.
+  async function checkNudge(): Promise<boolean> {
+    if (!userId) return false;
+    try {
+      const n = await api.nudge(userId);
+      // The engine's text says "modules"; the app and report call them steps.
+      if (n.nudge) setNudge(n.message.replace(/\bmodules\b/g, 'steps').replace(/\bmodule\b/g, 'step'));
+      return n.nudge;
+    } catch { return false; /* offline: no nudge */ }
+  }
+
   // Session events + nudge check. The nudge is checked BEFORE session_start updates last activity (DD7).
   useEffect(() => {
     if (!userId) return;
     const begin = async () => {
-      try {
-        const n = await api.nudge(userId);
-        if (n.nudge) setNudge(n.message);
-      } catch { /* offline: no nudge */ }
+      await checkNudge();
       api.event(userId, 'session_start');
     };
     begin();
@@ -111,7 +119,7 @@ export default function App() {
   else if (tab === 'next') content = <NextSkill key={refreshKey} userId={userId} onAdopted={() => go('pathway')} onEditProfile={() => setEditingProfile(true)} />;
   else if (tab === 'pathway') content = <Pathway key={refreshKey} userId={userId} onGoToNextSkill={() => go('next')} />;
   else if (tab === 'progress') content = <ProgressScreen key={refreshKey} userId={userId} />;
-  else content = <Settings userId={userId} onDeleted={onDeleted} onEditProfile={() => setEditingProfile(true)} />;
+  else content = <Settings userId={userId} onDeleted={onDeleted} onEditProfile={() => setEditingProfile(true)} onCheckNudge={checkNudge} />;
 
   const signedIn = ready && !!userId;
 
@@ -151,7 +159,7 @@ export default function App() {
           {TABS.map((t) => {
             const on = tab === t.key && !editingProfile;
             return (
-              <Pressable key={t.key} accessibilityRole="tab" accessibilityState={{ selected: on }} accessibilityLabel={t.label}
+              <Pressable key={t.key} accessibilityRole="tab" accessibilityState={{ selected: on }} aria-selected={on} accessibilityLabel={t.label}
                          onPress={() => go(t.key)} style={(st) => [s.tab, focusVisible(st)]}>
                 <View style={[s.tabIcon, on && s.tabIconOn]}>
                   <Ionicons name={t.icon} size={22} color={on ? colors.text : colors.faint} />
