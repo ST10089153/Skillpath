@@ -1,7 +1,9 @@
-"""Capture the app screenshots for Figures 2-5 of the Part 3 report (phone-sized, 2x resolution).
+"""Capture the app screenshots for Figures 8-11 of the research report (phone-sized, 2x resolution).
 
-    (start the API on :8000 and the web app on :8081 first, e.g. .\\start.ps1)
+    (start the API on :8000 and the web app on :8081 first, e.g. .\\start.ps1, or set SKILLPATH_APP_URL
+     to a research build served by deploy/server.py; not the demo build, whose wording differs)
     python scripts/capture_screens.py            -> docs/exemplar/figures/*.png
+    python scripts/refresh_report_figures.py IN.docx OUT.docx   (puts them into the report)
 
 Drives the real web app with Playwright using the installed Microsoft Edge (channel "msedge"), so no browser
 download is needed. Uses the watermarked example CV EXAMPLE_CV_SP15.pdf.
@@ -26,7 +28,11 @@ def main():
         shot = lambda name: page.screenshot(path=os.path.join(OUT, name)) or print("saved", name)
         page.goto(URL)
         page.get_by_text("Find your next skill").first.wait_for(timeout=60000)
+        page.evaluate("document.fonts.ready.then(() => true)")  # Bebas Neue and Outfit, not the fallback font
         page.wait_for_timeout(1000)
+        # what is stored, the disclaimer, and the consent and age checkboxes in one view (Figure 8a)
+        page.get_by_text("What we store").first.evaluate("e => e.scrollIntoView({block: 'start'})")
+        page.wait_for_timeout(500)
         shot("fig1_welcome.png")
 
         page.get_by_role("checkbox", name="I understand what SkillPath stores and I agree to take part.").click()
@@ -43,7 +49,8 @@ def main():
 
         page.get_by_role("radio").nth(1).click()  # "I know the basics"
         page.get_by_role("button", name="Find my next skill").click()
-        page.get_by_text("Recommended for you").wait_for(timeout=30000)
+        page.get_by_text("Recommended for you").first.wait_for(timeout=30000)
+        page.get_by_text("Show it by").first.wait_for(timeout=30000)  # skill details loaded
         page.wait_for_timeout(800)
         shot("fig3a_recommendation.png")
         page.get_by_text("What's missing?").first.evaluate("e => e.scrollIntoView({block: 'start'})")
