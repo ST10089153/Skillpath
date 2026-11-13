@@ -1,7 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Lexend_400Regular, Lexend_600SemiBold, Lexend_700Bold, useFonts } from '@expo-google-fonts/lexend';
-import { Gloock_400Regular } from '@expo-google-fonts/gloock';
-import { SyneMono_400Regular } from '@expo-google-fonts/syne-mono';
+import { BebasNeue_400Regular } from '@expo-google-fonts/bebas-neue';
+import { Outfit_400Regular, Outfit_600SemiBold, Outfit_700Bold, useFonts } from '@expo-google-fonts/outfit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useRef, useState } from 'react';
@@ -30,7 +29,7 @@ const TABS: { key: Tab; label: string; icon: IconName; iconOn: IconName }[] = [
 ];
 
 export default function App() {
-  useFonts({ Lexend_400Regular, Lexend_600SemiBold, Lexend_700Bold, Gloock_400Regular, SyneMono_400Regular }); // system font until loaded; never blocks
+  useFonts({ Outfit_400Regular, Outfit_600SemiBold, Outfit_700Bold, BebasNeue_400Regular }); // system font until loaded; never blocks
   const [ready, setReady] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [editingProfile, setEditingProfile] = useState(false);
@@ -176,7 +175,7 @@ const s = StyleSheet.create({
   header: { paddingHorizontal: 16, paddingVertical: 12, borderBottomWidth: 1, borderColor: colors.border,
             flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   logo: { width: 30, height: 30, borderRadius: 15, borderWidth: 4, borderColor: colors.line, marginRight: 10 },
-  brand: { fontSize: 22, fontFamily: fonts.display, color: colors.text },
+  brand: { fontSize: 30, lineHeight: 32, fontFamily: fonts.display, color: colors.text, letterSpacing: 1, paddingTop: 3 },
   headerBtn: { width: 44, height: 44, borderRadius: 4, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: colors.hairline },
   tabs: { flexDirection: 'row', height: TAB_BAR_HEIGHT + (Platform.OS === 'ios' ? 18 : 0), paddingBottom: Platform.OS === 'ios' ? 18 : 0,
           backgroundColor: colors.cardDeep, borderTopWidth: 1, borderColor: colors.hairline },

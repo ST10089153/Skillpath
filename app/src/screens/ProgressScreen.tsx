@@ -53,7 +53,7 @@ export default function ProgressScreen({ userId }: { userId: string }) {
               return (
                 <View key={b} accessibilityLabel={`${b} ${got ? 'reached' : 'not reached yet'}`}
                       style={{ alignItems: 'center', marginRight: 28, marginBottom: 8 }}>
-                  <View style={{ width: 44, height: 24, borderRadius: 12, borderWidth: 4, borderColor: got ? '#FFFFFF' : colors.track,
+                  <View style={{ width: 44, height: 24, borderRadius: 12, borderWidth: 4, borderColor: got ? colors.text : colors.track,
                                  backgroundColor: got ? colors.line : colors.bg, marginBottom: 10 }} />
                   {face}
                 </View>

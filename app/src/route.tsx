@@ -13,11 +13,11 @@ const LINE_W = 4;
 
 /** Station marker: filled = passed, gold ring = you are here, hollow = still to come; interchanges are capsules. */
 function Marker({ state, interchange }: { state: StopState; interchange?: boolean }) {
-  const stroke = state === 'here' ? colors.primary : state === 'done' ? colors.line : colors.track;
+  const stroke = state === 'here' ? colors.here : state === 'done' ? colors.line : colors.track;
   const fill = state === 'done' ? colors.line : colors.bg;
   if (interchange) {
     return (
-      <View style={{ width: 30, height: 18, borderRadius: 9, borderWidth: 3, borderColor: state === 'here' ? colors.primary : '#FFFFFF',
+      <View style={{ width: 30, height: 18, borderRadius: 9, borderWidth: 3, borderColor: state === 'here' ? colors.here : colors.text,
                      backgroundColor: state === 'done' ? colors.line : colors.bg }} />
     );
   }
@@ -25,7 +25,7 @@ function Marker({ state, interchange }: { state: StopState; interchange?: boolea
     return (
       <View style={{ width: 24, height: 24, borderRadius: 12, borderWidth: 3, borderColor: stroke, backgroundColor: colors.bg,
                      alignItems: 'center', justifyContent: 'center' }}>
-        <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: colors.primary }} />
+        <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: colors.here }} />
       </View>
     );
   }
@@ -61,7 +61,7 @@ export function RouteStops({ stops }: { stops: Stop[] }) {
                              opacity: s.state === 'done' ? 1 : 0.55 }} />
             </View>
             <View style={{ flex: 1, paddingTop: 8, paddingBottom: last ? 0 : 22, paddingLeft: 6 }}>
-              <Text style={[styles.numeric, { fontSize: 12, color: s.state === 'here' ? colors.primary : colors.faint, letterSpacing: 1 }]}>
+              <Text style={[styles.numeric, { fontSize: 12, color: s.state === 'here' ? colors.here : colors.faint, letterSpacing: 1 }]}>
                 {`STOP ${String(s.number).padStart(2, '0')}${s.meta ? ` · ${s.meta}` : ''}${s.state === 'here' ? ' · YOU ARE HERE' : ''}`}
               </Text>
               <Text style={[styles.h2, { fontSize: s.state === 'here' ? 24 : 19, lineHeight: s.state === 'here' ? 30 : 25, marginTop: 4,
@@ -103,7 +103,7 @@ export function RouteStrip({ total, done, here, interchanges }: {
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 8 }}>
         {Array.from({ length: total }, (_, i) => (
-          <Text key={i} style={[styles.numeric, { fontSize: 11, color: i + 1 === here ? colors.primary : colors.faint }]}>
+          <Text key={i} style={[styles.numeric, { fontSize: 11, color: i + 1 === here ? colors.here : colors.faint }]}>
             {String(i + 1).padStart(2, '0')}
           </Text>
         ))}
@@ -149,7 +149,7 @@ export function Branches({ branches }: { branches: Branch[] }) {
                 <Text style={[styles.body, { fontSize: 15, lineHeight: 23, marginLeft: 24, marginTop: 6, marginBottom: 0, color: colors.muted }]}>
                   {'Still to learn: '}
                   {b.missing.map((m, j) => (
-                    <Text key={m.label} style={m.isThis ? { color: colors.primary, fontFamily: fonts.semibold } : undefined}>
+                    <Text key={m.label} style={m.isThis ? { color: colors.here, fontFamily: fonts.semibold } : undefined}>
                       {m.label}{m.isThis ? ' (this stop)' : ''}{j < b.missing.length - 1 ? ' · ' : ''}
                     </Text>
                   ))}

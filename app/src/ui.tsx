@@ -1,12 +1,11 @@
-// SkillPath UI kit: the route map.
-// The design idea comes from the subject itself: SkillPath plots a path between jobs, so the app reads like a
-// transit map and timetable. A pathway is a line with six stops, milestones are interchanges, the current step is
-// "you are here", and the recommendation branches to the occupations it serves. Real data (DHET OFO codes, skill
-// counts, sources) is set in the mono face like a ticket or timetable instead of decorative labels.
-// Surfaces are flat with thin rules; boxes are used only where they mean something (the current stop, a ticket).
-// Type: Gloock (display), Syne Mono (readouts and section heads), Lexend (body, designed for reading fluency).
-// Colour: navy ground, one route colour (signal vermilion) for the line, gold only for "you are here".
-// Every text/background pair meets WCAG AA; motion is minimal and skipped under reduce-motion.
+// SkillPath UI kit: the route map, in the "Ocean night" palette.
+// The design idea comes from the subject itself: SkillPath plots a path between jobs, so a pathway is a line with six
+// stops, milestones are interchanges, the current step is "you are here", and the recommendation branches to the
+// occupations it serves. Visual language after markusfourie.dev (design only, not content or colours): a deep base,
+// big condensed uppercase display type, pill buttons, softly rounded panels and large numerals.
+// Type: Bebas Neue (display), Outfit (text; uppercase letter-spaced for labels and readouts). Both free Google Fonts.
+// Colour: deep teal ground, aqua for actions, coral for the route line and numerals, sand only for "you are here".
+// Every text/background pair meets WCAG AA (lowest 7.5:1 for text); motion is minimal and skipped under reduce-motion.
 import { Ionicons } from '@expo/vector-icons';
 import React, { ReactNode, useEffect, useRef } from 'react';
 import { Animated, Easing, Platform, Pressable, ScrollView, StyleSheet, Text, View, ViewStyle } from 'react-native';
@@ -16,37 +15,38 @@ import { PRISM, useReducedMotion } from './fx';
 export { PRISM, useReducedMotion };
 
 export const colors = {
-  bg: '#0B1D26',
-  card: '#10242D',
-  cardDeep: '#081820',
-  text: '#FFFFFF',
-  muted: '#A9B6BD',
-  faint: '#9AA8AF',
-  border: 'rgba(255,255,255,0.10)',
-  hairline: 'rgba(255,255,255,0.22)',
-  line: '#F0603F',        // the route line (signal vermilion), 5.3:1 on the ground
-  track: '#7C9097',       // the part of the line not yet travelled, 5.2:1
-  primary: '#FBD784',     // gold: "you are here" and the one primary action per screen
-  primaryDark: '#E9C46A',
-  primaryText: '#0B1D26',
-  accent: '#13303B',
-  onAccent: '#FFFFFF',
+  bg: '#0B1A1E',          // deep teal
+  card: '#12262B',        // raised panel
+  cardDeep: '#081417',
+  text: '#EEF6F5',        // 16.2:1 on the ground
+  muted: '#A9C3C5',       // 9.6:1
+  faint: '#8FAEB1',       // 7.5:1
+  border: 'rgba(238,246,245,0.09)',
+  hairline: 'rgba(238,246,245,0.20)',
+  line: '#FF8A6B',        // coral: the route line and numerals, 7.7:1
+  track: '#6F8E92',       // the part of the line not yet travelled
+  primary: '#5FD3C6',     // aqua: buttons and links, 9.8:1
+  primaryDark: '#45B8AB',
+  primaryText: '#0B1A1E', // text on aqua, 9.8:1
+  here: '#F2D49B',        // sand: "you are here" only, 12.4:1
+  accent: '#163038',
+  onAccent: '#EEF6F5',
   olive: '#6E6E46',
-  success: '#FBD784',
-  successBg: 'rgba(251,215,132,0.08)',
-  warnBg: 'rgba(251,215,132,0.10)',
-  warnText: '#FBD784',
-  danger: '#FF8A8A',
-  dangerSolid: '#FF8A8A',
-  dangerBg: 'rgba(255,138,138,0.10)',
+  success: '#5FD3C6',
+  successBg: 'rgba(95,211,198,0.10)',
+  warnBg: 'rgba(242,212,155,0.10)',
+  warnText: '#F2D49B',
+  danger: '#FF7A85',      // 7.1:1
+  dangerSolid: '#FF7A85',
+  dangerBg: 'rgba(255,122,133,0.10)',
 };
 
 export const fonts = {
-  display: 'Gloock_400Regular',
-  mono: 'SyneMono_400Regular',
-  regular: 'Lexend_400Regular',
-  semibold: 'Lexend_600SemiBold',
-  bold: 'Lexend_700Bold',
+  display: 'BebasNeue_400Regular',
+  mono: 'Outfit_600SemiBold',     // readouts and labels: set uppercase and letter-spaced in the styles below
+  regular: 'Outfit_400Regular',
+  semibold: 'Outfit_600SemiBold',
+  bold: 'Outfit_700Bold',
 };
 
 export const DISCLAIMER =
@@ -284,44 +284,44 @@ export const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg },
   screenContent: { padding: 20, paddingBottom: 40 },
   inner: { width: '100%', maxWidth: 560, alignSelf: 'center' },
-  title: { fontSize: 34, lineHeight: 40, fontFamily: fonts.display, color: colors.text, letterSpacing: -0.3, ...balance },
-  h2: { fontSize: 22, lineHeight: 28, fontFamily: fonts.display, color: colors.text, marginBottom: 6, ...balance },
-  eyebrow: { fontSize: 13, fontFamily: fonts.mono, letterSpacing: 1, marginBottom: 8 },
+  title: { fontSize: 46, lineHeight: 46, fontFamily: fonts.display, color: colors.text, letterSpacing: 0.6, paddingTop: 4, ...balance },
+  h2: { fontSize: 28, lineHeight: 30, fontFamily: fonts.display, color: colors.text, letterSpacing: 0.5, marginBottom: 6, paddingTop: 2, ...balance },
+  eyebrow: { fontSize: 12, fontFamily: fonts.mono, letterSpacing: 2.4, textTransform: 'uppercase', marginBottom: 10 },
   sectionHead: { flexDirection: 'row', justifyContent: 'space-between', borderTopWidth: 1, borderTopColor: colors.hairline,
                  paddingTop: 10, marginTop: 22, marginBottom: 12 },
-  sectionLabel: { fontSize: 12, fontFamily: fonts.mono, color: colors.muted, textTransform: 'uppercase', letterSpacing: 1.5 },
-  body: { fontSize: 16, lineHeight: 26, color: colors.text, marginBottom: 8, fontFamily: fonts.regular },
+  sectionLabel: { fontSize: 12, fontFamily: fonts.mono, color: colors.muted, textTransform: 'uppercase', letterSpacing: 2.4 },
+  body: { fontSize: 16, lineHeight: 25, color: colors.text, marginBottom: 8, fontFamily: fonts.regular },
   small: { fontSize: 13, lineHeight: 19, color: colors.faint, fontFamily: fonts.regular },
-  numeric: { fontFamily: fonts.mono, fontVariant: ['tabular-nums'], letterSpacing: 0.3 },
-  cardInner: { backgroundColor: colors.card, borderRadius: 4, padding: 18, borderWidth: 1, borderColor: colors.border },
-  card: { backgroundColor: colors.card, borderRadius: 4, padding: 18, marginBottom: 16, borderWidth: 1, borderColor: colors.border },
+  numeric: { fontFamily: fonts.mono, fontVariant: ['tabular-nums'], letterSpacing: 1.2, textTransform: 'uppercase' },
+  cardInner: { backgroundColor: colors.card, borderRadius: 22, padding: 20, borderWidth: 1, borderColor: colors.border },
+  card: { backgroundColor: colors.card, borderRadius: 22, padding: 20, marginBottom: 16, borderWidth: 1, borderColor: colors.border },
   hero: { paddingTop: 12, paddingBottom: 8, marginBottom: 8 },
-  heroEyebrow: { color: colors.muted, fontSize: 13, fontFamily: fonts.mono, letterSpacing: 1 },
-  heroTitle: { color: colors.text, fontSize: 42, lineHeight: 46, fontFamily: fonts.display, marginBottom: 12, letterSpacing: -0.5, ...balance },
-  bigNumber: { fontSize: 44, lineHeight: 48, fontFamily: fonts.display, color: colors.track, fontVariant: ['lining-nums'] },
-  btn: { minHeight: 54, borderRadius: 4, paddingHorizontal: 18, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
+  heroEyebrow: { color: colors.line, fontSize: 12, fontFamily: fonts.mono, letterSpacing: 2.4, textTransform: 'uppercase' },
+  heroTitle: { color: colors.text, fontSize: 60, lineHeight: 58, fontFamily: fonts.display, marginBottom: 12, letterSpacing: 0.8, paddingTop: 6, ...balance },
+  bigNumber: { fontSize: 56, lineHeight: 56, fontFamily: fonts.display, color: colors.line, paddingTop: 4 },
+  btn: { minHeight: 54, borderRadius: 999, paddingHorizontal: 24, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
   btnPrimary: { backgroundColor: colors.primary },
   btnSecondary: { backgroundColor: 'transparent', borderWidth: 1, borderColor: colors.primary },
   btnTonal: { backgroundColor: 'transparent', borderWidth: 1, borderColor: colors.hairline },
   btnDanger: { backgroundColor: 'transparent', borderWidth: 1, borderColor: colors.danger },
-  btnText: { fontSize: 16, fontFamily: fonts.semibold, flex: 1, marginRight: 12 },
+  btnText: { fontSize: 16, fontFamily: fonts.semibold, flex: 1, marginRight: 12, letterSpacing: 0.2 },
   textLink: { fontSize: 15, fontFamily: fonts.semibold, color: colors.primary, textDecorationLine: 'underline' },
   checkRow: { flexDirection: 'row', alignItems: 'center', minHeight: 52, paddingVertical: 8, borderRadius: 4 },
-  checkBox: { width: 26, height: 26, borderRadius: 4, borderWidth: 1.5, borderColor: colors.primary, marginRight: 12, alignItems: 'center', justifyContent: 'center' },
+  checkBox: { width: 26, height: 26, borderRadius: 8, borderWidth: 1.5, borderColor: colors.primary, marginRight: 12, alignItems: 'center', justifyContent: 'center' },
   checkBoxOn: { backgroundColor: colors.primary },
   error: { color: colors.danger, fontSize: 15, marginVertical: 8, fontFamily: fonts.regular },
   dot: { width: 9, height: 9, borderRadius: 5, borderWidth: 1, borderColor: colors.track, marginRight: 5 },
   dotOn: { backgroundColor: colors.line, borderColor: colors.line },
   input: { minHeight: 52, borderWidth: 0, borderBottomWidth: 1, borderColor: colors.hairline, borderRadius: 0, paddingHorizontal: 4, fontSize: 16,
            backgroundColor: 'transparent', color: colors.text, fontFamily: fonts.regular },
-  chip: { borderWidth: 1, borderColor: colors.hairline, backgroundColor: 'transparent', borderRadius: 4, paddingHorizontal: 14, minHeight: 40, justifyContent: 'center', marginRight: 8, marginBottom: 8 },
+  chip: { borderWidth: 1, borderColor: colors.hairline, backgroundColor: 'transparent', borderRadius: 999, paddingHorizontal: 14, minHeight: 40, justifyContent: 'center', marginRight: 8, marginBottom: 8 },
   chipOn: { backgroundColor: colors.primary, borderColor: colors.primary },
-  banner: { borderLeftWidth: 3, borderLeftColor: colors.line, paddingLeft: 14, paddingVertical: 6, marginBottom: 14 },
-  pill: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderRadius: 4, paddingHorizontal: 9, paddingVertical: 4, marginRight: 6, marginBottom: 6, alignSelf: 'flex-start' },
-  progressTrack: { height: 4, borderRadius: 2, backgroundColor: 'rgba(124,144,151,0.35)', overflow: 'hidden', marginVertical: 12 },
-  progressFill: { height: '100%', borderRadius: 2, backgroundColor: colors.line },
-  skeleton: { backgroundColor: 'rgba(255,255,255,0.07)', borderRadius: 3 },
+  banner: { backgroundColor: colors.card, borderRadius: 16, borderLeftWidth: 3, borderLeftColor: colors.line, paddingLeft: 16, paddingRight: 14, paddingVertical: 12, marginBottom: 14 },
+  pill: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderRadius: 999, paddingHorizontal: 9, paddingVertical: 4, marginRight: 6, marginBottom: 6, alignSelf: 'flex-start' },
+  progressTrack: { height: 6, borderRadius: 3, backgroundColor: 'rgba(124,144,151,0.35)', overflow: 'hidden', marginVertical: 12 },
+  progressFill: { height: '100%', borderRadius: 3, backgroundColor: colors.line },
+  skeleton: { backgroundColor: 'rgba(238,246,245,0.07)', borderRadius: 8 },
   ticketRow: { flexDirection: 'row', paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: colors.border },
-  ticketLabel: { width: 108, fontSize: 12, lineHeight: 20, fontFamily: fonts.mono, color: colors.faint, textTransform: 'uppercase', letterSpacing: 1 },
+  ticketLabel: { width: 108, fontSize: 11, lineHeight: 20, fontFamily: fonts.mono, color: colors.faint, textTransform: 'uppercase', letterSpacing: 1.8 },
   ticketValue: { fontSize: 15, lineHeight: 22, fontFamily: fonts.regular, color: colors.text },
 });

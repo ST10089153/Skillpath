@@ -99,7 +99,7 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
         <Pressable accessibilityRole="button" accessibilityLabel="Back" onPress={onCancel}
                    style={{ flexDirection: 'row', alignItems: 'center', minHeight: 44, alignSelf: 'flex-start' }}>
           <Ionicons name="chevron-back" size={22} color={colors.primary} />
-          <Text style={{ color: colors.primary, fontSize: 16, fontFamily: 'Lexend_600SemiBold' }}>Back</Text>
+          <Text style={{ color: colors.primary, fontSize: 16, fontFamily: 'Outfit_600SemiBold' }}>Back</Text>
         </Pressable>
       ) : null}
       <Title sub="Upload your CV or choose the skills you already have.">Your skills</Title>
@@ -123,8 +123,8 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
                          style={{ flexDirection: 'row', backgroundColor: colors.cardDeep, borderRadius: 6, padding: 12, marginBottom: 8, minHeight: 48 }}>
                 <Ionicons name={selected.includes(d.skill) ? 'checkbox' : 'square-outline'} size={24} color={colors.primary} style={{ marginRight: 10 }} />
                 <View style={{ flex: 1 }}>
-                  <Text style={{ fontSize: 16, fontFamily: 'Lexend_600SemiBold', color: colors.text }}>{label(d.skill)}</Text>
-                  <Text style={[styles.small, { color: colors.primary, fontFamily: 'Lexend_600SemiBold' }]}>
+                  <Text style={{ fontSize: 16, fontFamily: 'Outfit_600SemiBold', color: colors.text }}>{label(d.skill)}</Text>
+                  <Text style={[styles.small, { color: colors.primary, fontFamily: 'Outfit_600SemiBold' }]}>
                     {d.method === 'exact' ? 'Named in your CV' : `${Math.round(d.score * 100)}% match`}
                   </Text>
                   <Text style={styles.small} numberOfLines={2}>From your CV: "{d.evidence}"</Text>
