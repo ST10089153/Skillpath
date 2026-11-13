@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Pressable, Text, TextInput, View } from 'react-native';
 
 import { api, Competency, DetectedSkill } from '../api';
-import { Body, Button, Card, Columns, ErrorText, Loading, Screen, SectionLabel, Title, colors, styles } from '../ui';
+import { Body, Button, Card, ErrorText, Grid, Loading, Panel, Screen, SectionLabel, Title, colors, fonts, styles, useWide } from '../ui';
 
 const LEVELS: { value: Competency; label: string; detail: string }[] = [
   { value: 'limited', label: 'Just starting', detail: "I'm new to most of this and have had little chance to use these skills." },
@@ -40,6 +40,7 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
   const [detected, setDetected] = useState<DetectedSkill[] | null>(null);
   const [cvBusy, setCvBusy] = useState(false);
   const [cvNote, setCvNote] = useState('');
+  const wide = useWide();
 
   useEffect(() => {
     api.event(userId, 'assessment_started');
@@ -94,9 +95,143 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
     }
   }
 
+  if (wide) {
+    // Three numbered parts, in the order the user works through them, then one action.
+    const openGroup = groups?.find((g) => g.category === open);
+    return (
+      <Screen>
+        {onCancel ? (
+          <Pressable accessibilityRole="button" accessibilityLabel="Back" onPress={onCancel}
+                     style={{ flexDirection: 'row', alignItems: 'center', minHeight: 44, alignSelf: 'flex-start' }}>
+            <Ionicons name="chevron-back" size={22} color={colors.primary} />
+            <Text style={{ color: colors.primary, fontSize: 16, fontFamily: 'Outfit_600SemiBold' }}>Back</Text>
+          </Pressable>
+        ) : null}
+        <Title sub="Upload your CV or choose the skills you already have.">Your skills</Title>
+
+        <Panel style={{ padding: 36 }}>
+          <PartHead n={1} title="Start with your CV (optional)" />
+          <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+            <View style={{ flex: 4, minWidth: 0, paddingRight: 40 }}>
+              <Body>SkillPath's built-in AI reads your CV and suggests the skills it finds. Your CV is processed by
+                SkillPath's own server, is never sent to outside AI services, and is not saved.</Body>
+              <Button label={cvBusy ? 'Reading your CV…' : 'Upload your CV'} hint="PDF, Word or text file"
+                      variant="primary" icon="cloud-upload-outline" disabled={cvBusy} onPress={uploadCv} />
+              <Text style={[styles.small, { marginBottom: 8 }]}>{cvBusy ? 'The first time takes about 20 seconds.' : 'PDF, Word or text file.'}</Text>
+              {cvNote !== '' && <Body muted>{cvNote}</Body>}
+            </View>
+            <View style={{ flex: 5, minWidth: 0 }}>
+              {detected && detected.length > 0 ? (
+                <>
+                  <Body style={{ fontWeight: '600' }}>Found {detected.length} skills. Untick any that are not right:</Body>
+                  <Grid cols={2} gap={10}>
+                    {detected.map((d) => (
+                      <Pressable key={d.skill} accessibilityRole="checkbox" accessibilityState={{ checked: selected.includes(d.skill) }}
+                                 aria-checked={selected.includes(d.skill)} onPress={() => toggle(d.skill)}
+                                 style={{ flexDirection: 'row', backgroundColor: colors.cardDeep, borderRadius: 12, padding: 14, flexGrow: 1 }}>
+                        <Ionicons name={selected.includes(d.skill) ? 'checkbox' : 'square-outline'} size={24} color={colors.primary} style={{ marginRight: 10 }} />
+                        <View style={{ flex: 1 }}>
+                          <Text style={{ fontSize: 16, fontFamily: 'Outfit_600SemiBold', color: colors.text }}>{label(d.skill)}</Text>
+                          <Text style={[styles.small, { color: colors.primary, fontFamily: 'Outfit_600SemiBold' }]}>
+                            {d.method === 'exact' ? 'Named in your CV' : `${Math.round(d.score * 100)}% match`}
+                          </Text>
+                          <Text style={styles.small} numberOfLines={2}>From your CV: "{d.evidence}"</Text>
+                        </View>
+                      </Pressable>
+                    ))}
+                  </Grid>
+                </>
+              ) : (
+                <View style={{ borderWidth: 1, borderStyle: 'dashed', borderColor: colors.hairline, borderRadius: 16, padding: 24 }}>
+                  <Body muted style={{ marginBottom: 0 }}>The skills SkillPath finds in your CV appear here, so you can confirm or untick them.</Body>
+                </View>
+              )}
+            </View>
+          </View>
+        </Panel>
+
+        <Panel style={{ marginTop: 20, padding: 36 }}>
+          <PartHead n={2} title="Add or remove skills" right={`${selected.length} selected`} />
+          <TextInput style={[styles.input, { maxWidth: 560 }]} placeholder="Search skills" value={query} onChangeText={setQuery}
+                     accessibilityLabel="Search skills" autoCorrect={false} autoCapitalize="none" />
+          {selected.length > 0 && (
+            <>
+              <Text style={[styles.sectionLabel, { marginTop: 20, marginBottom: 10 }]}>Selected</Text>
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                {selected.map((x) => <Chip key={x} label={label(x)} on onPress={() => toggle(x)} />)}
+              </View>
+            </>
+          )}
+          {!groups && !error && <Loading />}
+          {query.trim() !== '' ? (
+            <>
+              <Text style={[styles.sectionLabel, { marginTop: 20, marginBottom: 10 }]}>Results</Text>
+              {matches.length === 0 && <Body muted>No skills match "{query}".</Body>}
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                {matches.map((x) => <Chip key={x} label={label(x)} on={selected.includes(x)} onPress={() => toggle(x)} />)}
+              </View>
+            </>
+          ) : groups ? (
+            <>
+              <Text style={[styles.sectionLabel, { marginTop: 20, marginBottom: 10 }]}>Browse by category</Text>
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                {groups.map((g) => {
+                  const isOpen = open === g.category;
+                  const count = g.skills.filter((x) => selected.includes(x)).length;
+                  return (
+                    <Pressable key={g.category} accessibilityRole="button" accessibilityState={{ expanded: isOpen }} aria-expanded={isOpen}
+                               accessibilityLabel={`${g.category}, ${g.skills.length} skills${count ? `, ${count} selected` : ''}`}
+                               onPress={() => setOpen(isOpen ? null : g.category)}
+                               style={[styles.chip, isOpen && { borderColor: colors.line, backgroundColor: colors.accent }]}>
+                      <Text style={{ fontSize: 16, fontFamily: fonts.semibold, color: colors.text }}>
+                        {`${g.category}${count ? ` · ${count}` : ''} ${isOpen ? '▴' : '▾'}`}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+              {openGroup && (
+                <View style={{ backgroundColor: colors.cardDeep, borderRadius: 16, padding: 18, marginTop: 8, flexDirection: 'row', flexWrap: 'wrap' }}>
+                  {openGroup.skills.map((x) => <Chip key={x} label={label(x)} on={selected.includes(x)} onPress={() => toggle(x)} />)}
+                </View>
+              )}
+            </>
+          ) : null}
+        </Panel>
+
+        <Panel style={{ marginTop: 20, padding: 36 }}>
+          <PartHead n={3} title="How confident are you?" />
+          <Grid cols={3} gap={16}>
+            {LEVELS.map((l) => (
+              <Pressable key={l.value} accessibilityRole="radio" accessibilityState={{ selected: level === l.value }}
+                         aria-checked={level === l.value} onPress={() => setLevel(l.value)}
+                         style={[styles.card, { borderWidth: 2, marginBottom: 0, flexGrow: 1, backgroundColor: colors.bg },
+                                 level === l.value && { borderColor: colors.primary, backgroundColor: colors.accent }]}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Ionicons name={level === l.value ? 'radio-button-on' : 'radio-button-off'} size={22} color={colors.primary} style={{ marginRight: 8 }} />
+                  <Text style={[styles.h2, { marginBottom: 0 }]}>{l.label}</Text>
+                </View>
+                <Body muted style={{ marginBottom: 0 }}>{l.detail}</Body>
+              </Pressable>
+            ))}
+          </Grid>
+        </Panel>
+
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 24 }}>
+          <View style={{ flex: 1, paddingRight: 24, alignItems: 'flex-end' }}>
+            <ErrorText error={error} />
+            {selected.length === 0 && <Body muted style={{ marginBottom: 0 }}>Tip: add at least one skill so SkillPath can make a suggestion.</Body>}
+          </View>
+          <View style={{ width: 420 }}>
+            <Button label={busy ? 'Saving…' : 'Find my next skill'} icon="arrow-forward" onPress={save} disabled={!level || busy} />
+          </View>
+        </View>
+      </Screen>
+    );
+  }
+
   return (
     <Screen>
-      <Columns sticky={false} main={<>
       {onCancel ? (
         <Pressable accessibilityRole="button" accessibilityLabel="Back" onPress={onCancel}
                    style={{ flexDirection: 'row', alignItems: 'center', minHeight: 44, alignSelf: 'flex-start' }}>
@@ -137,7 +272,6 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
           </View>
         )}
       </Card>
-      </>} side={<>
 
       <SectionLabel>Add or remove skills</SectionLabel>
       <TextInput
@@ -218,7 +352,17 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
       <ErrorText error={error} />
       <Button label={busy ? 'Saving…' : 'Find my next skill'} icon="arrow-forward" onPress={save} disabled={!level || busy} />
       {selected.length === 0 && <Body muted>Tip: add at least one skill so SkillPath can make a suggestion.</Body>}
-      </>} />
     </Screen>
+  );
+}
+
+/** Wide screens: a numbered part heading ("01 Start with your CV"). */
+function PartHead({ n, title, right }: { n: number; title: string; right?: string }) {
+  return (
+    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 18 }}>
+      <Text style={{ fontFamily: fonts.display, fontSize: 44, lineHeight: 44, color: colors.line, paddingTop: 4, marginRight: 16 }}>{String(n).padStart(2, '0')}</Text>
+      <Text style={[styles.h2, { fontSize: 32, lineHeight: 34, marginBottom: 0, flex: 1 }]}>{title}</Text>
+      {right ? <Text style={[styles.sectionLabel, { fontSize: 13 }]}>{right}</Text> : null}
+    </View>
   );
 }

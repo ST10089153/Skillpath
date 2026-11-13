@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 
 import { api, API_URL } from '../api';
 import { DEMO } from '../demo';
-import { Body, Button, Card, Columns, DISCLAIMER, ErrorText, Screen, Title, colors, styles } from '../ui';
+import { Body, Button, Card, DISCLAIMER, ErrorText, Grid, Screen, Title, colors, styles, useWide } from '../ui';
 
 const RULE = 'Reminders come only while a pathway is open (a recommendation, "Not now" or an unfinished pathway), '
   + 'after two days without activity, at most once a day, and stop after three unopened until you return.';
@@ -12,6 +12,7 @@ const RULE = 'Reminders come only while a pathway is open (a recommendation, "No
 export default function Settings({ userId, onDeleted, onEditProfile, onCheckNudge }: {
   userId: string; onDeleted: () => void; onEditProfile: () => void; onCheckNudge: () => Promise<boolean>;
 }) {
+  const wide = useWide();
   const [arm, setArm] = useState<'A' | 'B' | ''>('');
   const [demoNote, setDemoNote] = useState('');
   useEffect(() => {
@@ -68,10 +69,70 @@ export default function Settings({ userId, onDeleted, onEditProfile, onCheckNudg
     }
   }
 
+  const deleteControls = !confirming ? (
+    <Button label="Delete my data" icon="trash-outline" variant="danger" onPress={() => setConfirming(true)} />
+  ) : (
+    <>
+      <Body style={{ fontFamily: 'Outfit_600SemiBold' }}>Are you sure? This cannot be undone.</Body>
+      <Button label="Yes, delete everything" variant="danger" onPress={del} />
+      <Button label="Cancel" variant="secondary" onPress={() => setConfirming(false)} />
+    </>
+  );
+
+  if (wide) {
+    return (
+      <Screen>
+        <Title>Settings</Title>
+        <ErrorText error={error} />
+        <Section title="Your ID" text="This random ID is the only thing that links your data. No name, email or phone number is stored.">
+          <Text style={[styles.title, { fontSize: 56, lineHeight: 56 }]} selectable>{userId}</Text>
+        </Section>
+        <Section title="Your skills" text="Change the skills SkillPath starts from. Your next recommendation is worked out again.">
+          <View style={{ maxWidth: 420 }}>
+            <Button label="Edit my skills" icon="create-outline" variant="tonal" onPress={onEditProfile} />
+          </View>
+        </Section>
+        <Section title="Your data" text="See everything SkillPath stores about you, exactly as it is saved.">
+          <View style={{ maxWidth: 420 }}>
+            <Button label={data ? 'Refresh my data' : 'View my data'} icon="eye-outline" variant="tonal" onPress={view} />
+          </View>
+          {data !== '' && (
+            <Card style={{ marginTop: 10 }}><Text style={{ fontFamily: 'monospace', fontSize: 13, color: colors.text }} selectable>{data}</Text></Card>
+          )}
+        </Section>
+        <Section title="Delete my data" text="This permanently removes your profile, pathway and activity records from SkillPath." danger>
+          <View style={{ maxWidth: 420 }}>{deleteControls}</View>
+        </Section>
+        {DEMO ? (
+          <Section title="For markers" text="Demo-only tools to see two behaviours described in the report without waiting days.">
+            <Text style={[styles.numeric, { fontSize: 13, color: colors.faint, marginBottom: 6 }]}>
+              {`INCOME VERSION (DD9) · NOW ${arm === 'A' ? 'A, INCOME SHOWN' : arm === 'B' ? 'B, INCOME HIDDEN' : '…'}`}
+            </Text>
+            <Grid cols={2} gap={12}>
+              <Button label="Use version A (income shown)" variant={arm === 'A' ? 'secondary' : 'tonal'} icon="cash-outline"
+                      onPress={() => switchArm('A')} />
+              <Button label="Use version B (income hidden)" variant={arm === 'B' ? 'secondary' : 'tonal'} icon="eye-off-outline"
+                      onPress={() => switchArm('B')} />
+            </Grid>
+            <Text style={[styles.numeric, { fontSize: 13, color: colors.faint, marginTop: 18, marginBottom: 6 }]}>REMINDERS (DD7)</Text>
+            <Grid cols={2} gap={12}>
+              <Button label="Simulate two days without activity" variant="tonal" icon="time-outline" onPress={simulateInactive} />
+              <Button label="Check for a reminder again today" variant="tonal" icon="refresh" onPress={checkAgain} />
+            </Grid>
+            {demoNote !== '' && <View style={[styles.banner, { marginTop: 12, marginBottom: 0 }]}><Body style={{ marginBottom: 0 }}>{demoNote}</Body></View>}
+          </Section>
+        ) : null}
+        <Section title="About" text="SkillPath is a research prototype for an Honours study at The Independent Institute of Education.">
+          <Body muted>{DISCLAIMER}</Body>
+          <Text style={styles.small}>Server: {API_URL}</Text>
+        </Section>
+      </Screen>
+    );
+  }
+
   return (
     <Screen>
       <Title>Settings</Title>
-      <Columns main={<>
       <Card>
         <Text style={styles.h2}>Your ID</Text>
         <Body>{userId}</Body>
@@ -90,18 +151,9 @@ export default function Settings({ userId, onDeleted, onEditProfile, onCheckNudg
           <Text style={[styles.h2, { marginBottom: 0 }]}>Delete my data</Text>
         </View>
         <Body>This permanently removes your profile, pathway and activity records from SkillPath.</Body>
-        {!confirming ? (
-          <Button label="Delete my data" icon="trash-outline" variant="danger" onPress={() => setConfirming(true)} />
-        ) : (
-          <>
-            <Body style={{ fontFamily: 'Outfit_600SemiBold' }}>Are you sure? This cannot be undone.</Body>
-            <Button label="Yes, delete everything" variant="danger" onPress={del} />
-            <Button label="Cancel" variant="secondary" onPress={() => setConfirming(false)} />
-          </>
-        )}
+        {deleteControls}
       </Card>
       <ErrorText error={error} />
-      </>} side={<>
 
       {DEMO ? (
         <Card>
@@ -127,7 +179,22 @@ export default function Settings({ userId, onDeleted, onEditProfile, onCheckNudg
         <Body muted>{DISCLAIMER}</Body>
         <Text style={styles.small}>Server: {API_URL}</Text>
       </Card>
-      </>} />
     </Screen>
+  );
+}
+
+/** Wide screens: one settings section, its title and explanation on the left and its controls on the right. */
+function Section({ title, text, danger, children }: { title: string; text: string; danger?: boolean; children: React.ReactNode }) {
+  return (
+    <View style={{ flexDirection: 'row', alignItems: 'flex-start', borderTopWidth: 1, borderTopColor: colors.hairline, paddingVertical: 30 }}>
+      <View style={{ width: 380, paddingRight: 48 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 6 }}>
+          {danger ? <Ionicons name="trash-outline" size={22} color={colors.danger} style={{ marginRight: 8 }} /> : null}
+          <Text style={[styles.h2, { fontSize: 32, lineHeight: 34, marginBottom: 0 }]}>{title}</Text>
+        </View>
+        <Body muted style={{ marginBottom: 0 }}>{text}</Body>
+      </View>
+      <View style={{ flex: 1, minWidth: 0 }}>{children}</View>
+    </View>
   );
 }

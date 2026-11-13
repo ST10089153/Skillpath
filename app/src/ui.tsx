@@ -115,19 +115,48 @@ export function Screen({ children }: { children: ReactNode }) {
   );
 }
 
-/**
- * Two columns on wide screens: the main column and a narrower side column (optionally sticky while the page
- * scrolls). On phones the two are simply stacked, main first.
- */
-export function Columns({ main, side, sticky }: { main: ReactNode; side: ReactNode; sticky?: boolean }) {
-  const wide = useWide();
-  if (!wide) return <>{main}{side}</>;
+// ---- Desktop building blocks (wide screens only; phones never render these) ----
+
+/** A raised panel with an optional label row: the unit desktop screens are composed from. */
+export function Panel({ label, right, children, style }: { label?: string; right?: string; children: ReactNode; style?: object }) {
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-      <View style={{ flex: 3, minWidth: 0 }}>{main}</View>
-      <View style={{ width: 64 }} />
-      <View style={[{ flex: 2, minWidth: 0 }, sticky && WEB ? ({ position: 'sticky', top: 8 } as object) : null]}>{side}</View>
+    <View style={[styles.panel, style]}>
+      {label ? (
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 14 }}>
+          <Text style={[styles.sectionLabel, { fontSize: 13 }]}>{label}</Text>
+          {right ? <Text style={[styles.sectionLabel, { fontSize: 13 }]}>{right}</Text> : null}
+        </View>
+      ) : null}
+      {children}
     </View>
+  );
+}
+
+/** Equal-width columns with a gap; cells in a row share one height. */
+export function Grid({ cols, gap = 20, children, style }: { cols: number; gap?: number; children: ReactNode; style?: object }) {
+  const items = React.Children.toArray(children).filter(Boolean);
+  const rows: ReactNode[][] = [];
+  for (let i = 0; i < items.length; i += cols) rows.push(items.slice(i, i + cols));
+  return (
+    <View style={style}>
+      {rows.map((row, r) => (
+        <View key={r} style={{ flexDirection: 'row', alignItems: 'stretch', marginTop: r ? gap : 0 }}>
+          {Array.from({ length: cols }, (_, c) => (
+            <View key={c} style={{ flex: 1, minWidth: 0, marginLeft: c ? gap : 0 }}>{row[c] ?? null}</View>
+          ))}
+        </View>
+      ))}
+    </View>
+  );
+}
+
+/** A number tile: small label, big display figure, one line under it. */
+export function Stat({ label, value, sub, color = colors.text }: { label: string; value: string; sub?: string; color?: string }) {
+  return (
+    <Panel label={label}>
+      <Text style={{ fontFamily: fonts.display, fontSize: 52, lineHeight: 52, color, paddingTop: 4, letterSpacing: 0.5 }}>{value}</Text>
+      {sub ? <Text style={[styles.body, styles.bodyWide, { color: colors.muted, marginBottom: 0, marginTop: 6 }]}>{sub}</Text> : null}
+    </Panel>
   );
 }
 
@@ -333,6 +362,7 @@ export const styles = StyleSheet.create({
   bodyWide: { fontSize: 17, lineHeight: 27 },
   small: { fontSize: 13, lineHeight: 19, color: colors.faint, fontFamily: fonts.regular },
   numeric: { fontFamily: fonts.mono, fontVariant: ['tabular-nums'], letterSpacing: 1.2, textTransform: 'uppercase' },
+  panel: { flexGrow: 1, backgroundColor: colors.card, borderRadius: 22, padding: 28, borderWidth: 1, borderColor: colors.border },
   cardInner: { backgroundColor: colors.card, borderRadius: 22, padding: 20, borderWidth: 1, borderColor: colors.border },
   card: { backgroundColor: colors.card, borderRadius: 22, padding: 20, marginBottom: 16, borderWidth: 1, borderColor: colors.border },
   hero: { paddingTop: 12, paddingBottom: 8, marginBottom: 8 },
