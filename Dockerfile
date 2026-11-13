@@ -20,7 +20,7 @@ COPY skillpath/ skillpath/
 COPY api/ api/
 COPY data/ data/
 COPY deploy/ deploy/
-RUN python -c "from skillpath.cv import CVSkillExtractor; CVSkillExtractor()"
+RUN python -c "from skillpath.cv import FastEmbedder; FastEmbedder()"
 COPY --from=web /app/dist web/
 
 # One thread and small batches keep the CV reader within a 512 MB free instance (same model, same scores).
