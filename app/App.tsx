@@ -6,7 +6,8 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useRef, useState } from 'react';
 import { AppState, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { api } from './src/api';
+import { api, onUserMissing } from './src/api';
+import { RESET_NOTICE } from './src/demo';
 import Home from './src/screens/Home';
 import NextSkill from './src/screens/NextSkill';
 import Pathway from './src/screens/Pathway';
@@ -36,7 +37,10 @@ export default function App() {
   const [tab, setTab] = useState<Tab>('home');
   const [nudge, setNudge] = useState('');
   const [refreshKey, setRefreshKey] = useState(0);
+  const [notice, setNotice] = useState(''); // why the app started again (shown on Welcome)
   const appState = useRef(AppState.currentState);
+  const userRef = useRef<string | null>(null);
+  useEffect(() => { userRef.current = userId; }, [userId]);
 
   // Web: tell the browser the page is dark (form controls, scrollbars) and colour its UI to match.
   useEffect(() => {
@@ -56,12 +60,23 @@ export default function App() {
         try {
           await api.myData(id);
         } catch (e) {
-          if ((e as Error).message === 'User not found') { await AsyncStorage.removeItem(USER_KEY); id = null; }
+          if ((e as Error).message === 'User not found') {
+            try { await AsyncStorage.removeItem(USER_KEY); } catch { /* ignore */ }
+            id = null;
+            setNotice(RESET_NOTICE);
+          }
         }
       }
       setUserId(id);
       setReady(true);
     })();
+  }, []);
+
+  // The server can forget an ID while the app is open (the hosted demo empties its database when it restarts):
+  // any "User not found" for the current ID takes the user back to the start with a short explanation.
+  useEffect(() => {
+    onUserMissing((id) => { if (id === userRef.current) forget(RESET_NOTICE); });
+    return () => onUserMissing(null);
   }, []);
 
   // Nudge check, shared with the demo's marker tools. Returns whether a reminder was shown.
@@ -93,17 +108,23 @@ export default function App() {
 
   async function onCreated(id: string) {
     try { await AsyncStorage.setItem(USER_KEY, id); } catch { /* storage unavailable: session only */ }
+    setNotice('');
     setUserId(id);
     setEditingProfile(true);
   }
 
-  async function onDeleted() {
+  // Back to the Welcome screen without an ID; `why` is shown there (empty after "Delete my data").
+  async function forget(why: string) {
+    userRef.current = null; // later failures for the old ID are ignored
     try { await AsyncStorage.removeItem(USER_KEY); } catch { /* ignore */ }
     setUserId(null);
     setTab('home');
     setEditingProfile(false);
     setNudge('');
+    setNotice(why);
   }
+
+  const onDeleted = () => forget('');
 
   function go(t: Tab) {
     setEditingProfile(false);
@@ -113,7 +134,7 @@ export default function App() {
 
   let content: React.ReactNode;
   if (!ready) content = <Loading />;
-  else if (!userId) content = <Welcome onDone={onCreated} />;
+  else if (!userId) content = <Welcome onDone={onCreated} notice={notice} />;
   else if (editingProfile) content = <Profile userId={userId} onDone={() => go('next')} onCancel={() => go(tab)} />;
   else if (tab === 'home') content = <Home key={refreshKey} userId={userId} go={go} onEditProfile={() => setEditingProfile(true)} />;
   else if (tab === 'next') content = <NextSkill key={refreshKey} userId={userId} onAdopted={() => go('pathway')} onEditProfile={() => setEditingProfile(true)} />;

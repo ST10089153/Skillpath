@@ -3,9 +3,9 @@ import { Text, View } from 'react-native';
 
 import { api } from '../api';
 import { DEMO, DEMO_PRIVACY } from '../demo';
-import { Body, Button, Checkbox, DISCLAIMER, ErrorText, Hero, Screen, SectionLabel, colors } from '../ui';
+import { Body, Button, Checkbox, DISCLAIMER, ErrorText, Hero, Screen, SectionLabel, colors, styles } from '../ui';
 
-export default function Welcome({ onDone }: { onDone: (userId: string) => void }) {
+export default function Welcome({ onDone, notice = '' }: { onDone: (userId: string) => void; notice?: string }) {
   const [consent, setConsent] = useState(false);
   const [adult, setAdult] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -26,6 +26,11 @@ export default function Welcome({ onDone }: { onDone: (userId: string) => void }
 
   return (
     <Screen>
+      {notice !== '' && (
+        <View style={[styles.banner, { marginTop: 4 }]} accessibilityRole="alert">
+          <Body style={{ marginBottom: 0 }}>{notice}</Body>
+        </View>
+      )}
       <Hero eyebrow="RESEARCH PROTOTYPE" title="Find your next skill">
         <Text style={{ color: colors.muted, fontSize: 16, lineHeight: 23 }}>
         SkillPath looks at the skills you already have (you can upload your CV or pick them yourself),

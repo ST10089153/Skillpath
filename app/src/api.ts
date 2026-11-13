@@ -87,6 +87,11 @@ export interface ModuleLibrary {
   skills: Record<string, ModuleContent[]>;
 }
 
+// Told when the server no longer knows a user ID (data deleted, or the hosted demo's server restarted), so the app
+// can start again instead of showing "User not found" on every screen.
+let userMissing: ((id: string) => void) | null = null;
+export function onUserMissing(fn: ((id: string) => void) | null) { userMissing = fn; }
+
 async function call<T>(method: string, path: string, body?: unknown): Promise<T> {
   const res = await fetch(`${API_URL}${path}`, {
     method,
@@ -96,6 +101,8 @@ async function call<T>(method: string, path: string, body?: unknown): Promise<T>
   const data = await res.json().catch(() => ({}));
   if (!res.ok) {
     const detail = typeof data?.detail === 'string' ? data.detail : `Request failed (${res.status})`;
+    const user = path.match(/^\/users\/([^/?]+)/);
+    if (res.status === 404 && detail === 'User not found' && user) userMissing?.(decodeURIComponent(user[1]));
     throw new Error(detail);
   }
   return data as T;
