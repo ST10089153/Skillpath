@@ -3,11 +3,12 @@ import { Text, View } from 'react-native';
 
 import { api, Recommendation, SkillInfo } from '../api';
 import { Branches, ofoCode } from '../route';
-import { Body, Button, ErrorText, Hero, Loading, Screen, SectionLabel, TextLink, TicketRow, colors, styles } from '../ui';
+import { Body, Button, Columns, ErrorText, Hero, Loading, Screen, SectionLabel, TextLink, TicketRow, colors, styles, useWide } from '../ui';
 
 export default function NextSkill({ userId, onAdopted, onEditProfile }: {
   userId: string; onAdopted: () => void; onEditProfile: () => void;
 }) {
+  const wide = useWide();
   const [rec, setRec] = useState<Recommendation | null>(null);
   const [info, setInfo] = useState<SkillInfo | null>(null);
   const [labels, setLabels] = useState<Record<string, string>>({});
@@ -64,29 +65,32 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
     source: o.source ? `Source: ${o.source}` : 'Source: not recorded',
   }));
 
-  return (
-    <Screen>
-      <Hero eyebrow="YOUR NEXT SKILL · RECOMMENDED FOR YOU" title={name}>
-        {info?.description ? <Body muted>{info.description}</Body> : null}
-      </Hero>
-
-      <View style={{ borderTopWidth: 1, borderTopColor: colors.hairline, marginBottom: 6 }}>
-        {info?.category ? <TicketRow label="Category" value={info.category} /> : null}
-        <TicketRow label="Steps" value="6 short steps · 5 to 10 min each · free resources" />
-        {info?.how_to_show ? <TicketRow label="Show it by" value={info.how_to_show} /> : null}
-        {info?.demand_evidence ? <TicketRow label="Demand" value={info.demand_evidence} /> : null}
-        {rec.income_displayed !== '' ? <TicketRow label="Income" value={rec.income_displayed} /> : null}
-      </View>
-
+  const facts = (
+    <View style={{ borderTopWidth: 1, borderTopColor: colors.hairline, marginBottom: 6 }}>
+      {info?.category ? <TicketRow label="Category" value={info.category} /> : null}
+      <TicketRow label="Steps" value="6 short steps · 5 to 10 min each · free resources" />
+      {info?.how_to_show ? <TicketRow label="Show it by" value={info.how_to_show} /> : null}
+      {info?.demand_evidence ? <TicketRow label="Demand" value={info.demand_evidence} /> : null}
+      {rec.income_displayed !== '' ? <TicketRow label="Income" value={rec.income_displayed} /> : null}
+    </View>
+  );
+  const missing = (
+    <>
       <SectionLabel right={`${branches.length} nearest jobs`}>What's missing?</SectionLabel>
       <Text style={[styles.numeric, { fontSize: 12, color: colors.faint, marginBottom: 4 }]}>
         {`THIS SKILL LEADS TO ${branches.length === 1 ? 'THIS JOB' : 'THESE JOBS'}`}
       </Text>
       <Branches branches={branches} />
-
+    </>
+  );
+  const why = (
+    <>
       <SectionLabel>Why this skill?</SectionLabel>
       <Body>{rec.explanation}</Body>
-
+    </>
+  );
+  const actions = (
+    <>
       <ErrorText error={error} />
       {note !== '' && <View style={styles.banner}><Body style={{ marginBottom: 0 }}>{note}</Body></View>}
       <View style={{ marginTop: 8 }}>
@@ -108,6 +112,17 @@ export default function NextSkill({ userId, onAdopted, onEditProfile }: {
         </View>
         <TextLink label="Edit my skills" onPress={onEditProfile} />
       </View>
+    </>
+  );
+
+  return (
+    <Screen>
+      <Hero eyebrow="YOUR NEXT SKILL · RECOMMENDED FOR YOU" title={name}>
+        {info?.description ? <Body muted style={wide ? { fontSize: 20, lineHeight: 30 } : undefined}>{info.description}</Body> : null}
+      </Hero>
+      {wide
+        ? <Columns main={<>{facts}{why}{actions}</>} side={missing} />
+        : <>{facts}{missing}{why}{actions}</>}
     </Screen>
   );
 }

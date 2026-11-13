@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Pressable, Text, TextInput, View } from 'react-native';
 
 import { api, Competency, DetectedSkill } from '../api';
-import { Body, Button, Card, ErrorText, Loading, Screen, SectionLabel, Title, colors, styles } from '../ui';
+import { Body, Button, Card, Columns, ErrorText, Loading, Screen, SectionLabel, Title, colors, styles } from '../ui';
 
 const LEVELS: { value: Competency; label: string; detail: string }[] = [
   { value: 'limited', label: 'Just starting', detail: "I'm new to most of this and have had little chance to use these skills." },
@@ -96,6 +96,7 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
 
   return (
     <Screen>
+      <Columns sticky={false} main={<>
       {onCancel ? (
         <Pressable accessibilityRole="button" accessibilityLabel="Back" onPress={onCancel}
                    style={{ flexDirection: 'row', alignItems: 'center', minHeight: 44, alignSelf: 'flex-start' }}>
@@ -136,6 +137,7 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
           </View>
         )}
       </Card>
+      </>} side={<>
 
       <SectionLabel>Add or remove skills</SectionLabel>
       <TextInput
@@ -216,6 +218,7 @@ export default function Profile({ userId, onDone, onCancel }: { userId: string; 
       <ErrorText error={error} />
       <Button label={busy ? 'Saving…' : 'Find my next skill'} icon="arrow-forward" onPress={save} disabled={!level || busy} />
       {selected.length === 0 && <Body muted>Tip: add at least one skill so SkillPath can make a suggestion.</Body>}
+      </>} />
     </Screen>
   );
 }

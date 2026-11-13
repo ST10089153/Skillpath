@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 
 import { api, moduleContent, ModuleLibrary, Progress, SkillInfo } from '../api';
 import { RouteStrip } from '../route';
-import { Body, Button, Eyebrow, Hero, Loading, Screen, SectionLabel, TextLink, colors, styles } from '../ui';
+import { Body, Button, Columns, Eyebrow, Hero, Loading, Screen, SectionLabel, TextLink, colors, styles } from '../ui';
 
 type Go = 'next' | 'pathway' | 'progress' | 'settings';
 
@@ -52,8 +52,8 @@ export default function Home({ userId, go, onEditProfile }: { userId: string; go
         <Hero eyebrow="No pathway yet" title="Find your next skill">
           <Body muted>SkillPath looks at the {skills.length} skills you have and finds the one skill that brings you closest to jobs near your profile.</Body>
         </Hero>
-        <Button label="See my next skill" onPress={() => go('next')} />
-        <SkillsList skills={skills} label={label} onEdit={onEditProfile} />
+        <Columns main={<Button label="See my next skill" onPress={() => go('next')} />}
+                 side={<SkillsList skills={skills} label={label} onEdit={onEditProfile} />} />
       </Screen>
     );
   }
@@ -72,6 +72,7 @@ export default function Home({ userId, go, onEditProfile }: { userId: string; go
         <Body muted>{`Your pathway: ${skillName}.`}</Body>
       </Hero>
 
+      <Columns main={<>
       <RouteStrip total={total} done={prog.modules_completed} here={here} interchanges={interchanges} />
 
       {nextInterchange ? (
@@ -89,8 +90,7 @@ export default function Home({ userId, go, onEditProfile }: { userId: string; go
       ) : (
         <Button label="See my progress" onPress={() => go('progress')} />
       )}
-
-      <SkillsList skills={skills} label={label} onEdit={onEditProfile} />
+      </>} side={<SkillsList skills={skills} label={label} onEdit={onEditProfile} />} />
     </Screen>
   );
 }

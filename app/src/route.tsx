@@ -165,6 +165,31 @@ export function Branches({ branches }: { branches: Branch[] }) {
 }
 
 /** "OFO 2021-251101" from a DHET source string, if present. */
+/** Milestones as a list of interchanges (wide screens): marker, name, and when it is or was reached. */
+export function MilestoneRows({ total, done, reached, per }: { total: number; done: number; reached: string[]; per: number }) {
+  const ends = Array.from({ length: Math.floor(total / per) }, (_, i) => (i + 1) * per);
+  return (
+    <View>
+      {ends.map((n) => {
+        const name = `MS${n / per}`;
+        const got = reached.includes(name);
+        const left = n - done;
+        return (
+          <View key={name} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 14 }}
+                accessibilityLabel={`${name} after step ${n}, ${got ? 'reached' : `${left} steps to go`}`}>
+            <View style={{ width: 34, height: 20, borderRadius: 10, borderWidth: 3, marginRight: 14,
+                           borderColor: got ? colors.text : colors.track, backgroundColor: got ? colors.line : colors.bg }} />
+            <Text style={[styles.h2, { fontSize: 24, lineHeight: 28, marginBottom: 0, marginRight: 12 }]}>{name}</Text>
+            <Text style={[styles.numeric, { fontSize: 12, color: got ? colors.primary : colors.faint, flex: 1 }]}>
+              {got ? `REACHED · AFTER STEP ${n}` : `AFTER STEP ${n} · ${left} ${left === 1 ? 'STEP' : 'STEPS'} TO GO`}
+            </Text>
+          </View>
+        );
+      })}
+    </View>
+  );
+}
+
 export function ofoCode(source: string | undefined): string {
   const m = /OFO\s*(\d{4}-\d{6})/.exec(source ?? '');
   return m ? `OFO ${m[1]}` : '';

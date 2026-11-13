@@ -8,7 +8,7 @@
 // Every text/background pair meets WCAG AA (lowest 7.5:1 for text); motion is minimal and skipped under reduce-motion.
 import { Ionicons } from '@expo/vector-icons';
 import React, { ReactNode, useEffect, useRef } from 'react';
-import { Animated, Easing, Platform, Pressable, ScrollView, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { Animated, Easing, Platform, Pressable, ScrollView, StyleSheet, Text, View, ViewStyle, useWindowDimensions } from 'react-native';
 
 import { PRISM, useReducedMotion } from './fx';
 
@@ -53,6 +53,13 @@ export const DISCLAIMER =
   'AI-generated suggestion based on published labour-market literature. Not professional career or financial advice.';
 
 export const TAB_BAR_HEIGHT = 64;
+
+// Wide screens (laptops, desktops, landscape tablets) get a wider page, two columns and larger type. Phones keep the
+// single 560 px column exactly as it is, so the report's phone screenshots stay accurate.
+export const WIDE_MIN = 960;
+export const CONTENT_MAX = 1180;
+export const WIDE_PAD = 48;
+export function useWide() { return useWindowDimensions().width >= WIDE_MIN; }
 
 const WEB = Platform.OS === 'web';
 const NATIVE_DRIVER = !WEB;
@@ -99,39 +106,62 @@ export function PressableScale({ children, style, onPress, disabled, ...a11y }: 
 }
 
 export function Screen({ children }: { children: ReactNode }) {
+  const wide = useWide();
   return (
-    <ScrollView style={styles.screen} contentContainerStyle={styles.screenContent} keyboardShouldPersistTaps="handled">
-      <View style={styles.inner}><FadeIn>{children}</FadeIn></View>
+    <ScrollView style={styles.screen} contentContainerStyle={[styles.screenContent, wide && styles.screenContentWide]}
+                keyboardShouldPersistTaps="handled">
+      <View style={[styles.inner, wide && styles.innerWide]}><FadeIn>{children}</FadeIn></View>
     </ScrollView>
+  );
+}
+
+/**
+ * Two columns on wide screens: the main column and a narrower side column (optionally sticky while the page
+ * scrolls). On phones the two are simply stacked, main first.
+ */
+export function Columns({ main, side, sticky }: { main: ReactNode; side: ReactNode; sticky?: boolean }) {
+  const wide = useWide();
+  if (!wide) return <>{main}{side}</>;
+  return (
+    <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+      <View style={{ flex: 3, minWidth: 0 }}>{main}</View>
+      <View style={{ width: 64 }} />
+      <View style={[{ flex: 2, minWidth: 0 }, sticky && WEB ? ({ position: 'sticky', top: 8 } as object) : null]}>{side}</View>
+    </View>
   );
 }
 
 /** Small mono readout above a headline, e.g. "Next stop". No decorative rule. */
 export function Eyebrow({ children, color = colors.muted }: { children: ReactNode; color?: string }) {
-  return <Text style={[styles.eyebrow, { color }]}>{children}</Text>;
+  const wide = useWide();
+  return <Text style={[styles.eyebrow, wide && { fontSize: 13 }, { color }]}>{children}</Text>;
 }
 
 export function Title({ children, sub }: { children: ReactNode; sub?: string }) {
+  const wide = useWide();
   return (
-    <View style={{ marginTop: 10, marginBottom: 20 }}>
-      <Text style={styles.title} accessibilityRole="header">{children}</Text>
-      {sub ? <Text style={[styles.body, { color: colors.muted, marginBottom: 0, marginTop: 6 }]}>{sub}</Text> : null}
+    <View style={{ marginTop: 10, marginBottom: wide ? 28 : 20 }}>
+      <Text style={[styles.title, wide && styles.titleWide]} accessibilityRole="header">{children}</Text>
+      {sub ? <Text style={[styles.body, wide && styles.bodyWide, { color: colors.muted, marginBottom: 0, marginTop: 6 }]}>{sub}</Text> : null}
     </View>
   );
 }
 
 /** Timetable-style section head: a full-width rule with a mono label under it. */
 export function SectionLabel({ children, right }: { children: ReactNode; right?: string }) {
+  const wide = useWide();
+  const label = [styles.sectionLabel, wide && { fontSize: 13 }];
   return (
     <View style={styles.sectionHead}>
-      <Text style={styles.sectionLabel}>{children}</Text>
-      {right ? <Text style={styles.sectionLabel}>{right}</Text> : null}
+      <Text style={label}>{children}</Text>
+      {right ? <Text style={label}>{right}</Text> : null}
     </View>
   );
 }
 
 export function Body({ children, muted, style }: { children: ReactNode; muted?: boolean; style?: object }) {
-  return <Text style={[styles.body, muted && { color: colors.muted }, style]}>{children}</Text>;
+  const wide = useWide();
+  return <Text style={[styles.body, wide && styles.bodyWide, muted && { color: colors.muted }, style]}>{children}</Text>;
 }
 
 /** A plain block with a thin border. Use sparingly: most content sits on the page between rules. */
@@ -143,10 +173,11 @@ export function Card({ children, style }: { children: ReactNode; style?: ViewSty
 export function Hero({ eyebrow, title, children }: {
   icon?: keyof typeof Ionicons.glyphMap; eyebrow?: string; title: string; children?: ReactNode;
 }) {
+  const wide = useWide();
   return (
-    <View style={styles.hero}>
+    <View style={[styles.hero, wide && { marginBottom: 20 }]}>
       {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
-      <Text style={styles.heroTitle} accessibilityRole="header">{title}</Text>
+      <Text style={[styles.heroTitle, wide && styles.heroTitleWide]} accessibilityRole="header">{title}</Text>
       {children}
     </View>
   );
@@ -274,10 +305,13 @@ export function Difficulty({ level }: { level: number }) {
 
 /** A label/value row in the mono face, like a line on a ticket. */
 export function TicketRow({ label, value, last }: { label: string; value: ReactNode; last?: boolean }) {
+  const wide = useWide();
   return (
-    <View style={[styles.ticketRow, last && { borderBottomWidth: 0 }]}>
-      <Text style={styles.ticketLabel}>{label}</Text>
-      <View style={{ flex: 1 }}>{typeof value === 'string' ? <Text style={styles.ticketValue}>{value}</Text> : value}</View>
+    <View style={[styles.ticketRow, wide && { paddingVertical: 14 }, last && { borderBottomWidth: 0 }]}>
+      <Text style={[styles.ticketLabel, wide && { width: 150, fontSize: 12, lineHeight: 24 }]}>{label}</Text>
+      <View style={{ flex: 1 }}>
+        {typeof value === 'string' ? <Text style={[styles.ticketValue, wide && { fontSize: 17, lineHeight: 26 }]}>{value}</Text> : value}
+      </View>
     </View>
   );
 }
@@ -285,14 +319,18 @@ export function TicketRow({ label, value, last }: { label: string; value: ReactN
 export const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg },
   screenContent: { padding: 20, paddingBottom: 40 },
+  screenContentWide: { paddingHorizontal: WIDE_PAD, paddingTop: 40, paddingBottom: 72 },
   inner: { width: '100%', maxWidth: 560, alignSelf: 'center' },
+  innerWide: { maxWidth: CONTENT_MAX },
   title: { fontSize: 46, lineHeight: 46, fontFamily: fonts.display, color: colors.text, letterSpacing: 0.6, paddingTop: 4, ...balance },
+  titleWide: { fontSize: 76, lineHeight: 74 },
   h2: { fontSize: 28, lineHeight: 30, fontFamily: fonts.display, color: colors.text, letterSpacing: 0.5, marginBottom: 6, paddingTop: 2, ...balance },
   eyebrow: { fontSize: 12, fontFamily: fonts.mono, letterSpacing: 2.4, textTransform: 'uppercase', marginBottom: 10 },
   sectionHead: { flexDirection: 'row', justifyContent: 'space-between', borderTopWidth: 1, borderTopColor: colors.hairline,
                  paddingTop: 10, marginTop: 22, marginBottom: 12 },
   sectionLabel: { fontSize: 12, fontFamily: fonts.mono, color: colors.muted, textTransform: 'uppercase', letterSpacing: 2.4 },
   body: { fontSize: 16, lineHeight: 25, color: colors.text, marginBottom: 8, fontFamily: fonts.regular },
+  bodyWide: { fontSize: 17, lineHeight: 27 },
   small: { fontSize: 13, lineHeight: 19, color: colors.faint, fontFamily: fonts.regular },
   numeric: { fontFamily: fonts.mono, fontVariant: ['tabular-nums'], letterSpacing: 1.2, textTransform: 'uppercase' },
   cardInner: { backgroundColor: colors.card, borderRadius: 22, padding: 20, borderWidth: 1, borderColor: colors.border },
@@ -300,6 +338,7 @@ export const styles = StyleSheet.create({
   hero: { paddingTop: 12, paddingBottom: 8, marginBottom: 8 },
   heroEyebrow: { color: colors.line, fontSize: 12, fontFamily: fonts.mono, letterSpacing: 2.4, textTransform: 'uppercase' },
   heroTitle: { color: colors.text, fontSize: 60, lineHeight: 58, fontFamily: fonts.display, marginBottom: 12, letterSpacing: 0.8, paddingTop: 6, ...balance },
+  heroTitleWide: { fontSize: 104, lineHeight: 98, marginBottom: 16, letterSpacing: 1 },
   bigNumber: { fontSize: 56, lineHeight: 56, fontFamily: fonts.display, color: colors.line, paddingTop: 4 },
   btn: { minHeight: 54, borderRadius: 999, paddingHorizontal: 24, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
   btnPrimary: { backgroundColor: colors.primary },

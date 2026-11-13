@@ -15,7 +15,7 @@ import Profile from './src/screens/Profile';
 import ProgressScreen from './src/screens/ProgressScreen';
 import Settings from './src/screens/Settings';
 import Welcome from './src/screens/Welcome';
-import { Body, Loading, TAB_BAR_HEIGHT, colors, focusVisible, fonts, styles as ui } from './src/ui';
+import { Body, CONTENT_MAX, Loading, TAB_BAR_HEIGHT, WIDE_PAD, colors, focusVisible, fonts, styles as ui, useWide } from './src/ui';
 
 const USER_KEY = 'skillpath.user_id';
 type Tab = 'home' | 'next' | 'pathway' | 'progress' | 'settings';
@@ -38,6 +38,7 @@ export default function App() {
   const [nudge, setNudge] = useState('');
   const [refreshKey, setRefreshKey] = useState(0);
   const [notice, setNotice] = useState(''); // why the app started again (shown on Welcome)
+  const wide = useWide();
   const appState = useRef(AppState.currentState);
   const userRef = useRef<string | null>(null);
   useEffect(() => { userRef.current = userId; }, [userId]);
@@ -143,39 +144,59 @@ export default function App() {
   else content = <Settings userId={userId} onDeleted={onDeleted} onEditProfile={() => setEditingProfile(true)} onCheckNudge={checkNudge} />;
 
   const signedIn = ready && !!userId;
+  // On wide screens the header, reminder and page share one width, and the tabs sit in the header.
+  const band = wide ? { width: '100%' as const, maxWidth: CONTENT_MAX + WIDE_PAD * 2, alignSelf: 'center' as const, paddingHorizontal: WIDE_PAD } : null;
 
   return (
     <View style={s.root}>
       <StatusBar style="light" />
       <View style={s.header}>
-        <Pressable accessibilityRole="button" accessibilityLabel="SkillPath home" disabled={!signedIn}
-                   onPress={() => go('home')} style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View style={s.logo} />
-          <Text style={s.brand}>SkillPath</Text>
-        </Pressable>
-        {signedIn && tab !== 'home' && !editingProfile ? (
-          <Pressable accessibilityRole="button" accessibilityLabel="Go to home" onPress={() => go('home')}
-                     style={(st) => [s.headerBtn, focusVisible(st)]}>
-            <Ionicons name="home-outline" size={20} color={colors.text} />
+        <View style={[s.headerInner, band]}>
+          <Pressable accessibilityRole="button" accessibilityLabel="SkillPath home" disabled={!signedIn}
+                     onPress={() => go('home')} style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={s.logo} />
+            <Text style={s.brand}>SkillPath</Text>
           </Pressable>
-        ) : null}
+          {signedIn && wide ? (
+            <View style={{ flexDirection: 'row', alignItems: 'center' }} accessibilityRole="tablist">
+              {TABS.map((t) => {
+                const on = tab === t.key && !editingProfile;
+                return (
+                  <Pressable key={t.key} accessibilityRole="tab" accessibilityState={{ selected: on }} aria-selected={on}
+                             accessibilityLabel={t.label} onPress={() => go(t.key)}
+                             style={(st) => [s.topTab, on && s.topTabOn, focusVisible(st)]}>
+                    <Ionicons name={on ? t.iconOn : t.icon} size={18} color={on ? colors.line : colors.faint} style={{ marginRight: 8 }} />
+                    <Text style={[s.topTabText, on && { color: colors.text }]}>{t.label}</Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          ) : signedIn && tab !== 'home' && !editingProfile ? (
+            <Pressable accessibilityRole="button" accessibilityLabel="Go to home" onPress={() => go('home')}
+                       style={(st) => [s.headerBtn, focusVisible(st)]}>
+              <Ionicons name="home-outline" size={20} color={colors.text} />
+            </Pressable>
+          ) : null}
+        </View>
       </View>
       {nudge !== '' && userId && (
-        <Pressable
-          accessibilityRole="button"
-          accessibilityHint="Opens your pathway"
-          onPress={() => { api.event(userId, 'notification_opened'); setNudge(''); go('pathway'); }}
-          style={[ui.banner, { marginHorizontal: 16, marginTop: 10, marginBottom: 0, flexDirection: 'row', alignItems: 'center' }]}
-        >
-          <Ionicons name="notifications" size={20} color={colors.warnText} style={{ marginRight: 10 }} />
-          <View style={{ flex: 1 }}>
-            <Body style={{ marginBottom: 0, fontFamily: fonts.semibold }}>{nudge}</Body>
-            <Text style={ui.small}>Tap to continue</Text>
-          </View>
-        </Pressable>
+        <View style={[{ paddingHorizontal: 16, marginTop: 10 }, band, wide && { marginTop: 16 }]}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityHint="Opens your pathway"
+            onPress={() => { api.event(userId, 'notification_opened'); setNudge(''); go('pathway'); }}
+            style={[ui.banner, { marginBottom: 0, flexDirection: 'row', alignItems: 'center' }]}
+          >
+            <Ionicons name="notifications" size={20} color={colors.warnText} style={{ marginRight: 10 }} />
+            <View style={{ flex: 1 }}>
+              <Body style={{ marginBottom: 0, fontFamily: fonts.semibold }}>{nudge}</Body>
+              <Text style={ui.small}>Tap to continue</Text>
+            </View>
+          </Pressable>
+        </View>
       )}
       <View style={{ flex: 1 }}>{content}</View>
-      {signedIn && (
+      {signedIn && !wide && (
         <View style={s.tabs} accessibilityRole="tablist">
           {TABS.map((t) => {
             const on = tab === t.key && !editingProfile;
@@ -201,8 +222,12 @@ const s = StyleSheet.create({
           ...(Platform.OS === 'web' ? ({ height: '100dvh', overflow: 'hidden' } as object) : {}) },
   demo: { paddingHorizontal: 16, paddingVertical: 6, borderBottomWidth: 1, borderColor: colors.border, backgroundColor: colors.cardDeep },
   demoText: { fontSize: 12, color: colors.primary, fontFamily: fonts.mono, textAlign: 'center' },
-  header: { paddingHorizontal: 16, paddingVertical: 12, borderBottomWidth: 1, borderColor: colors.border,
-            flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  header: { borderBottomWidth: 1, borderColor: colors.border },
+  headerInner: { paddingHorizontal: 16, paddingVertical: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  topTab: { flexDirection: 'row', alignItems: 'center', height: 44, paddingHorizontal: 16, marginLeft: 6, borderRadius: 999,
+            borderWidth: 1, borderColor: 'transparent' },
+  topTabOn: { backgroundColor: colors.card, borderColor: colors.hairline },
+  topTabText: { fontSize: 15, color: colors.faint, fontFamily: fonts.semibold, letterSpacing: 0.3 },
   logo: { width: 30, height: 30, borderRadius: 15, borderWidth: 4, borderColor: colors.line, marginRight: 10 },
   brand: { fontSize: 30, lineHeight: 32, fontFamily: fonts.display, color: colors.text, letterSpacing: 1, paddingTop: 3 },
   headerBtn: { width: 44, height: 44, borderRadius: 4, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: colors.hairline },

@@ -2,12 +2,13 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Linking, Text, View } from 'react-native';
 
 import { api, moduleContent, ModuleLibrary, Progress, SkillInfo } from '../api';
-import { RouteStops, Stop } from '../route';
-import { Body, Button, Difficulty, ErrorText, Hero, Loading, Screen, colors, styles } from '../ui';
+import { MilestoneRows, RouteStops, Stop } from '../route';
+import { Body, Button, Columns, Difficulty, ErrorText, Hero, Loading, Screen, SectionLabel, colors, styles, useWide } from '../ui';
 
 const MODULES_PER_MILESTONE = 3; // mirrors skillpath/config.py (display only)
 
 export default function Pathway({ userId, onGoToNextSkill }: { userId: string; onGoToNextSkill: () => void }) {
+  const wide = useWide();
   const [prog, setProg] = useState<Progress | null>(null);
   const [lib, setLib] = useState<ModuleLibrary | null>(null);
   const [info, setInfo] = useState<SkillInfo | null>(null);
@@ -92,6 +93,7 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
           {`${prog.modules_completed} OF ${prog.total_modules} STEPS DONE · ABOUT ${prog.modules.reduce((t, m) => t + m.minutes, 0)} MIN IN TOTAL`}
         </Text>
       </Hero>
+      <Columns sticky main={<>
       {flash !== '' && <View style={styles.banner}><Body style={{ marginBottom: 0 }}>{flash}</Body></View>}
       <ErrorText error={error} />
       <View style={{ marginTop: 10 }}><RouteStops stops={stops} /></View>
@@ -100,6 +102,26 @@ export default function Pathway({ userId, onGoToNextSkill }: { userId: string; o
           <Body style={{ marginBottom: 0 }}>You've completed this pathway. Well done.</Body>
         </View>
       )}
+      </>} side={wide ? <PathwayGuide prog={prog} showIt={info?.how_to_show ?? ''} /> : null} />
     </Screen>
+  );
+}
+
+/** Wide screens only: what the pathway leads to, its milestones and how steps adapt, beside the six steps. */
+function PathwayGuide({ prog, showIt }: { prog: Progress; showIt: string }) {
+  return (
+    <View>
+      {showIt !== '' ? (
+        <>
+          <SectionLabel>Show it by</SectionLabel>
+          <Body>{showIt}</Body>
+        </>
+      ) : null}
+      <SectionLabel>Milestones</SectionLabel>
+      <MilestoneRows total={prog.total_modules} done={prog.modules_completed} reached={prog.milestones} per={MODULES_PER_MILESTONE} />
+      <SectionLabel>How steps adapt</SectionLabel>
+      <Body muted>Mark a step done when you finish it. If a step feels hard twice in a row, SkillPath adds an easier
+        one that builds the same skill. Each step is one level harder at most.</Body>
+    </View>
   );
 }

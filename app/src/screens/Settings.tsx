@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 
 import { api, API_URL } from '../api';
 import { DEMO } from '../demo';
-import { Body, Button, Card, DISCLAIMER, ErrorText, Screen, Title, colors, styles } from '../ui';
+import { Body, Button, Card, Columns, DISCLAIMER, ErrorText, Screen, Title, colors, styles } from '../ui';
 
 const RULE = 'Reminders come only while a pathway is open (a recommendation, "Not now" or an unfinished pathway), '
   + 'after two days without activity, at most once a day, and stop after three unopened until you return.';
@@ -71,6 +71,7 @@ export default function Settings({ userId, onDeleted, onEditProfile, onCheckNudg
   return (
     <Screen>
       <Title>Settings</Title>
+      <Columns main={<>
       <Card>
         <Text style={styles.h2}>Your ID</Text>
         <Body>{userId}</Body>
@@ -100,6 +101,7 @@ export default function Settings({ userId, onDeleted, onEditProfile, onCheckNudg
         )}
       </Card>
       <ErrorText error={error} />
+      </>} side={<>
 
       {DEMO ? (
         <Card>
@@ -125,6 +127,7 @@ export default function Settings({ userId, onDeleted, onEditProfile, onCheckNudg
         <Body muted>{DISCLAIMER}</Body>
         <Text style={styles.small}>Server: {API_URL}</Text>
       </Card>
+      </>} />
     </Screen>
   );
 }
