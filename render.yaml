@@ -1,0 +1,11 @@
+# Render Blueprint for the SkillPath demo (Dashboard > New > Blueprint, then pick this repository).
+services:
+  - type: web
+    name: skillpath-demo
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: SKILLPATH_DEMO
+        value: "1"

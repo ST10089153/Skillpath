@@ -111,10 +111,14 @@ class FastEmbedder:
     def __init__(self, model_name: str = C.CV_MODEL, cache_dir: str = os.path.join(ROOT, "models")):
         from fastembed import TextEmbedding
         self.model_name = model_name
-        self._model = TextEmbedding(model_name, cache_dir=cache_dir)
+        # Optional limits for small servers (the hosted demo sets both); unset locally, so research runs are unchanged.
+        threads = os.environ.get("SKILLPATH_CV_THREADS")
+        batch = os.environ.get("SKILLPATH_CV_BATCH")
+        self._embed_kw = {"batch_size": int(batch)} if batch else {}
+        self._model = TextEmbedding(model_name, cache_dir=cache_dir, **({"threads": int(threads)} if threads else {}))
 
     def __call__(self, texts: list[str]) -> np.ndarray:
-        v = np.array(list(self._model.embed(texts)), dtype=np.float32)
+        v = np.array(list(self._model.embed(texts, **self._embed_kw)), dtype=np.float32)
         return v / np.maximum(np.linalg.norm(v, axis=1, keepdims=True), 1e-12)
 
 

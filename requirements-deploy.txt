@@ -1,0 +1,7 @@
+# Runtime packages for the hosted demo only (no test, analysis or plotting packages).
+fastapi==0.142.2
+uvicorn==0.54.0
+pydantic>=2.0
+fastembed==0.8.1
+pypdf==6.19.0
+python-multipart==0.0.32

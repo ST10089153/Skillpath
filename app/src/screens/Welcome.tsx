@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 
 import { api } from '../api';
+import { DEMO, DEMO_PRIVACY } from '../demo';
 import { Body, Button, Checkbox, DISCLAIMER, ErrorText, Hero, Screen, SectionLabel, colors } from '../ui';
 
 export default function Welcome({ onDone }: { onDone: (userId: string) => void }) {
@@ -38,8 +39,10 @@ export default function Welcome({ onDone }: { onDone: (userId: string) => void }
         <Body>• A random ID (like U3F9A1C). We never ask for your name, email or phone number.</Body>
         <Body>• The skills you select, your self-rating, and your progress through the lessons.</Body>
         <Body>• If you upload a CV, it is read once by SkillPath's own built-in AI to suggest skills. It is never sent to outside AI services and is not saved.</Body>
-        <Body>• When you use the app (for example, finishing a lesson), so we can study how SkillPath works.</Body>
-        <Body>Your data stays on the research computer, and no tracking or analytics services are used. You can view or delete your data at any time in Settings.</Body>
+        <Body>{DEMO
+          ? '• What you do in the app (for example, finishing a lesson), so the demo works as it does in the study.'
+          : '• When you use the app (for example, finishing a lesson), so we can study how SkillPath works.'}</Body>
+        <Body>{DEMO ? DEMO_PRIVACY : 'Your data stays on the research computer, and no tracking or analytics services are used. You can view or delete your data at any time in Settings.'}</Body>
 
       <SectionLabel>Research prototype</SectionLabel>
         <Body>SkillPath is a prototype built for an Honours research study at The Independent Institute of Education. It may contain mistakes.</Body>
@@ -49,7 +52,7 @@ export default function Welcome({ onDone }: { onDone: (userId: string) => void }
       <Checkbox
         checked={consent}
         onChange={setConsent}
-        label="I understand what SkillPath stores and I agree to take part."
+        label={DEMO ? 'I understand what this demo stores.' : 'I understand what SkillPath stores and I agree to take part.'}
       />
       <Checkbox checked={adult} onChange={setAdult} label="I confirm that I am 18 years or older." />
       <ErrorText error={error} />

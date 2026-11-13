@@ -8,6 +8,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AppState, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { api } from './src/api';
+import { DEMO, DEMO_NOTICE } from './src/demo';
 import Home from './src/screens/Home';
 import NextSkill from './src/screens/NextSkill';
 import Pathway from './src/screens/Pathway';
@@ -132,6 +133,11 @@ export default function App() {
           </Pressable>
         ) : null}
       </View>
+      {DEMO ? (
+        <View style={s.demo} accessibilityRole="text">
+          <Text style={s.demoText}>{DEMO_NOTICE}</Text>
+        </View>
+      ) : null}
       {nudge !== '' && userId && (
         <Pressable
           accessibilityRole="button"
@@ -171,6 +177,8 @@ const s = StyleSheet.create({
   // Fill the dynamic viewport on web (100dvh avoids the iOS Safari jump) so the navigation stays pinned.
   root: { flex: 1, backgroundColor: colors.bg, paddingTop: Platform.OS === 'web' ? 0 : 36,
           ...(Platform.OS === 'web' ? ({ height: '100dvh', overflow: 'hidden' } as object) : {}) },
+  demo: { paddingHorizontal: 16, paddingVertical: 6, borderBottomWidth: 1, borderColor: colors.border, backgroundColor: colors.cardDeep },
+  demoText: { fontSize: 12, color: colors.primary, fontFamily: fonts.mono, textAlign: 'center' },
   header: { paddingHorizontal: 16, paddingVertical: 12, borderBottomWidth: 1, borderColor: colors.border,
             flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   logo: { width: 30, height: 30, borderRadius: 15, borderWidth: 4, borderColor: colors.line, marginRight: 10 },
