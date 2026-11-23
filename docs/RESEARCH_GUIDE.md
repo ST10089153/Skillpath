@@ -27,7 +27,7 @@ All commands run from the repository root.
 | `run_synthetic_tests.py`, `analyse_outputs.py`, `prepare_profiles.py` | Researcher-provided scripts. **Unmodified.** |
 | `templates/` | Researcher-provided CSV templates. |
 | `tests/` | pytest suite; `tests/fixtures/` holds tiny, obviously fake fixtures only. |
-| `DECISIONS.md`, `TRACEABILITY.md`, `AI_USE.md` | Design decision log, directive traceability, AI-use disclosure. |
+| `DECISIONS.md`, `TRACEABILITY.md` | Design decision log, directive traceability. |
 
 ## Setup
 

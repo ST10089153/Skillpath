@@ -12,3 +12,5 @@ app/dist/
 models/
 runs/*.zip
 samples/example_study/runs/*.zip
+.claude/
+app/.claude/

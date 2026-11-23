@@ -164,10 +164,8 @@ graduates move toward work. It was evaluated with researcher-built synthetic pro
 not real participants, so its results describe how the system behaves rather than how people respond to it.
 
 I set the research question and the ten design rules the system had to follow, wrote the specification, chose the
-data sources and designed the evaluation. The code was built with Claude Code as an AI pair programmer working
-from that specification, and I reviewed and logged each design decision along the way. What the assistant did is
-disclosed in [`AI_USE.md`](AI_USE.md), and the original specification is in
-[`CLAUDE_CODE_PROMPT.md`](CLAUDE_CODE_PROMPT.md).
+data sources and designed the evaluation. Each design decision, with the alternative I considered and why I
+rejected it, is logged in [`DECISIONS.md`](DECISIONS.md).
 
 <!-- TODO: add your name, LinkedIn and email here if you'd like employers to contact you from this page. -->
 

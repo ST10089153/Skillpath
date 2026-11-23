@@ -8,7 +8,7 @@
 > Section 4.3, "Median monthly earnings of employees" (printed page 64; PDF page 65), text paragraph and Table 4.14.
 
 ## How these figures were obtained
-Extracted by Claude Code (AI-assisted) from the text layer of the PDF on 2026-10-05. Only values that
+Extracted from the text layer of the PDF on 2026-10-05. Only values that
 appear as text in the report are included. Both-sexes values for Clerk and the lower groups appear only in
 the chart (Figure 4.30), not as text, so they are left blank. **Check every figure against the PDF before
 use.**
