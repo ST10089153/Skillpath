@@ -1,198 +1,177 @@
+<div align="center">
+
 # SkillPath
 
-Research prototype for an Honours Design Science Research study (REIT8419, The Independent Institute of
-Education). SkillPath reads a graduate's current skills, recommends the highest-leverage **next skill**
-through adjacency-first logic, and delivers a six-module micro-learning pathway with visible milestones.
+**Tells a graduate which one skill to learn next, shows why, and gets them started in six short steps.**
 
-Evaluation is by **controlled synthetic testing**: researcher-built synthetic profiles are fed to the engine by
-`run_synthetic_tests.py`, and the logged outputs are analysed by `analyse_outputs.py`. No real users take part.
+[![Live demo](https://img.shields.io/badge/live_demo-skillpath--demo.onrender.com-F2775E?style=for-the-badge)](https://skillpath-demo.onrender.com)
 
-> AI-generated suggestion based on published labour-market literature. Not professional career or financial advice.
+![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
+![React Native](https://img.shields.io/badge/React_Native-Expo-000020?logo=expo&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-105_passing-2EA44F?logo=pytest&logoColor=white)
+![License](https://img.shields.io/badge/license-AGPL--3.0-blue)
 
-## Repository layout
+<img src="docs/screenshots/wide_recommendation.png" alt="SkillPath recommending Machine learning & AI, with the three nearest jobs and the skills still missing for each" width="900">
 
-| Path | What it is |
+</div>
+
+## What it does
+
+A lot of new graduates in South Africa know they need "more skills" but can't tell which one is worth their next
+few weekends. SkillPath answers that with one recommendation instead of a list of fifty courses.
+
+1. **Read the CV.** You upload a CV (PDF, Word or text) and a small AI model running on SkillPath's own server picks
+   out the skills it finds, quoting the line in the CV each one came from. You untick anything that's wrong.
+2. **Pick the next skill.** The engine finds the three jobs closest to your current skill set, then picks the one
+   missing skill that moves you closest to all three at once. It shows its working: the jobs, how many of their
+   skills you already have, what's still missing, and the official source for every figure.
+3. **Learn it in six steps.** Each step takes 5 to 10 minutes and uses free resources. Difficulty rises as you
+   pass steps and eases off if you struggle twice in a row, there's a milestone every three steps, and a reminder
+   appears if you've been away for two days.
+
+**Try it:** [skillpath-demo.onrender.com](https://skillpath-demo.onrender.com). It's on a free plan, so the first
+visit can take about a minute to wake up. Use one of the fictional CVs in
+[`samples/example_study/cvs`](samples/example_study/cvs) if you'd like to test the CV reader.
+
+## Screens
+
+| Upload a CV | Your progress |
 |---|---|
-| `skillpath/` | The engine (pure, deterministic rules). `config.py` holds every design constant. |
-| `skillpath_adapter.py` | `SkillPathEngine` class imported by the harness (`--engine skillpath`). |
-| `skillpath/cv.py` | CV skill extraction with a locally hosted AI model (all-MiniLM-L6-v2 via fastembed). The model (~90 MB) downloads once into `models/` (git-ignored) on first use, then works offline. |
-| `api/` | FastAPI backend with SQLite event logging (Milestone 2). |
-| `app/` | Expo (React Native, TypeScript) mobile-first app (Milestone 3). |
-| `data/skill_map.csv` | Occupation-skill map (24 DHET occupations × 68 condensed skills) built by `scripts/build_skill_map.py`. Loaded if present. |
-| `data/skill_taxonomy.csv` | The condensed skill list: category, definition, how to show it, WEF demand cluster, evidencing ESCO labels, CV keywords. Edit this to change skills, then rebuild. |
-| `data/esco_occupation_skills.json`, `data/wef_skills_2025.csv` | Cached ESCO occupation skills and WEF Future of Jobs 2025 figures used by the build. |
-| `data/skill_descriptions.json` | Per-skill category, definition, how to show it and demand evidence (shown in the app). |
-| `data/skill_map.example.csv` | Four FAKE rows for development, used when `skill_map.csv` is absent. |
-| `data/modules.json` | Placeholder module content shown in the app. |
-| `data/income_reference_statssa.csv` | Stats SA 2024 median earnings by occupation group, for the researcher to review (see `data/INCOME_SOURCES.md`). Not read by code. |
-| `run_synthetic_tests.py`, `analyse_outputs.py`, `prepare_profiles.py` | Researcher-provided scripts. **Unmodified.** |
-| `templates/` | Researcher-provided CSV templates. |
-| `tests/` | pytest suite; `tests/fixtures/` holds tiny, obviously fake fixtures only. |
-| `DECISIONS.md`, `TRACEABILITY.md`, `AI_USE.md` | Design decision log, directive traceability, AI-use disclosure. |
+| <img src="docs/screenshots/wide_profile_cv.png" alt="Skills found in an uploaded CV, each with the CV phrase it came from" width="440"> | <img src="docs/screenshots/wide_home.png" alt="Home screen showing step 4 of 6 and milestones" width="440"> |
 
-## Setup
+On a phone it has its own layout, with bottom tabs:
 
-Requires Python 3.10+ (tested on 3.13) and, for the app, Node 18+ (tested on Node 24).
+<p>
+<img src="docs/screenshots/phone_recommendation.png" alt="Recommended skill on a phone" width="200">
+<img src="docs/screenshots/phone_transparency.png" alt="Nearest jobs and missing skills on a phone" width="200">
+<img src="docs/screenshots/phone_pathway.png" alt="Six-step pathway on a phone" width="200">
+<img src="docs/screenshots/phone_progress.png" alt="Milestones on a phone" width="200">
+</p>
+
+## How it works
+
+```mermaid
+flowchart LR
+    CV["CV upload<br/>(PDF, DOCX, TXT)"] --> X["CV reader<br/>MiniLM embeddings, on-server"]
+    X -->|proposed skills| U{{"User confirms<br/>or edits"}}
+    U --> E["Recommendation engine<br/>deterministic rules"]
+    M[("Skill map<br/>24 occupations × 68 skills")] --> E
+    E --> R["Next skill + explanation<br/>+ 3 alternatives"]
+    R --> P["Six-step pathway<br/>difficulty, milestones, nudges"]
+    P --> DB[("SQLite<br/>pseudonymous events")]
+```
+
+**The recommendation engine** ([`skillpath/engine.py`](skillpath/engine.py)) is plain rules, no machine learning.
+It scores how close you are to each occupation with Jaccard similarity (skills you share with the job, divided by
+all the skills either of you has), takes the three nearest, and tries every skill you don't have yet. Whichever
+skill raises the average similarity across those three jobs the most wins. I used exact fractions rather than
+floats, because two candidates that are mathematically tied can come out a hair apart in floating point, and then
+the alphabetical tie-break never gets a say. So the same profile gives the same answer every time, which the
+evaluation depends on.
+
+**The CV reader** ([`skillpath/cv.py`](skillpath/cv.py)) splits a CV into short phrases and compares each one with
+every skill's name and description using `all-MiniLM-L6-v2`, a small open-source sentence-embedding model run
+through ONNX. A skill is suggested when a phrase is close enough in meaning (cosine similarity of 0.55 or more) or
+names it outright. The model runs on SkillPath's own server, so a CV never goes to a third-party AI service, and
+the file isn't stored. It only ever suggests: the user confirms every skill before the engine sees it.
+
+**The skill map** is built by a script ([`scripts/build_skill_map.py`](scripts/build_skill_map.py)) from public
+sources, so every cell can be traced back:
+
+- occupations from the DHET 2024 National List of Occupations in High Demand,
+- each occupation's essential skills from the European ESCO API,
+- demand figures from the WEF *Future of Jobs Report 2025*,
+- earnings from Stats SA's *Labour Market Dynamics in South Africa, 2024*.
+
+## Engineering notes
+
+- **Testable by design.** The engine has no clock, randomness or network. A pytest suite covers the engine,
+  the API, the CV reader and an end-to-end run of the evaluation harness, and one test fails if the engine so much
+  as reads a field holding the expected answer.
+- **Reproducible results.** `run_evaluation.py` runs the whole evaluation and writes a replication package with
+  the git commit, package versions, engine constants and a SHA-256 hash of every file. It refuses to run on
+  uncommitted code. The results in the report come from the tagged build `v1.0-eval`.
+- **Built-in A/B test.** Users are split into two versions by the parity of a SHA-256 hash of their ID: one shows
+  estimated income for the recommended skill, the other doesn't. Income is only added after ranking, so it can
+  inform without steering the recommendation.
+- **Privacy (POPIA).** No names, emails or phone numbers. Users get a random ID, data lives in SQLite with no
+  third-party analytics, and *Delete my data* removes every row for that user.
+- **One container, free hosting.** A multi-stage [`Dockerfile`](Dockerfile) builds the Expo web app with Node,
+  then serves it and the API from one Python image with the AI model baked in. Running the model single-threaded
+  keeps memory around 250 MB, inside Render's 512 MB free tier. Every push to `main` redeploys.
+- **Responsive without breaking the phone layout.** From 960 px wide each screen switches to a desktop layout
+  that leads with the main task. The phone screens stay pixel-identical because the research report uses them as
+  figures.
+- **Every decision written down.** [`DECISIONS.md`](DECISIONS.md) logs 80+ design decisions with the alternative
+  considered and the reason. [`TRACEABILITY.md`](TRACEABILITY.md) maps each design rule to the code and the tests
+  that check it.
+
+## Tech stack
+
+| Layer | Tools |
+|---|---|
+| App | Expo (React Native + TypeScript), runs on web, Android and iOS |
+| API | FastAPI, Pydantic, SQLite |
+| Engine | Python 3.13, standard library only (`fractions` for exact arithmetic) |
+| CV reader | fastembed (ONNX Runtime), `all-MiniLM-L6-v2`, pypdf |
+| Evaluation | pandas, matplotlib, openpyxl |
+| Testing | pytest, httpx, Playwright for screenshots |
+| Deployment | Docker, Render Blueprint (`render.yaml`) |
+
+## Run it locally
+
+You'll need Python 3.10+ and Node 18+.
 
 ```bash
 python -m venv .venv
-.venv/Scripts/activate        # Windows (Git Bash: source .venv/Scripts/activate); macOS/Linux: source .venv/bin/activate
+.venv/Scripts/activate            # macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
+pytest                            # run the test suite
 ```
 
-## Run the tests
+Then start the API and the app (on Windows, `.\start.ps1` does both):
 
 ```bash
-pytest
+uvicorn api.main:app --port 8000
+cd app && npm install && npx expo start --web
 ```
 
-This runs the engine unit tests, the API tests, and an integration test that executes the real harness
-(`run_synthetic_tests.py ... --engine skillpath`) on the fake fixture and then `analyse_outputs.py` on its log.
+The CV model (about 90 MB) downloads once on first use and works offline after that.
 
-## Rebuilding the skill map
+## Repository map
 
-```bash
-python scripts/fetch_esco_occupations.py   # online, only when refreshing ESCO data
-python scripts/build_skill_map.py          # offline: rebuilds the map from data/skill_taxonomy.csv
-python scripts/make_skill_reference.py     # refreshes profiles/skill_reference.xlsx
-```
-
-Commit the outputs before any test run so `--app-version` identifies the exact data used.
-
-## Worked example and CV-reader accuracy
-
-`samples/example_study/` is a complete, watermarked **EXAMPLE** (not study data): 28 profiles covering the full
-design matrix and edge cases, one fictional CV per profile, expected skills, and a full example evaluation run.
-Use its CVs to try **Upload CV** in the app. To measure how well the CV reader finds skills:
-
-```bash
-python scripts/cv_accuracy.py samples/example_study/cvs
-```
-
-For a real study, build profiles with `profiles/profile_builder.xlsx` and CVs from
-`profiles/cv_template/CV_TEMPLATE.docx`, convert with `python scripts/profiles_from_builder.py`, then run the same
-accuracy command on `profiles/cvs` (with an `expected_skills.csv` written before running).
-
-## Evaluation run for Part 3 (recommended)
-
-One command runs the whole evaluation and stores a replication package:
-
-```bash
-python run_evaluation.py profiles.csv --label final
-```
-
-It runs `prepare_profiles.py`, `run_synthetic_tests.py --engine skillpath` and `analyse_outputs.py` (all
-unmodified) on copies of your inputs and writes `runs/EVAL<date-time>-final/` plus a `.zip` for export:
-
-| File | Use in Part 3 |
+| Path | What's in it |
 |---|---|
-| `PART3_RESULTS.md` | Section 5 tables: DSR criteria, A/B comparison, U2 by competency, discipline and goal, what SkillPath recommended |
-| `results/results.xlsx`, `results/fig_criteria.png`, `results/fig_match.png` | Tables and figures from `analyse_outputs.py` |
-| `test_output_log.csv` | Raw system outputs (annexure / supervisor) |
-| `profiles_ready.csv`, `inputs/` | Exact inputs, including acceptable sets fixed before testing |
-| `run_outputs_summary.csv` | Per-profile recommendation, category and WEF demand cluster |
-| `manifest.json` | Date, git commit, package versions, engine constants, commands, exit codes, SHA-256 of every file |
-| `code/`, `README_RUN.txt` | Code snapshot and the commands to reproduce the run |
+| [`skillpath/`](skillpath) | Recommendation engine, CV reader, A/B assignment, design constants |
+| [`api/`](api) | FastAPI backend and SQLite event log ([endpoint reference](docs/API.md)) |
+| [`app/`](app) | Expo app: screens in `app/src/screens`, shared components in `app/src/ui.tsx` |
+| [`data/`](data) | Skill map, skill taxonomy and the cached source data it's built from |
+| [`scripts/`](scripts) | Skill-map build, CV-reader accuracy check, simulated app users, screenshot capture |
+| [`tests/`](tests) | pytest suite with small, obviously fake fixtures |
+| [`deploy/`](deploy), `Dockerfile`, `render.yaml` | Hosted demo |
+| [`docs/RESEARCH_GUIDE.md`](docs/RESEARCH_GUIDE.md) | Running the evaluation, the data collection and the simulations |
+| [`docs/DEVELOPER_NOTES.md`](docs/DEVELOPER_NOTES.md) | What not to change and why |
 
-Commit your changes first: the run refuses to start with uncommitted code or data, so the build is traceable
-(`--allow-dirty` exists for trial runs only). If `prepare_profiles.py` reports problems the run stops; fix the
-sheet and rerun.
+## Background
 
-## App data collection (simulated users)
+SkillPath is the artefact for my Honours research project (REIT8419, The Independent Institute of Education),
+a Design Science Research study on whether adjacency-first recommendations and short, staged learning can help
+graduates move toward work. It was evaluated with researcher-built synthetic profiles and scripted simulated users,
+not real participants, so its results describe how the system behaves rather than how people respond to it.
 
-Operational app data is generated by scripted simulated users driving the real API over a simulated 21 days
-(7 behaviour personas x every profile x both logic versions), then analysed with the proposal's operational measures:
+I set the research question and the ten design rules the system had to follow, wrote the specification, chose the
+data sources and designed the evaluation. The code was built with Claude Code as an AI pair programmer working
+from that specification, and I reviewed and logged each design decision along the way. What the assistant did is
+disclosed in [`AI_USE.md`](AI_USE.md), and the original specification is in
+[`CLAUDE_CODE_PROMPT.md`](CLAUDE_CODE_PROMPT.md).
 
-```bash
-python scripts/simulate_app_users.py profiles.csv --label final
-python scripts/analyse_app_data.py runs/APPSIM<date-time>-final
-```
+<!-- TODO: add your name, LinkedIn and email here if you'd like employers to contact you from this page. -->
 
-Outputs: raw `events.csv`/`users.csv`/`pathways.csv`, `app_metrics.xlsx`, `APP_DATA_RESULTS.md`, `fig_app_metrics.png`.
-Behaviour is scripted and identical in both arms: results describe system behaviour, not human engagement.
+> SkillPath gives AI-generated suggestions based on published labour-market literature. It isn't professional
+> career or financial advice.
 
-## Data collection (the three commands individually)
-
-Put your skill map at `data/skill_map.csv` and your specification sheet at `profiles.csv`, then run, from the repository root:
-
-```bash
-python prepare_profiles.py profiles.csv data/skill_map.csv --fill-acceptable
-python run_synthetic_tests.py profiles_ready.csv data/skill_map.csv --app-version $(git rev-parse --short HEAD) --engine skillpath
-python analyse_outputs.py profiles_ready.csv test_output_log.csv
-```
-
-- Commit all code changes first so `--app-version` identifies the exact engine build tested.
-- `prepare_profiles.py` exits with code 1 if it finds problems; it still writes `profiles_ready.csv` when
-  `--fill-acceptable` is used. Review its report before continuing.
-- Outputs: `test_output_log.csv` (raw log) and `results/` (`results.xlsx`, figures, `analysis_log.txt`).
-- `$(git rev-parse --short HEAD)` works in Git Bash, macOS/Linux shells and PowerShell.
-
-## API (Milestone 2)
-
-```bash
-cp .env.example .env          # then set SKILLPATH_ADMIN_TOKEN
-uvicorn api.main:app --reload --port 8000
-```
-
-Interactive docs: http://localhost:8000/docs. Data is stored in `skillpath.db` (SQLite, local, git-ignored).
-
-| Method and path | Purpose |
-|---|---|
-| `POST /users` | Body `{consent, age_confirmed}`. Creates a pseudonymous user (`U` + 6 hex) and assigns arm A/B (SHA-256 parity). Researcher override: `?arm=A` or `?arm=B`. |
-| `GET /vocabulary` | Skills grouped by occupation. |
-| `POST /cv/extract` | Multipart `file` (PDF, DOCX, TXT). Returns proposed skills with the matching CV phrase and similarity. Nothing is stored. |
-| `GET /skills/{skill}` | Official ESCO description and the occupations that need the skill. |
-| `GET /modules` | Placeholder module content (`data/modules.json`). |
-| `GET /users/{id}` | View my data (profile, pathway, events). |
-| `POST /users/{id}/profile` | Body `{skills: [...], competency_level}`. |
-| `GET /users/{id}/recommendation` | Calls the engine with the user's arm. |
-| `POST /users/{id}/pathway/accept` | Accept the recommendation. |
-| `POST /users/{id}/pathway/swap` | Body `{skill}`; switch to an alternative (DD6). |
-| `POST /users/{id}/pathway/defer` | "Not now" (DD6). |
-| `POST /users/{id}/modules/{module_id}/result` | Body `{passed}`; calls the engine's `progress`. |
-| `GET /users/{id}/progress` | Milestones, current module, difficulty. |
-| `GET /users/{id}/nudge` | Nudge decision from days since last activity (at most one per day). |
-| `POST /users/{id}/events` | App-reported events: `session_start`, `session_end`, `assessment_started`, `notification_opened`. |
-| `DELETE /users/{id}` | Deletes every row for that user (POPIA). |
-| `GET /admin/export` | Events CSV (`user_id, arm, event_type, timestamp, item_id`); requires header `X-Admin-Token`. |
-| `GET /admin/export/all` | ZIP of every table (users, pathways, events) as CSV; requires `X-Admin-Token`. |
-
-```bash
-curl -H "X-Admin-Token: <your token>" http://localhost:8000/admin/export -o events.csv
-```
-
-## App (Milestone 3)
-
-```bash
-cd app
-npm install
-npx expo start --web          # browser
-npx expo start                # scan the QR code with Expo Go on a phone
-```
-
-The app calls the API at `http://localhost:8000` by default. On a phone, localhost is the phone itself, so start
-the API on all interfaces and point the app at your computer's LAN IP:
-
-```bash
-uvicorn api.main:app --host 0.0.0.0 --port 8000
-EXPO_PUBLIC_API_URL=http://192.168.1.10:8000 npx expo start   # PowerShell: $env:EXPO_PUBLIC_API_URL="http://192.168.1.10:8000"; npx expo start
-```
-
-## Privacy (POPIA by design)
-
-No names, emails or phone numbers are collected. Users are identified by a random pseudonymous ID. All data stays in
-a local SQLite file, there are no third-party analytics or trackers, and users can view and delete their data in
-Settings. Secrets (`.env`) and the database are git-ignored.
-
-## Quick start (Windows)
-
-From the repository folder in PowerShell (or the VS Code terminal):
-
-```powershell
-.\start.ps1          # browser: opens http://localhost:8081
-.\start.ps1 -Phone   # phone: scan the QR code with Expo Go
-.\start.ps1 -Live    # public live link (Cloudflare quick tunnel; install once: winget install --id Cloudflare.cloudflared)
-```
-
-The API opens in its own window titled 'SkillPath API'. Ctrl+C stops the app; close that window to stop the API.
-
+Licensed under the [GNU AGPL-3.0](LICENSE).
